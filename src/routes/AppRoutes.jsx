@@ -6,6 +6,10 @@ import NotFound from '../pages/customer/NotFound.jsx';
 import Login from '../pages/customer/Login.jsx';
 import Register from '../pages/customer/Register.jsx';
 import Profile from '../pages/customer/Profile.jsx';
+import Settings from '../pages/customer/Settings.jsx';
+import Categories from '../pages/customer/Categories.jsx';
+import Section from '../pages/customer/Section.jsx';
+import CategoryView from '../pages/customer/CategoryView.jsx';
 import ProductList from '../pages/customer/ProductList.jsx';
 import ProductDetail from '../pages/customer/ProductDetail.jsx';
 import Cart from '../pages/customer/Cart.jsx';
@@ -31,6 +35,9 @@ export default function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/categories" element={<Categories />} />
+      <Route path="/s/:slug" element={<Section />} />
+      <Route path="/c/:slug" element={<CategoryView />} />
       <Route path="/products" element={<ProductList />} />
       <Route path="/products/:id" element={<ProductDetail />} />
       <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
@@ -38,16 +45,17 @@ export default function AppRoutes() {
       <Route path="/payment/:id" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
       <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
       <Route path="/orders/:id/confirmation" element={<ProtectedRoute><PaymentConfirmation /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-      <Route path="/admin/orders" element={<AdminRoute><ManageOrders /></AdminRoute>} />
-      <Route path="/admin/inventory" element={<AdminRoute><Inventory /></AdminRoute>} />
       <Route path="/orders/:id/track" element={<ProtectedRoute><OrderTracking /></ProtectedRoute>} />
       <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/settings" element={<Settings />} />
       <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />
       <Route path="/admin/deliveries" element={<AdminRoute><Deliveries /></AdminRoute>} />
       <Route path="/admin/customers" element={<AdminRoute><ManageCustomers /></AdminRoute>} />
       <Route path="/admin/payments" element={<AdminRoute><ManagePayments /></AdminRoute>} />
       <Route path="/admin/reports" element={<AdminRoute><Reports /></AdminRoute>} />
+      <Route path="/admin/orders" element={<AdminRoute><ManageOrders /></AdminRoute>} />
+      <Route path="/admin/inventory" element={<AdminRoute><Inventory /></AdminRoute>} />
       <Route path="/admin/products" element={<AdminRoute><ManageProducts /></AdminRoute>} />
       <Route path="/admin/categories" element={<AdminRoute><ManageCategories /></AdminRoute>} />
       <Route path="*" element={<NotFound />} />
