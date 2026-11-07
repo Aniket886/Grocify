@@ -59,6 +59,19 @@ export async function updateUser(id, patch) {
   save();
   return u;
 }
+export async function deleteUser(id) {
+  const d = load();
+  const idx = d.users.findIndex((x) => x.id === id);
+  if (idx === -1) return false;
+  d.users.splice(idx, 1);
+  if (d.carts && d.carts[id]) delete d.carts[id];
+  if (d.notifications) {
+    d.notifications = d.notifications.filter((n) => n.userId !== id);
+  }
+  save();
+  return true;
+}
+
 export async function listCustomers() {
   return load().users.filter((u) => u.role === 'customer');
 }
@@ -327,6 +340,17 @@ export async function advanceDelivery(orderId, nextStatus) {
   del.updatedAt = now();
   o.status = nextStatus; // the order shows the same status the customer tracks
   notify(o.userId, 'delivery_update', nextStatus === 'Delivered' ? `Order ${o.id} has been delivered. Enjoy!` : `Order ${o.id} is now: ${nextStatus}.`, o.id);
+  save();
+  return { order: o, delivery: del };
+}
+
+export async function resetDemoDelivery(orderId) {
+  const { o, del } = paidOrderAndDelivery(orderId);
+  del.status = 'Order Placed';
+  del.history = [{ status: 'Order Placed', at: o.paidAt || now() }];
+  del.assignedTo = null;
+  del.updatedAt = now();
+  o.status = 'Order Placed';
   save();
   return { order: o, delivery: del };
 }

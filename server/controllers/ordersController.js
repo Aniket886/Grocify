@@ -111,3 +111,38 @@ export async function adminList(req, res) {
   const orders = await store.listAllOrders({ status: req.query.status });
   res.json({ orders: await Promise.all(orders.map((o) => present(o, { withCustomer: true }))) });
 }
+
+export async function advanceDemoDelivery(req, res) {
+  const order = await loadAccessible(req);
+  if (order.userId !== req.user.id && req.user.role !== 'admin') throw badRequest('Order not found', 404);
+  if (order.status === 'Cancelled' || order.status === 'Payment Pending') {
+    return res.json({ order: await present(order) });
+  }
+
+  const STEPS = ['Order Placed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered'];
+  const targetStep = req.body?.step;
+  if (!STEPS.includes(targetStep)) throw badRequest('Invalid delivery step');
+
+  const del = await store.getDelivery(order.id);
+  if (del) {
+    const targetIdx = STEPS.indexOf(targetStep);
+    if (targetIdx === 0) {
+      await store.resetDemoDelivery(order.id);
+    } else {
+      if (!del.assignedTo && targetIdx >= 2) {
+        await store.assignDelivery(order.id, 'Rohan Sharma (Express Partner)');
+      }
+      let currentIdx = STEPS.indexOf(del.status);
+      while (currentIdx < targetIdx) {
+        currentIdx += 1;
+        if (currentIdx >= 2 && !del.assignedTo) {
+          await store.assignDelivery(order.id, 'Rohan Sharma (Express Partner)');
+        }
+        await store.advanceDelivery(order.id, STEPS[currentIdx]);
+      }
+    }
+  }
+
+  const updated = await store.getOrder(order.id);
+  res.json({ order: await present(updated) });
+}

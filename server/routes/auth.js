@@ -8,4 +8,5 @@ r.post('/register', authLimiter, c.register);
 r.post('/login', authLimiter, c.login);
 r.get('/me', authenticate, c.me);
 r.put('/profile', authenticate, c.updateProfile);
+r.delete('/account', authenticate, c.deleteAccount);
 export default r;

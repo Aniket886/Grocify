@@ -23,6 +23,12 @@ export function AuthProvider({ children }) {
     register: async (form) => finish(await api.post('/auth/register', form)),
     logout: () => { setToken(null); setUser(null); },
     updateProfile: async (form) => { const d = await api.put('/auth/profile', form); setUser(d.user); return d.user; },
+    deleteAccount: async (confirmText) => {
+      const res = await api.del('/auth/account', { confirmText });
+      setToken(null);
+      setUser(null);
+      return res;
+    },
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

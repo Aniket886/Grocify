@@ -10,4 +10,5 @@ r.get('/', authorize('customer'), c.listMine);
 r.get('/:id', c.getOne);                              // own order, or any order for admin
 r.post('/:id/pay', authorize('customer'), c.pay);
 r.post('/:id/cancel', c.cancel);                      // own unpaid order, or any unpaid order for admin
+r.post('/:id/progress', authorize('customer'), c.advanceDemoDelivery);
 export default r;
