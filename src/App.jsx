@@ -4,6 +4,7 @@ import { CartProvider } from './context/CartContext.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import Navbar from './components/Navbar.jsx';
 import BottomNav from './components/BottomNav.jsx';
+import PwaInstallBanner from './components/PwaInstallBanner.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import Footer from './components/Footer.jsx';
 import AppRoutes from './routes/AppRoutes.jsx';
@@ -14,6 +15,7 @@ export default function App() {
       <BrowserRouter>
         <AuthProvider>
           <CartProvider>
+            <PwaInstallBanner />
             <Navbar />
             <main className="container">
               <ErrorBoundary>

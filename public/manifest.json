@@ -1,0 +1,65 @@
+{
+  "name": "Grocify — Curated Provisions & Essentials",
+  "short_name": "Grocify",
+  "description": "Curated artisanal provisions, certified organic pantry staples, and everyday essentials delivered fresh to your doorstep in minutes.",
+  "id": "/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["shopping", "food", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse Products",
+      "short_name": "Products",
+      "description": "Explore organic and artisanal grocery collections",
+      "url": "/products",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Shopping Cart",
+      "short_name": "Cart",
+      "description": "Review items in your shopping basket",
+      "url": "/cart",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Orders",
+      "short_name": "Orders",
+      "description": "Track active deliveries and order history",
+      "url": "/orders",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
