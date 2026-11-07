@@ -169,6 +169,11 @@ p { margin: 0 0 10px; line-height: 1.5; }
   flex-direction: column;
   gap: 8px;
   align-items: center;
+  transition: z-index 0.2s ease;
+}
+
+.navbar-wrapper.mega-menu-open {
+  z-index: 1200;
 }
 
 /* 1. Primary Pill Bar */
@@ -186,6 +191,8 @@ p { margin: 0 0 10px; line-height: 1.5; }
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
+  position: relative;
+  z-index: 100;
 }
 :root[data-theme='light'] .navbar-pill-primary {
   background: rgba(255, 255, 255, 0.88);
@@ -330,6 +337,17 @@ p { margin: 0 0 10px; line-height: 1.5; }
   width: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
+  z-index: 10;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+/* When the hamburger mega menu is open, cleanly hide the sub-strip */
+.navbar-wrapper.mega-menu-open .navbar-sub-strip {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transform: translateY(-8px);
 }
 .sub-strip-pill {
   display: inline-flex;
@@ -395,8 +413,29 @@ p { margin: 0 0 10px; line-height: 1.5; }
   background: var(--danger);
 }
 
-/* -------- Mega menu Panel -------- */
+/* -------- Mega menu Backdrop & Panel -------- */
 .mega-wrap { position: relative; }
+
+.mega-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1050;
+  animation: megaFadeIn 0.15s ease-out;
+}
+
+@keyframes megaFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes megaSlideDown {
+  from { opacity: 0; transform: translate(-50%, -10px) scale(0.98); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
 .mega-panel {
   position: fixed;
   left: 50%;
@@ -405,17 +444,23 @@ p { margin: 0 0 10px; line-height: 1.5; }
   width: min(880px, calc(100vw - 32px));
   max-height: calc(100vh - 100px);
   overflow: hidden;
-  background: rgba(17, 24, 39, 0.95);
+  background: rgba(17, 24, 39, 0.98);
   border: 1px solid var(--border-strong);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
   display: grid;
   grid-template-columns: 230px 1fr;
   gap: 18px;
-  z-index: 60;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  z-index: 1100;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  animation: megaSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+:root[data-theme='light'] .mega-panel {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 .mega-sections { display: flex; flex-direction: column; gap: 4px; max-height: 440px; overflow-y: auto; }
 .mega-section-btn {
@@ -455,8 +500,15 @@ p { margin: 0 0 10px; line-height: 1.5; }
 .mega-cat.featured { border-color: var(--primary); background: rgba(16, 185, 129, 0.08); }
 
 @media (max-width: 800px) {
-  .mega-panel { grid-template-columns: 1fr; }
-  .mega-sections { flex-direction: row; overflow-x: auto; max-height: none; flex: 0 0 auto; }
+  .mega-panel { 
+    grid-template-columns: 1fr; 
+    top: 68px;
+    max-height: calc(100vh - 84px);
+    width: calc(100vw - 20px);
+    padding: 14px;
+    gap: 12px;
+  }
+  .mega-sections { flex-direction: row; overflow-x: auto; max-height: none; flex: 0 0 auto; padding-bottom: 6px; }
   .mega-section-btn { white-space: nowrap; }
 }
 
