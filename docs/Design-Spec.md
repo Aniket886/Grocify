@@ -153,13 +153,16 @@ element from Google's web component.
   Decor, Sweets and Dry Fruits.
 - A dedicated `Diwali Store` section links to Diwali Gifting, Diwali
   Lights, Diwali Decor, Rangoli, Pooja Thali, Sweets and Dry Fruits.
-- Turn off anywhere in Settings: this hides the lights, the banner and
-  removes the Diwali Store hint from the hero.
+- Turn off in Settings: this hides the light string and the banner. The
+  Diwali Store section and the hero's "Diwali Store" button stay, since
+  they are normal catalogue navigation.
 
 ## 9. Navigation buttons
 
-The brief asked for Category, Home, Order Again and Print. All four are
-available on every page (the first two are also on the top bar):
+The brief asked for Category, Home, Order Again and Print. On phones
+(under 760px) all four sit in a bottom bar on every customer page. On
+wider screens Home and Categories are in the top bar, and Order Again and
+Print appear on the pages where they apply:
 
 - **Home** — bottom nav + top navbar.
 - **Category** — opens the mega menu (top navbar) or jumps to the all-sections page (bottom nav).
@@ -173,8 +176,9 @@ available on every page (the first two are also on the top bar):
 
 ## 10. Accessibility and performance
 
-- `prefers-color-scheme` is respected via the `color-scheme` property so
-  form controls and the scrollbar inherit the current theme.
+- The `color-scheme` property follows the chosen theme, so form controls
+  and scrollbars match it. (The site deliberately ignores the device's
+  light/dark preference: dark is the default for everyone.)
 - All interactive elements keep visible focus outlines (`outline: 2px solid var(--primary)`).
 - The mega menu is keyboard-reachable: Tab opens the button; Esc closes.
 - `<meta name="theme-color">` matches the dark palette so the browser

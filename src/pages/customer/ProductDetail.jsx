@@ -44,7 +44,7 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="card" style={{ display: 'grid', gridTemplateColumns: showViewer ? 'minmax(260px, 1fr) minmax(260px, 1fr)' : '1fr', gap: 24 }}>
+    <div className="card" style={{ display: 'grid', gridTemplateColumns: showViewer ? 'repeat(auto-fit, minmax(260px, 1fr))' : '1fr', gap: 24 }}>
       {showViewer && (
         <div>
           <ProductViewer360 label={product.name} />

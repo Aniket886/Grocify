@@ -39,7 +39,7 @@ export default function Settings() {
         <label style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
           <input
             type="checkbox"
-            style={{ width: 'auto' }}
+            style={{ width: 'auto', flex: 'none', minWidth: 0 }}
             checked={diwali}
             onChange={(e) => setDiwali(e.target.checked)}
           />
