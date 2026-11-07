@@ -21,42 +21,57 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Shop */}
-          <div className="footer-col">
-            <h4 className="footer-heading">Collections</h4>
-            <ul className="footer-links">
-              <li><Link to="/products">All Products</Link></li>
-              <li><Link to="/s/artisanal">Artisanal &amp; Gourmet</Link></li>
-              <li><Link to="/s/grocery-kitchen">Grocery &amp; Kitchen</Link></li>
-              <li><Link to="/s/gifting">Curated Gifting</Link></li>
-              <li><Link to="/categories">All Categories</Link></li>
-            </ul>
+          {/* Grouped Links: Collections & Customer Care */}
+          <div className="footer-links-row">
+            {/* Shop Collections */}
+            <div className="footer-col footer-col-links">
+              <h4 className="footer-heading">Collections</h4>
+              <ul className="footer-links">
+                <li><Link to="/products">All Products</Link></li>
+                <li><Link to="/s/artisanal">Artisanal &amp; Gourmet</Link></li>
+                <li><Link to="/s/grocery-kitchen">Grocery &amp; Kitchen</Link></li>
+                <li><Link to="/s/gifting">Curated Gifting</Link></li>
+                <li><Link to="/categories">All Categories</Link></li>
+              </ul>
+            </div>
+
+            {/* Customer Care */}
+            <div className="footer-col footer-col-links">
+              <h4 className="footer-heading">Customer Care</h4>
+              <ul className="footer-links">
+                <li><Link to="/orders">My Orders &amp; Receipts</Link></li>
+                <li><Link to="/cart">Shopping Basket</Link></li>
+                <li><Link to="/notifications">Order Notifications</Link></li>
+                <li><Link to="/profile">Profile &amp; Dashboard</Link></li>
+              </ul>
+            </div>
           </div>
 
-          {/* Customer Care */}
-          <div className="footer-col">
-            <h4 className="footer-heading">Customer Care</h4>
-            <ul className="footer-links">
-              <li><Link to="/orders">My Orders &amp; Receipts</Link></li>
-              <li><Link to="/cart">Shopping Basket</Link></li>
-              <li><Link to="/notifications">Order Notifications</Link></li>
-              <li><Link to="/profile">Profile &amp; Dashboard</Link></li>
-            </ul>
-          </div>
-
-          {/* Trust & Project Details */}
-          <div className="footer-col">
+          {/* Trust & Security */}
+          <div className="footer-col trust-col">
             <h4 className="footer-heading">Trust &amp; Security</h4>
-            <ul className="footer-links">
-              <li><span className="footer-static-item">🔒 256-Bit Encrypted Payments</span></li>
-              <li><span className="footer-static-item">🌿 100% Quality Guarantee</span></li>
-              <li><span className="footer-static-item">⚡ Fresh Express Packing</span></li>
-              <li><span className="footer-static-item">GM University · UC25CA2303</span></li>
-            </ul>
+            <div className="footer-trust-grid">
+              <div className="footer-trust-item">
+                <span className="trust-icon" aria-hidden="true">🔒</span>
+                <span className="trust-text">256-Bit Encrypted Payments</span>
+              </div>
+              <div className="footer-trust-item">
+                <span className="trust-icon" aria-hidden="true">🌿</span>
+                <span className="trust-text">100% Quality Guarantee</span>
+              </div>
+              <div className="footer-trust-item">
+                <span className="trust-icon" aria-hidden="true">⚡</span>
+                <span className="trust-text">Fresh Express Packing</span>
+              </div>
+              <div className="footer-trust-item">
+                <span className="trust-icon" aria-hidden="true">🎓</span>
+                <span className="trust-text">GM University · UC25CA2303</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright on left, Made with ❤️ Harshita on the right side */}
+        {/* Bottom Bar: Copyright & Made with ❤️ Harshita */}
         <div className="footer-bottom-bar">
           <p className="footer-copyright">
             © {new Date().getFullYear()} Grocify v{__APP_VERSION__}. All rights reserved.

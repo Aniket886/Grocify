@@ -925,7 +925,7 @@ tbody tr:hover { background: var(--surface-2); }
 .muted { color: var(--text-muted); font-size: 13.5px; }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Multi-Column E-Commerce Footer (STRICTLY NOT FIXED, NATURAL SCROLL)
+   Multi-Column E-Commerce Footer (Responsive & Mobile-Optimized)
    ───────────────────────────────────────────────────────────────────────── */
 .site-footer {
   margin-top: auto;
@@ -946,14 +946,11 @@ tbody tr:hover { background: var(--surface-2); }
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  grid-template-columns: 2fr 1fr 1fr 1.3fr;
   gap: 40px;
 }
-@media (max-width: 900px) {
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
-}
-@media (max-width: 550px) {
-  .footer-grid { grid-template-columns: 1fr; gap: 26px; }
+.footer-links-row {
+  display: contents; /* On desktop, children sit directly in the 4-column footer-grid */
 }
 .footer-brand {
   display: flex;
@@ -988,6 +985,18 @@ tbody tr:hover { background: var(--surface-2); }
   font-weight: 600;
   color: var(--text-muted);
 }
+.footer-badge.version-badge {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--primary);
+  border-color: rgba(16, 185, 129, 0.3);
+  font-weight: 700;
+}
+.footer-badge.author-badge {
+  background: rgba(244, 63, 94, 0.1);
+  color: #fb7185;
+  border-color: rgba(244, 63, 94, 0.25);
+  font-weight: 600;
+}
 .footer-heading {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 13.5px;
@@ -1015,9 +1024,24 @@ tbody tr:hover { background: var(--surface-2); }
   color: var(--primary);
   text-decoration: none;
 }
-.footer-static-item {
+.footer-trust-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   color: var(--text-muted);
   font-size: 13px;
+}
+.footer-trust-item .trust-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.footer-trust-item .trust-text {
+  line-height: 1.3;
 }
 .footer-bottom-bar {
   border-top: 1px solid var(--border);
@@ -1036,30 +1060,19 @@ tbody tr:hover { background: var(--surface-2); }
   display: flex;
   align-items: center;
 }
-
-.footer-badge.version-badge {
-  background: rgba(16, 185, 129, 0.12);
-  color: var(--primary);
-  border-color: rgba(16, 185, 129, 0.3);
-  font-weight: 700;
-}
-.footer-badge.author-badge {
-  background: rgba(244, 63, 94, 0.1);
-  color: #fb7185;
-  border-color: rgba(244, 63, 94, 0.25);
-  font-weight: 600;
-}
 .footer-credit {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-strong);
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   background: rgba(244, 63, 94, 0.08);
-  border: 1px solid rgba(244, 63, 94, 0.2);
-  padding: 4px 14px;
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  padding: 5px 16px;
   border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(244, 63, 94, 0.12);
+  transition: all 0.2s ease;
 }
 .heart-icon {
   color: #f43f5e;
@@ -1075,6 +1088,160 @@ tbody tr:hover { background: var(--surface-2); }
   text-decoration: none;
 }
 .footer-sub-links a:hover { color: var(--primary); }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Mobile Footer Optimization (< 768px)
+   - Extra bottom padding so "Made with ❤️ Harshita" is never trapped by bottom nav
+   - Balanced 2-column card layout for Collections & Customer Care
+   - 2x2 grid for Trust & Security badges
+   - Centered brand header & highlighted author credit
+   ───────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 36px 16px calc(112px + env(safe-area-inset-bottom, 24px)) !important;
+    background: linear-gradient(180deg, var(--bg-elev) 0%, rgba(6, 16, 30, 0.98) 100%);
+  }
+  .footer-inner {
+    gap: 22px;
+  }
+  .footer-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .brand-col {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2px;
+  }
+  .footer-brand {
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .footer-about {
+    max-width: 440px;
+    margin: 0 auto 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .footer-pill-badges {
+    justify-content: center;
+    gap: 8px;
+  }
+  .footer-badge {
+    padding: 3px 10px;
+    font-size: 11px;
+  }
+
+  /* Two-column grouped card for Collections & Customer Care */
+  .footer-links-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  }
+  .footer-links-row .footer-heading {
+    font-size: 11.5px;
+    margin-bottom: 10px;
+    color: var(--primary);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+    padding-bottom: 5px;
+    letter-spacing: 0.06em;
+  }
+  .footer-links-row .footer-links {
+    gap: 8px;
+  }
+  .footer-links-row .footer-links a {
+    font-size: 12.5px;
+    line-height: 1.35;
+    padding: 2px 0;
+    display: inline-block;
+  }
+
+  /* Trust & Security: 2x2 grid of modern badges */
+  .trust-col {
+    padding: 0 4px;
+  }
+  .trust-col .footer-heading {
+    text-align: center;
+    font-size: 11.5px;
+    margin-bottom: 10px;
+    color: var(--text-strong);
+    letter-spacing: 0.06em;
+  }
+  .footer-trust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .footer-trust-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 9px 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .footer-trust-item .trust-icon {
+    font-size: 15px;
+  }
+  .footer-trust-item .trust-text {
+    line-height: 1.25;
+  }
+
+  /* Bottom Bar with prominent clearance & centered credit */
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-right-credit {
+    margin: 0 auto;
+    order: 1; /* Shows "Made with ❤️ Harshita" first/prominently */
+  }
+  .footer-copyright {
+    order: 2;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .footer-credit {
+    font-size: 13.5px;
+    padding: 7px 20px;
+    background: rgba(244, 63, 94, 0.12);
+    border: 1px solid rgba(244, 63, 94, 0.35);
+    box-shadow: 0 4px 18px rgba(244, 63, 94, 0.22);
+  }
+}
+
+@media (max-width: 380px) {
+  .footer-links-row {
+    padding: 14px 10px;
+    gap: 10px;
+  }
+  .footer-links-row .footer-links a {
+    font-size: 11.5px;
+  }
+  .footer-trust-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* -------- Home Hero (Modern Niche E-Commerce - Centered & Justified) -------- */
 .home-container {
