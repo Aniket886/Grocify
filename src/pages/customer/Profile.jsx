@@ -85,9 +85,11 @@ export default function Profile() {
       <div className="card profile-header-card">
         <div className="profile-avatar-large">{initials}</div>
         <div className="profile-meta">
-          <div className="profile-name-row">
-            <h2>{user.name}</h2>
-            <span className="role-pill-badge">{user.role === 'admin' ? 'Administrator' : 'Verified Customer'}</span>
+          <h2 className="profile-user-name">{user.name}</h2>
+          <div className="profile-role-badge-row">
+            <span className="role-pill-badge">
+              <span className="badge-sparkle" aria-hidden="true">✓</span> {user.role === 'admin' ? 'Administrator' : 'Verified Customer'}
+            </span>
           </div>
           <p className="profile-email-text">{user.email}</p>
           <div className="profile-badges-row">

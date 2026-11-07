@@ -634,6 +634,30 @@ p { margin: 0 0 10px; line-height: 1.5; }
 }
 
 @media (max-width: 640px) {
+  .profile-header-card {
+    padding: 24px 16px;
+  }
+  .profile-avatar-large {
+    width: 72px;
+    height: 72px;
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .profile-user-name {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+  }
+  .profile-email-text {
+    font-size: 13.5px;
+    margin-bottom: 12px;
+  }
+  .profile-badges-row {
+    gap: 6px;
+  }
+  .info-chip {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
   .navbar-wrapper {
     top: 8px;
     padding: 0 10px;
@@ -1697,10 +1721,14 @@ tbody tr:hover { background: var(--surface-2); }
   border: 1px solid var(--border-strong);
   border-radius: 20px;
   box-shadow: var(--shadow-sm);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 .profile-avatar-large {
-  width: 80px;
-  height: 80px;
+  width: 84px;
+  height: 84px;
   border-radius: 50%;
   background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
   color: #ffffff;
@@ -1719,36 +1747,40 @@ tbody tr:hover { background: var(--surface-2); }
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   width: 100%;
 }
-.profile-name-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  width: 100%;
-  margin-bottom: 6px;
-}
-.profile-name-row h2 {
-  margin: 0;
-  font-size: 1.75rem;
+.profile-user-name {
+  margin: 0 0 6px 0;
+  font-size: 1.85rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text-strong);
   text-align: center;
+  width: 100%;
+}
+.profile-role-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 8px;
 }
 .role-pill-badge {
   display: inline-flex;
   align-items: center;
-  padding: 4px 12px;
+  gap: 6px;
+  padding: 4px 14px;
   border-radius: 999px;
   background: rgba(16, 185, 129, 0.16);
   color: var(--primary);
   font-size: 12px;
   font-weight: 700;
   border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.role-pill-badge .badge-sparkle {
+  font-size: 11px;
 }
 .profile-email-text {
   color: var(--text-muted);
