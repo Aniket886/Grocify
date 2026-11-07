@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SECTIONS } from '../data/categoryTaxonomy.js';
 
-// Category mega-menu. Opens from the "Categories" button in the navbar.
+// Category mega-menu. Opens from the hamburger icon in the navbar.
 // A section list on the left; the chosen section's categories on the right.
 export default function CategoryMegaMenu() {
   const [open, setOpen] = useState(false);
@@ -22,9 +22,22 @@ export default function CategoryMegaMenu() {
 
   return (
     <div className="mega-wrap" ref={wrapRef}>
-      <button type="button" className="mega-btn" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
-        <span aria-hidden="true">≡</span> Categories
+      <button 
+        type="button" 
+        className={`mega-btn-hamburger ${open ? 'active' : ''}`}
+        aria-haspopup="menu" 
+        aria-expanded={open} 
+        aria-label="Browse categories"
+        title="Browse categories"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="hamburger-box" aria-hidden="true">
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </span>
       </button>
+
       {open && (
         <div className="mega-panel" role="menu">
           <div className="mega-sections">

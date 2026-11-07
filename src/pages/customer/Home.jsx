@@ -2,44 +2,100 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api.js';
 import { SECTIONS } from '../../data/categoryTaxonomy.js';
-import DiwaliBanner from '../../components/DiwaliBanner.jsx';
 
-// Home page. Brings together the hero, the Diwali strip, the display
-// sections and the backend categories the admin edits. Nothing here calls
-// anything new on the server; only /categories (already used before).
+// Home page. Clean, niche e-commerce storefront with centered, justified layout
+// and responsive optimization across mobile, tablet, laptop, and desktop.
 export default function Home() {
   const [backendCats, setBackendCats] = useState([]);
   const [q, setQ] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => { api.get('/categories').then((d) => setBackendCats(d.categories)).catch(() => {}); }, []);
+  useEffect(() => {
+    api.get('/categories')
+      .then((d) => setBackendCats(d.categories || []))
+      .catch(() => {});
+  }, []);
 
-  const featured = SECTIONS.filter((s) => s.festive || s.slug === 'electronics' || s.slug === 'gifting' || s.slug === 'grocery-kitchen' || s.slug === 'snacks-drinks' || s.slug === 'beauty-personal-care').slice(0, 6);
+  const featuredSlugs = ['artisanal', 'grocery-kitchen', 'electronics', 'gifting', 'beauty-personal-care', 'imported'];
+  const featured = SECTIONS.filter((s) => featuredSlugs.includes(s.slug)).slice(0, 6);
   const browse = SECTIONS;
 
   return (
-    <>
-      <DiwaliBanner />
-
-      <section className="hero" aria-label="Welcome">
-        <h1>
-          Find everyday <span className="accent">essentials</span>, gifting and gadgets —
-          <br />delivered fresh.
+    <div className="home-container">
+      {/* Centered & Justified Hero Section */}
+      <section className="hero hero-centered" aria-label="Welcome">
+        <div className="hero-badge">✦ Curated Niche Store</div>
+        <h1 className="hero-title">
+          Artisanal Provisions &amp; <span className="accent">Mindful Living</span>,<br />
+          delivered fresh.
         </h1>
-        <p>Groceries, beauty, electronics, decor, pet care and more. One cart, one checkout, one delivery.</p>
-        <form className="hero-search" onSubmit={(e) => { e.preventDefault(); navigate(`/products?q=${encodeURIComponent(q)}`); }}>
-          <input placeholder='Try "banana", "headphones" or "diya"' value={q} onChange={(e) => setQ(e.target.value)} />
+        <p className="hero-tagline">
+          Organic pantry staples, single-origin specialties, crafted gifting, and everyday electronics. Quality without compromise, sustainably packaged and swiftly delivered directly to your doorstep in minutes.
+        </p>
+        
+        <form 
+          className="hero-search" 
+          onSubmit={(e) => { 
+            e.preventDefault(); 
+            if (q.trim()) navigate(`/products?q=${encodeURIComponent(q.trim())}`); 
+          }}
+        >
+          <input 
+            placeholder='Try "organic honey", "cold-pressed oil" or "headphones"' 
+            value={q} 
+            onChange={(e) => setQ(e.target.value)} 
+            aria-label="Search provisions"
+          />
           <button type="submit" className="primary">Search</button>
         </form>
+
         <div className="hero-cta">
-          <Link to="/categories"><button className="ghost">🗂️ Browse categories</button></Link>
-          <Link to="/s/diwali"><button className="secondary">🪔 Diwali Store</button></Link>
+          <Link to="/products"><button className="primary">Explore Store</button></Link>
+          <Link to="/s/artisanal"><button className="secondary">✨ Artisanal &amp; Gourmet</button></Link>
+          <Link to="/categories"><button className="ghost">🗂️ All Categories</button></Link>
         </div>
       </section>
 
-      <h2>Shop by section</h2>
-      <p className="muted" style={{ marginBottom: 14 }}>Big worlds, neatly sorted.</p>
-      <div className="section-grid">
+      {/* Symmetrical Niche Perks Row */}
+      <div className="niche-perks-row" role="region" aria-label="Store highlights">
+        <div className="perk-item">
+          <span className="perk-icon" aria-hidden="true">🌿</span>
+          <div>
+            <strong>Pure Origin</strong>
+            <span className="perk-desc">Artisanal &amp; certified organic</span>
+          </div>
+        </div>
+        <div className="perk-item">
+          <span className="perk-icon" aria-hidden="true">⚡</span>
+          <div>
+            <strong>Swift Delivery</strong>
+            <span className="perk-desc">Freshly packed to doorstep</span>
+          </div>
+        </div>
+        <div className="perk-item">
+          <span className="perk-icon" aria-hidden="true">🔄</span>
+          <div>
+            <strong>360° Inspection</strong>
+            <span className="perk-desc">Interactive product visualizer</span>
+          </div>
+        </div>
+        <div className="perk-item">
+          <span className="perk-icon" aria-hidden="true">🔒</span>
+          <div>
+            <strong>Secure Checkout</strong>
+            <span className="perk-desc">Encrypted digital payments</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Collections Section */}
+      <div className="landing-section-header">
+        <h2>Featured Collections</h2>
+        <p className="section-subtitle">
+          Hand-picked artisanal goods, fresh organic produce, and mindful lifestyle selections.
+        </p>
+      </div>
+      <div className="section-grid featured-grid">
         {featured.map((s) => (
           <Link key={s.slug} to={`/s/${s.slug}`} className={`section-tile accent-${s.accent}`}>
             <span className="icon" aria-hidden="true">{s.icon}</span>
@@ -49,8 +105,14 @@ export default function Home() {
         ))}
       </div>
 
-      <h2 style={{ marginTop: 28 }}>All sections</h2>
-      <div className="section-grid">
+      {/* All Collections Section */}
+      <div className="landing-section-header" style={{ marginTop: 44 }}>
+        <h2>All Collections</h2>
+        <p className="section-subtitle">
+          Explore our complete catalog spanning fresh groceries, pantry staples, personal care, and curated treats.
+        </p>
+      </div>
+      <div className="section-grid all-collections-grid">
         {browse.map((s) => (
           <Link key={s.slug} to={`/s/${s.slug}`} className={`section-tile accent-${s.accent}`}>
             <span className="icon" aria-hidden="true">{s.icon}</span>
@@ -59,21 +121,6 @@ export default function Home() {
           </Link>
         ))}
       </div>
-
-      {backendCats.length > 0 && (
-        <>
-          <h2 style={{ marginTop: 28 }}>Live catalogue</h2>
-          <p className="muted" style={{ marginBottom: 14 }}>Categories the admin has stocked right now.</p>
-          <div className="category-grid">
-            {backendCats.map((c) => (
-              <Link key={c.id} to={`/products?category=${c.id}`} className="category-tile">
-                <span className="icon" aria-hidden="true">🏷️</span>
-                <span>{c.name}</span>
-              </Link>
-            ))}
-          </div>
-        </>
-      )}
-    </>
+    </div>
   );
 }

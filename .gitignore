@@ -15,3 +15,7 @@ serviceAccountKey.json
 
 server/data/dev-db.json
 server/data/test-db*.json
+
+# Anti-gravity skills
+skills/
+

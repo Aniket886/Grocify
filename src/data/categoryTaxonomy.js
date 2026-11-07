@@ -13,7 +13,7 @@
 //              contains any of these counts as "this" category and its products load when
 //              the customer opens it. If `match` is missing the category is a placeholder
 //              (no products yet; the page still opens with a friendly empty state).
-//   featured : optional. Marks it as a Diwali promotional pick.
+//   featured : optional. Marks it as a featured promotional pick.
 
 export const SECTIONS = [
   {
@@ -101,21 +101,19 @@ export const SECTIONS = [
     ],
   },
   {
-    slug: 'diwali',
-    name: 'Diwali Store',
-    tagline: 'Gifting, lights and decor',
-    icon: '🪔',
-    accent: 'festive',
-    festive: true,
+    slug: 'artisanal',
+    name: 'Artisanal & Gourmet',
+    tagline: 'Handcrafted provisions and organics',
+    icon: '✨',
+    accent: 'emerald',
     categories: [
-      { slug: 'diwali-gifting', name: 'Diwali Gifting', icon: '🎁', featured: true },
-      { slug: 'diwali-lights', name: 'Diwali Lights', icon: '🪔', featured: true },
-      { slug: 'diwali-decor', name: 'Diwali Decor', icon: '🌼', featured: true },
-      { slug: 'rangoli', name: 'Rangoli & Colours', icon: '🎨' },
-      { slug: 'crackers', name: 'Safe Crackers', icon: '✨' },
-      { slug: 'pooja-thali', name: 'Pooja Thali', icon: '🪷' },
-      { slug: 'sweets', name: 'Sweets', icon: '🍬' },
-      { slug: 'dry-fruits', name: 'Dry Fruits', icon: '🥜' },
+      { slug: 'gourmet-sweets', name: 'Artisan Confections', icon: '🍬', featured: true },
+      { slug: 'dry-fruits', name: 'Premium Nuts & Fruits', icon: '🥜', featured: true },
+      { slug: 'organic-honey', name: 'Raw Honey & Spreads', icon: '🍯', featured: true },
+      { slug: 'single-origin', name: 'Single-Origin Tea & Coffee', icon: '☕' },
+      { slug: 'cold-pressed-oils', name: 'Cold-Pressed Oils', icon: '🫒' },
+      { slug: 'gourmet-spices', name: 'Artisan Spices', icon: '🌿' },
+      { slug: 'sweets', name: 'Confectionery', icon: '🍬' },
     ],
   },
   {
@@ -123,7 +121,7 @@ export const SECTIONS = [
     name: 'Party',
     tagline: 'Celebrations and get-togethers',
     icon: '🎉',
-    accent: 'festive',
+    accent: 'emerald',
     categories: [
       { slug: 'party-balloons', name: 'Balloons', icon: '🎈' },
       { slug: 'party-tableware', name: 'Tableware', icon: '🥳' },
@@ -193,7 +191,7 @@ export const SECTIONS = [
     name: 'Jewelry',
     tagline: 'Classics and new picks',
     icon: '💍',
-    accent: 'festive',
+    accent: 'emerald',
     categories: [
       { slug: 'jewel-earrings', name: 'Earrings', icon: '✨' },
       { slug: 'jewel-necklaces', name: 'Necklaces', icon: '📿' },
@@ -273,7 +271,7 @@ export const SECTIONS = [
     name: 'Spiritual',
     tagline: 'Pooja and prayer',
     icon: '🪷',
-    accent: 'festive',
+    accent: 'emerald',
     categories: [
       { slug: 'spiritual-pooja', name: 'Pooja Items', icon: '🪔' },
       { slug: 'spiritual-incense', name: 'Incense', icon: '🪵' },

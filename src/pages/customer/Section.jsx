@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { api } from '../../services/api.js';
 import { SECTION_BY_SLUG, backendMatchesDisplay } from '../../data/categoryTaxonomy.js';
-import DiwaliBanner from '../../components/DiwaliBanner.jsx';
 
 // Section landing. Shows every category inside the section and marks the ones
 // that have no products yet with a small "coming soon" badge.
@@ -25,7 +24,6 @@ export default function Section() {
 
   return (
     <>
-      {section.festive && <DiwaliBanner />}
       <h1>
         <span aria-hidden="true">{section.icon}</span> {section.name}
       </h1>

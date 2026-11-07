@@ -62,3 +62,15 @@ export async function updateProfile(req, res) {
   req.log.info('Profile updated', { userId: user.id });
   res.json({ user: publicUser(user) });
 }
+
+
+export async function deleteAccount(req, res) {
+  const confirmText = req.body?.confirmText;
+  if (!confirmText || confirmText.trim().toUpperCase() !== 'DELETE') {
+    throw badRequest('Please enter DELETE to confirm permanent account deletion', 400);
+  }
+  const ok = await store.deleteUser(req.user.id);
+  if (!ok) throw badRequest('Account could not be found', 404);
+  req.log.info('Account deleted permanently', { userId: req.user.id, email: req.user.email });
+  res.json({ ok: true, message: 'Your account has been permanently deleted' });
+}

@@ -5,8 +5,9 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useCart } from '../context/CartContext.jsx';
 import CategoryMegaMenu from './CategoryMegaMenu.jsx';
 
-// Top navigation. Keeps every login/role rule from before: the mega menu is
-// public, carts and orders need a login, admin pages need the admin role.
+// Professional Pill Navbar with Glassmorphism
+// - Primary Pill: Brand on Left, User Profile & Hamburger on the Complete Right Side
+// - Sub-Nav Pill Strip: Positioned directly under the navbar (Home, Shop, Cart, My Orders, Notifications)
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { count } = useCart();
@@ -23,59 +24,87 @@ export default function Navbar() {
   }, [user, location.pathname]);
 
   return (
-    <nav className="navbar" aria-label="Main">
-      <Link to={user?.role === 'admin' ? '/admin' : '/'} className="brand">
-        <span className="mark" aria-hidden="true">✦</span> Grocify
-      </Link>
+    <header className="navbar-wrapper">
+      {/* 1. Main Floating Pill Navbar */}
+      <nav className="navbar-pill-primary" aria-label="Main navigation">
+        <div className="nav-left-group">
+          <Link to={user?.role === 'admin' ? '/admin' : '/'} className="nav-brand">
+            <span className="brand-dot" aria-hidden="true">✦</span>
+            <span className="brand-name">Grocify</span>
+          </Link>
+        </div>
 
-      {user?.role !== 'admin' && <CategoryMegaMenu />}
+        <div className="nav-right-group">
+          {user ? (
+            <div className="user-pill-container">
+              <NavLink to="/profile" className="user-profile-badge" title="View Profile">
+                <span className="avatar-icon" aria-hidden="true">👤</span>
+                <span className="user-name-text">{user.name.split(' ')[0]}</span>
+              </NavLink>
+              <button 
+                type="button"
+                className="nav-logout-btn" 
+                onClick={() => { logout(); navigate('/'); }}
+                title="Log out of your account"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="auth-btn-cluster">
+              <NavLink to="/login" className="auth-login-link">Login</NavLink>
+              <NavLink to="/register" className="auth-join-pill">Join Grocify</NavLink>
+            </div>
+          )}
 
-      {user?.role !== 'admin' && (
-        <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink>
-      )}
-      {user?.role !== 'admin' && (
-        <NavLink to="/products" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Shop</NavLink>
-      )}
+          {/* Hamburger menu on the COMPLETE right side */}
+          {user?.role !== 'admin' && <CategoryMegaMenu />}
+        </div>
+      </nav>
 
-      {user?.role === 'customer' && (
-        <>
-          <NavLink to="/cart" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Cart ({count})</NavLink>
-          <NavLink to="/orders" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>My Orders</NavLink>
-          <NavLink to="/notifications" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            Notifications{unread > 0 ? <span className="unread-dot" aria-label={`${unread} unread`} /> : null}
-          </NavLink>
-        </>
-      )}
+      {/* 2. Sub-Navigation Bar positioned UNDER the navbar */}
+      <nav className="navbar-sub-strip" aria-label="Quick links">
+        <div className="sub-strip-pill">
+          {user?.role !== 'admin' && (
+            <>
+              <NavLink to="/" end className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>
+                <span className="pill-icon" aria-hidden="true">🏠</span> Home
+              </NavLink>
+              <NavLink to="/products" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>
+                <span className="pill-icon" aria-hidden="true">🛍️</span> Shop
+              </NavLink>
+              {user?.role === 'customer' && (
+                <>
+                  <NavLink to="/cart" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>
+                    <span className="pill-icon" aria-hidden="true">🛒</span> Cart {count > 0 && <span className="cart-badge-count">{count}</span>}
+                  </NavLink>
+                  <NavLink to="/orders" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>
+                    <span className="pill-icon" aria-hidden="true">📦</span> My Orders
+                  </NavLink>
+                  <NavLink to="/notifications" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>
+                    <span className="pill-icon" aria-hidden="true">🔔</span> Notifications
+                    {unread > 0 && <span className="unread-dot" aria-label={`${unread} unread notifications`} />}
+                  </NavLink>
+                </>
+              )}
+            </>
+          )}
 
-      {user?.role === 'admin' && (
-        <>
-          <NavLink to="/admin" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
-          <NavLink to="/admin/orders" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Orders</NavLink>
-          <NavLink to="/admin/deliveries" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Deliveries</NavLink>
-          <NavLink to="/admin/payments" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Payments</NavLink>
-          <NavLink to="/admin/customers" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Customers</NavLink>
-          <NavLink to="/admin/inventory" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Inventory</NavLink>
-          <NavLink to="/admin/products" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Products</NavLink>
-          <NavLink to="/admin/categories" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Categories</NavLink>
-          <NavLink to="/admin/reports" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Reports</NavLink>
-        </>
-      )}
-
-      <span className="nav-divider" aria-hidden="true" />
-
-      {user ? (
-        <>
-          <NavLink to={user.role === 'admin' ? '/profile' : '/profile'} className="nav-pill">
-            <span aria-hidden="true">👤</span> {user.name.split(' ')[0]}
-          </NavLink>
-          <button onClick={() => { logout(); navigate('/'); }}>Logout</button>
-        </>
-      ) : (
-        <>
-          <NavLink to="/login" className="nav-link">Login</NavLink>
-          <NavLink to="/register" className="nav-pill">Join Grocify</NavLink>
-        </>
-      )}
-    </nav>
+          {user?.role === 'admin' && (
+            <>
+              <NavLink to="/admin" end className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
+              <NavLink to="/admin/orders" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Orders</NavLink>
+              <NavLink to="/admin/deliveries" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Deliveries</NavLink>
+              <NavLink to="/admin/payments" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Payments</NavLink>
+              <NavLink to="/admin/customers" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Customers</NavLink>
+              <NavLink to="/admin/inventory" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Inventory</NavLink>
+              <NavLink to="/admin/products" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Products</NavLink>
+              <NavLink to="/admin/categories" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Categories</NavLink>
+              <NavLink to="/admin/reports" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Reports</NavLink>
+            </>
+          )}
+        </div>
+      </nav>
+    </header>
   );
 }
