@@ -12,6 +12,7 @@ import orderRoutes from './routes/orders.js';
 import paymentRoutes from './routes/payments.js';
 import inventoryRoutes from './routes/inventory.js';
 import adminRoutes from './routes/admin.js';
+import notificationRoutes from './routes/notifications.js';
 
 export default function createApp() {
   const app = express();
@@ -37,6 +38,7 @@ export default function createApp() {
   app.use('/api/payments', paymentRoutes);
   app.use('/api/inventory', inventoryRoutes);
   app.use('/api/admin', adminRoutes);
+  app.use('/api/notifications', notificationRoutes);
 
   app.use(notFound);
   app.use(errorHandler);

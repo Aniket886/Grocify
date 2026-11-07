@@ -32,6 +32,7 @@ export default function OrderHistory() {
           <ul>{o.items.map((i) => <li key={i.productId}>{i.name} × {i.quantity} (₹{i.price * i.quantity})</li>)}</ul>
           {o.payment && <div className="muted">Paid by {o.payment.method} · Transaction {o.payment.transactionId}</div>}
           {o.status === 'Cancelled' && <div className="muted">{o.cancelReason}</div>}
+          {o.delivery && <div className="row"><Link to={`/orders/${o.id}/track`}><button className="secondary">Track order</button></Link></div>}
           {o.status === 'Payment Pending' && (
             <div className="row">
               <Link to={`/payment/${o.id}`}><button className="primary">Pay now</button></Link>

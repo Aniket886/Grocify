@@ -26,7 +26,7 @@ export default function PaymentConfirmation() {
       <h3>Items</h3>
       {order.items.map((i) => <div className="row" key={i.productId}><span style={{ flex: 1 }}>{i.name} × {i.quantity}</span><span>₹{i.price * i.quantity}</span></div>)}
       <p className="muted">Delivering to {order.address.line}, {order.address.city} {order.address.pincode}</p>
-      <div className="row"><Link to="/orders">View my orders</Link></div>
+      <div className="row"><Link to={`/orders/${order.id}/track`}>Track this order</Link><Link to="/orders">View my orders</Link></div>
     </div>
   );
 }
