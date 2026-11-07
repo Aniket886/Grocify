@@ -1,0 +1,34 @@
+import dotenv from 'dotenv';
+import crypto from 'node:crypto';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+dotenv.config({ path: path.join(root, '.env'), quiet: true });
+
+const isPlaceholder = (v) => !v || v.startsWith('[FILL');
+const pick = (v, fallback) => (isPlaceholder(v) ? fallback : v);
+
+const generatedSecret = isPlaceholder(process.env.JWT_SECRET);
+
+const env = {
+  nodeEnv: process.env.NODE_ENV || 'development',
+  port: Number(process.env.PORT) || 5000,
+  clientUrl: pick(process.env.CLIENT_URL, 'http://localhost:5173'),
+  // Local login tokens. If no secret is set, a random one is made per start (tokens reset on restart).
+  jwtSecret: generatedSecret ? crypto.randomBytes(32).toString('hex') : process.env.JWT_SECRET,
+  jwtSecretGenerated: generatedSecret,
+  jwtExpiresIn: pick(process.env.JWT_EXPIRES_IN, '7d'),
+  dataFile: process.env.DATA_FILE || path.join(root, 'server/data/dev-db.json'),
+  logLevel: process.env.LOG_LEVEL || 'info',
+  logDir: path.resolve(root, process.env.LOG_DIR || './logs'),
+  logMaxFiles: process.env.LOG_MAX_FILES || '14d',
+  logMaxSize: process.env.LOG_MAX_SIZE || '10m',
+  paymentProvider: pick(process.env.PAYMENT_PROVIDER, 'mock'),
+  paymentTimeoutMinutes: Number(process.env.PAYMENT_TIMEOUT_MINUTES) || 15,
+  lowStockDefault: Number(process.env.LOW_STOCK_DEFAULT_LIMIT) || 10,
+  seedAdminEmail: pick(process.env.SEED_ADMIN_EMAIL, ''),
+  seedAdminPassword: pick(process.env.SEED_ADMIN_PASSWORD, ''),
+};
+
+export default env;
