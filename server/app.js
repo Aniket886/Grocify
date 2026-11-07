@@ -60,13 +60,28 @@ export default function createApp() {
   app.use('/api/notifications', notificationRoutes);
 
   // In production (e.g. Render / Cloud), serve compiled Vite frontend and support client-side SPA routing
+  // Dynamically substitutes request host into Open Graph meta tags so preview images always resolve cleanly
   if (fs.existsSync(distDir)) {
     app.use(express.static(distDir));
     app.get('{*path}', (req, res, next) => {
       if (req.path.startsWith('/api')) {
         return next();
       }
-      res.sendFile(path.join(distDir, 'index.html'));
+      const indexPath = path.join(distDir, 'index.html');
+      try {
+        const host = req.get('x-forwarded-host') || req.get('host');
+        const proto = req.get('x-forwarded-proto') || (req.secure ? 'https' : 'http');
+        if (host) {
+          const baseUrl = `${proto}://${host}`;
+          let html = fs.readFileSync(indexPath, 'utf8');
+          html = html.replaceAll('https://gmu2027.space', baseUrl);
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          return res.send(html);
+        }
+      } catch {
+        // Fallback to static sendFile
+      }
+      res.sendFile(indexPath);
     });
   }
 
