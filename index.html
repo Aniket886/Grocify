@@ -3,7 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Grocify</title>
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0e24" />
+    <meta name="description" content="Grocify — groceries, gifting, decor, electronics and more, delivered." />
+    <title>Grocify — Everyday essentials, gifting and gadgets</title>
+    <script>
+      // Set the data-theme and data-diwali attributes before React renders,
+      // so there is no flash of light theme when the dark theme was chosen.
+      (function () {
+        try {
+          var t = localStorage.getItem('grocify_theme');
+          document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+          var d = localStorage.getItem('grocify_diwali');
+          document.documentElement.setAttribute('data-diwali', d === 'off' ? 'off' : 'on');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute('data-diwali', 'on');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
