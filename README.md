@@ -1,0 +1,52 @@
+# Grocify
+
+Online Grocery E-Commerce System with Secure Digital Payments and Logistics Management (PBL, UC25CA2303).
+
+**Status: Phase 4 done** (login, products, cart, orders, payment, inventory). Delivery tracking, full admin reports and notifications come in Phase 5.
+
+## Run it
+
+```bash
+npm install
+npm run seed        # sample products + admin account from .env
+npm run server      # API on port 5000
+npm run dev:client  # website on port 5173 (second terminal)
+npm test            # backend tests
+```
+
+Copy `.env.example` to `.env` and fill the placeholders. The admin login comes from `SEED_ADMIN_EMAIL` and `SEED_ADMIN_PASSWORD` in `.env`.
+
+## Local development mode
+
+Firebase keys are not connected yet, so Phase 3 runs in **local mode**:
+- Data is stored in `server/data/dev-db.json` (git-ignored) by `server/data/localStore.js`.
+- Login uses bcrypt-hashed passwords and signed tokens (`server/middleware/authenticate.js`).
+
+To move to Firebase later, replace `localStore.js` with a Firestore version that has the same functions, and swap token checking in `authenticate.js` for Firebase Admin verification. Controllers and screens do not change.
+
+## What works now
+
+| Requirement | Status |
+|---|---|
+| FR1 Registration, login, profile and delivery address | Done |
+| FR2 Products by category, search, price, description, availability; admin add/update/delete | Done |
+| FR3 Cart: add, change quantity, remove, automatic total | Done |
+| FR4 Orders: place with delivery address, unique order ID, history; admin views and cancels unpaid orders | Done |
+| FR5 Payment: UPI / Card / Net Banking, status and transaction recorded, confirmation (mock provider) | Done |
+| FR6 Inventory: stock drops on order, admin monitors stock, low-stock flagged | Done |
+| FR10 Authentication required, separate customer and admin permissions, no payment details stored | Done |
+| FR7 Delivery tracking, FR8 reports and full admin, FR9 Notifications | Phase 5 |
+
+## How orders work
+
+- **Order ID:** `ORD-<date>-<customerCode>-<number>`, e.g. `ORD-20261107-VC53-0001`. The number counts up per customer.
+- **Placing an order is one all-or-nothing step:** check stock for every item, reduce stock, write the order, clear the cart. If two customers want the last item, one succeeds and the other is told it is gone.
+- **Stock rule:** stock is reserved when the order is placed. If it is not paid within `PAYMENT_TIMEOUT_MINUTES` (default 15), or the customer/admin cancels it, the order is cancelled and the stock goes back.
+- **Double clicks:** the checkout page sends an `Idempotency-Key`, so repeated submits create one order.
+- **Payment:** goes through `server/payments/`. `PAYMENT_PROVIDER=mock` is a fake gateway with a "simulate failed payment" button (test mode only). A failed payment keeps the order open for a retry. Card, UPI and bank details are never accepted or stored.
+- **Real gateway later:** fill in `server/payments/gatewayProvider.js` (steps are in the file) and set `PAYMENT_PROVIDER` in `.env`.
+
+## Notes
+- "Delete" on a product hides it (so old orders stay valid).
+- Cart totals are calculated on the server from current prices and stock.
+- Passwords are never returned by the API. Nobody can register as admin.
