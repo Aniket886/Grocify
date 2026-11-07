@@ -60,7 +60,7 @@ export default function Navbar() {
           ) : (
             <div className="auth-btn-cluster">
               <NavLink to="/login" className="auth-login-link" onClick={() => setMenuOpen(false)}>Login</NavLink>
-              <NavLink to="/register" className="auth-join-pill" onClick={() => setMenuOpen(false)}>Join Grocify</NavLink>
+              <NavLink to="/register" className="auth-join-pill" onClick={() => setMenuOpen(false)}><span className="join-full">Join Grocify</span><span className="join-short">Join</span></NavLink>
             </div>
           )}
 

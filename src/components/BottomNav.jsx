@@ -1,48 +1,53 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useCart } from '../context/CartContext.jsx';
 
-// Small-screen navigation. Mirrors the top bar for one-tap access to the key
-// actions the brief asks for: Home, Category, Order Again, Print.
-// All of these route to existing screens; no server call is added here.
+// Mobile bottom app bar for streamlined one-thumb navigation.
+// Includes live cart count badge and quick access to Home, Shop, Cart, and Orders/Profile.
 export default function BottomNav() {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const { count } = useCart();
 
-  const isAdmin = user?.role === 'admin';
-  if (isAdmin) return null;                        // admin uses the full top bar
-
-  function printPage() { window.print(); }
-  function openOrderAgain() {
-    if (!user) return navigate('/login');
-    navigate('/orders?reorder=1');
-  }
+  if (user?.role === 'admin') return null; // Admin uses top admin navigation bar
 
   return (
-    <nav className="bottom-nav" aria-label="Quick">
-      <NavLink to="/" end>
-        {({ isActive }) => (
-          <span className={isActive ? 'active' : ''}>
-            <span className="icon" aria-hidden="true">🏠</span>
-            Home
-          </span>
-        )}
+    <nav className="bottom-nav" aria-label="Mobile navigation">
+      <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
+        <span className="icon" aria-hidden="true">🏠</span>
+        <span>Home</span>
       </NavLink>
-      <NavLink to="/categories">
-        {({ isActive }) => (
-          <span className={isActive ? 'active' : ''}>
-            <span className="icon" aria-hidden="true">🗂️</span>
-            Category
-          </span>
-        )}
+
+      <NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>
+        <span className="icon" aria-hidden="true">🛍️</span>
+        <span>Shop</span>
       </NavLink>
-      <button type="button" onClick={openOrderAgain} aria-label="Order again">
-        <span className="icon" aria-hidden="true">🔁</span>
-        Order Again
-      </button>
-      <button type="button" onClick={printPage} aria-label="Print this page">
-        <span className="icon" aria-hidden="true">🖨️</span>
-        Print
-      </button>
+
+      <NavLink to="/cart" className={({ isActive }) => (isActive ? 'active' : '')}>
+        <span className="icon-wrapper">
+          <span className="icon" aria-hidden="true">🛒</span>
+          {count > 0 && <span className="bottom-cart-badge">{count}</span>}
+        </span>
+        <span>Cart</span>
+      </NavLink>
+
+      {user ? (
+        <NavLink to="/orders" className={({ isActive }) => (isActive ? 'active' : '')}>
+          <span className="icon" aria-hidden="true">📦</span>
+          <span>Orders</span>
+        </NavLink>
+      ) : (
+        <NavLink to="/login" className={({ isActive }) => (isActive ? 'active' : '')}>
+          <span className="icon" aria-hidden="true">👤</span>
+          <span>Login</span>
+        </NavLink>
+      )}
+
+      {user && (
+        <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>
+          <span className="icon" aria-hidden="true">👤</span>
+          <span>Profile</span>
+        </NavLink>
+      )}
     </nav>
   );
 }

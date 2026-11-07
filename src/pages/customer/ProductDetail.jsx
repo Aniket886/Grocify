@@ -58,8 +58,7 @@ export default function ProductDetail() {
           <div className="row">
             <input type="number" min="1" value={qty} onChange={(e) => setQty(Math.max(1, Number(e.target.value) || 1))} aria-label="Quantity" style={{ maxWidth: 110 }} />
             <button className="primary" disabled={product.availability === 'out_of_stock'} onClick={handleAdd}>Add to Cart</button>
-            <button className="ghost" onClick={() => window.print()} aria-label="Print this page">🖨️ Print</button>
-          </div>
+            </div>
         )}
         {msg && <p className={msg.ok ? 'success' : 'error'} role="status">{msg.text}</p>}
       </div>

@@ -85,8 +85,7 @@ export default function OrderHistory() {
     <>
       <div className="row">
         <h2 style={{ flex: 1, margin: 0 }}>My orders</h2>
-        <button className="ghost" onClick={() => window.print()} aria-label="Print orders">🖨️ Print</button>
-      </div>
+        </div>
       {error && <p className="error" role="alert">{error}</p>}
       {orders.length === 0 && <p>No orders yet. <Link to="/products">Start shopping</Link></p>}
       {params.get('reorder') === '1' && orders.length > 0 && (

@@ -32,8 +32,7 @@ export default function PaymentConfirmation() {
       <div className="row no-print">
         <Link to={`/orders/${order.id}/track`}><button className="secondary">Track this order</button></Link>
         <Link to="/orders"><button className="ghost">View my orders</button></Link>
-        <button className="ghost" onClick={() => window.print()} aria-label="Print receipt">🖨️ Print receipt</button>
-      </div>
+        </div>
     </div>
   );
 }
