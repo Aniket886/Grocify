@@ -1,6 +1,6 @@
 {
   "name": "grocify",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "private": true,
   "type": "module",
   "scripts": {
@@ -26,10 +26,6 @@
     "react-router-dom": "^7.18.5",
     "winston": "^3.19.0",
     "winston-daily-rotate-file": "^5.0.0",
-    "@vitejs/plugin-react": "^6.2.1",
-    "vite": "^8.3.6"
-  },
-  "devDependencies": {
     "@vitejs/plugin-react": "^6.2.1",
     "vite": "^8.3.6"
   },
