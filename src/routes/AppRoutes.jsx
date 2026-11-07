@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import AdminRoute from './AdminRoute.jsx';
 import Home from '../pages/customer/Home.jsx';
+import NotFound from '../pages/customer/NotFound.jsx';
 import Login from '../pages/customer/Login.jsx';
 import Register from '../pages/customer/Register.jsx';
 import Profile from '../pages/customer/Profile.jsx';
@@ -49,7 +50,7 @@ export default function AppRoutes() {
       <Route path="/admin/reports" element={<AdminRoute><Reports /></AdminRoute>} />
       <Route path="/admin/products" element={<AdminRoute><ManageProducts /></AdminRoute>} />
       <Route path="/admin/categories" element={<AdminRoute><ManageCategories /></AdminRoute>} />
-      <Route path="*" element={<p>Page not found.</p>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
