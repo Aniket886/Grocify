@@ -69,6 +69,14 @@ test('every response carries a request ID', async () => {
   assert.equal(echo.headers.get('x-request-id'), 'abc-123');
 });
 
+test('health check reports the version from package.json', async () => {
+  const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+  const r = await call('GET', '/health');
+  assert.equal(r.data.ok, true);
+  assert.equal(r.data.version, pkg.version);
+  assert.match(r.data.version, /^\d+\.\d+\.\d+$/);
+});
+
 test('secrets never appear in responses', async () => {
   const t = await newCustomer('Leaky');
   const p = await newProduct('Apple', 5);

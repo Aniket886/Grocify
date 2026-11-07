@@ -1,6 +1,6 @@
 {
   "name": "grocify",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,5 +29,14 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^6.2.1",
     "vite": "^8.3.6"
-  }
+  },
+  "description": "Online grocery e-commerce system with secure digital payments and logistics management (PBL, UC25CA2303)",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aniket886/Grocify.git"
+  },
+  "license": "UNLICENSED"
 }

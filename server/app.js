@@ -42,7 +42,7 @@ export default function createApp() {
     next();
   });
 
-  app.get('/api/health', (req, res) => res.json({ ok: true }));
+  app.get('/api/health', (req, res) => res.json({ ok: true, version: env.version }));
   app.use('/api/auth', authRoutes);
   app.use('/api/categories', categoryRoutes);
   app.use('/api/products', productRoutes);
