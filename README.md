@@ -2,15 +2,18 @@
 
 Online Grocery E-Commerce System with Secure Digital Payments and Logistics Management (PBL, UC25CA2303).
 
-**Status: Phase 6 done** (all ten functional requirements work, hardened and tested: 44 automated tests). Next: Phase 7 (final build, 12-page report, demo).
+**Status: Phase 7 done.** All ten functional requirements work and are tested (44 automated tests). The project report and the demo script are ready.
 
-Docs: [Design](docs/Phase2-Design.md) · [Test report](docs/Test-Report.md) · [Logging](docs/Logging.md) · [Clickable mock-up](docs/mockup.html)
+Docs: [Project report (Word)](docs/Grocify-Project-Report.docx) · [Demo script and viva prep](docs/Demo-Script.md) · [Design](docs/Phase2-Design.md) · [Test report](docs/Test-Report.md) · [Logging](docs/Logging.md) · [Clickable mock-up](docs/mockup.html)
+
+The report's diagrams are drawn by `docs/diagrams/make_diagrams.py` and the report by `docs/report/build_report.py` (needs Python with `python-docx` and `matplotlib`). You can also just edit the Word file.
 
 ## Run it
 
 ```bash
 npm install
 npm run seed        # sample products + admin account from .env
+npm run demo:reset  # wipe all data and start clean (use before a demo)
 npm run server      # API on port 5000
 npm run dev:client  # website on port 5173 (second terminal)
 npm test            # backend tests
