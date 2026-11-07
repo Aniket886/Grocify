@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useCart } from '../context/CartContext.jsx';
+import CategoryMegaMenu from './CategoryMegaMenu.jsx';
 
+// Top navigation. Keeps every login/role rule from before: the mega menu is
+// public, carts and orders need a login, admin pages need the admin role.
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { count } = useCart();
@@ -11,7 +14,6 @@ export default function Navbar() {
   const location = useLocation();
   const [unread, setUnread] = useState(0);
 
-  // Unread notification count for customers: refreshed on every page change and every 30 seconds.
   useEffect(() => {
     if (user?.role !== 'customer') { setUnread(0); return undefined; }
     const load = () => api.get('/notifications').then((d) => setUnread(d.unreadCount)).catch(() => {});
@@ -21,38 +23,57 @@ export default function Navbar() {
   }, [user, location.pathname]);
 
   return (
-    <nav className="navbar">
-      <Link to={user?.role === 'admin' ? '/admin' : '/'} className="brand">Grocify</Link>
-      <Link to="/products">Shop</Link>
+    <nav className="navbar" aria-label="Main">
+      <Link to={user?.role === 'admin' ? '/admin' : '/'} className="brand">
+        <span className="mark" aria-hidden="true">✦</span> Grocify
+      </Link>
+
+      {user?.role !== 'admin' && <CategoryMegaMenu />}
+
+      {user?.role !== 'admin' && (
+        <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink>
+      )}
+      {user?.role !== 'admin' && (
+        <NavLink to="/products" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Shop</NavLink>
+      )}
+
       {user?.role === 'customer' && (
         <>
-          <Link to="/cart">Cart ({count})</Link>
-          <Link to="/orders">My Orders</Link>
-          <Link to="/notifications">Notifications{unread > 0 ? ` (${unread})` : ''}</Link>
+          <NavLink to="/cart" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Cart ({count})</NavLink>
+          <NavLink to="/orders" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>My Orders</NavLink>
+          <NavLink to="/notifications" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            Notifications{unread > 0 ? <span className="unread-dot" aria-label={`${unread} unread`} /> : null}
+          </NavLink>
         </>
       )}
+
       {user?.role === 'admin' && (
         <>
-          <Link to="/admin">Dashboard</Link>
-          <Link to="/admin/orders">Orders</Link>
-          <Link to="/admin/deliveries">Deliveries</Link>
-          <Link to="/admin/payments">Payments</Link>
-          <Link to="/admin/customers">Customers</Link>
-          <Link to="/admin/inventory">Inventory</Link>
-          <Link to="/admin/products">Products</Link>
-          <Link to="/admin/categories">Categories</Link>
-          <Link to="/admin/reports">Reports</Link>
+          <NavLink to="/admin" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
+          <NavLink to="/admin/orders" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Orders</NavLink>
+          <NavLink to="/admin/deliveries" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Deliveries</NavLink>
+          <NavLink to="/admin/payments" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Payments</NavLink>
+          <NavLink to="/admin/customers" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Customers</NavLink>
+          <NavLink to="/admin/inventory" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Inventory</NavLink>
+          <NavLink to="/admin/products" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Products</NavLink>
+          <NavLink to="/admin/categories" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Categories</NavLink>
+          <NavLink to="/admin/reports" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Reports</NavLink>
         </>
       )}
+
+      <span className="nav-divider" aria-hidden="true" />
+
       {user ? (
         <>
-          <Link to="/profile">{user.name}</Link>
+          <NavLink to={user.role === 'admin' ? '/profile' : '/profile'} className="nav-pill">
+            <span aria-hidden="true">👤</span> {user.name.split(' ')[0]}
+          </NavLink>
           <button onClick={() => { logout(); navigate('/'); }}>Logout</button>
         </>
       ) : (
         <>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+          <NavLink to="/login" className="nav-link">Login</NavLink>
+          <NavLink to="/register" className="nav-pill">Join Grocify</NavLink>
         </>
       )}
     </nav>

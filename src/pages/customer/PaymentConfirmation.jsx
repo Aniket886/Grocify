@@ -3,6 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import { api } from '../../services/api.js';
 import StatusBadge from '../../components/StatusBadge.jsx';
 
+// Confirmation screen. Adds a Print button that triggers window.print(); the
+// print stylesheet in main.css hides everything outside .printable so the
+// browser outputs a clean receipt.
 export default function PaymentConfirmation() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
@@ -17,7 +20,7 @@ export default function PaymentConfirmation() {
   }
 
   return (
-    <div className="card narrow">
+    <div className="card narrow printable">
       <h2 className="success">Payment successful</h2>
       <p>Order ID: <b>{order.id}</b></p>
       <p>Transaction ID: <b>{order.payment.transactionId}</b></p>
@@ -26,7 +29,11 @@ export default function PaymentConfirmation() {
       <h3>Items</h3>
       {order.items.map((i) => <div className="row" key={i.productId}><span style={{ flex: 1 }}>{i.name} × {i.quantity}</span><span>₹{i.price * i.quantity}</span></div>)}
       <p className="muted">Delivering to {order.address.line}, {order.address.city} {order.address.pincode}</p>
-      <div className="row"><Link to={`/orders/${order.id}/track`}>Track this order</Link><Link to="/orders">View my orders</Link></div>
+      <div className="row no-print">
+        <Link to={`/orders/${order.id}/track`}><button className="secondary">Track this order</button></Link>
+        <Link to="/orders"><button className="ghost">View my orders</button></Link>
+        <button className="ghost" onClick={() => window.print()} aria-label="Print receipt">🖨️ Print receipt</button>
+      </div>
     </div>
   );
 }
