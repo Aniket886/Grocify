@@ -1,4 +1,7 @@
 import crypto from 'node:crypto';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -15,6 +18,9 @@ import inventoryRoutes from './routes/inventory.js';
 import adminRoutes from './routes/admin.js';
 import notificationRoutes from './routes/notifications.js';
 
+const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const distDir = path.join(rootDir, 'dist');
+
 export default function createApp() {
   const app = express();
 
@@ -27,8 +33,8 @@ export default function createApp() {
     req.log = logger.child({ requestId: req.id }); // every log line from this request carries its ID
     next();
   });
-  app.use(helmet());
-  app.use(cors({ origin: env.clientUrl }));
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(cors({ origin: true, credentials: true }));
   app.use(express.json({ limit: '100kb' }));
 
   // One line per request: ID, method, path, status, duration, user, IP.
@@ -52,6 +58,17 @@ export default function createApp() {
   app.use('/api/inventory', inventoryRoutes);
   app.use('/api/admin', adminRoutes);
   app.use('/api/notifications', notificationRoutes);
+
+  // In production (e.g. Render / Cloud), serve compiled Vite frontend and support client-side SPA routing
+  if (fs.existsSync(distDir)) {
+    app.use(express.static(distDir));
+    app.get('{*path}', (req, res, next) => {
+      if (req.path.startsWith('/api')) {
+        return next();
+      }
+      res.sendFile(path.join(distDir, 'index.html'));
+    });
+  }
 
   app.use(notFound);
   app.use(errorHandler);
