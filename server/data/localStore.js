@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import env from '../config/env.js';
+import { DELIVERY_STATUSES, ASSIGNMENT_REQUIRED_FROM } from '../utils/constants.js';
 
 let db = null;
 
@@ -16,6 +17,8 @@ function load() {
   }
   db.orders = db.orders || [];
   db.payments = db.payments || [];
+  db.deliveries = db.deliveries || [];
+  db.notifications = db.notifications || [];
   return db;
 }
 
@@ -151,12 +154,19 @@ function restoreStock(order) {
   }
 }
 
+// Adds an in-app notification. Called inside the same step as the change it describes,
+// so a notification can never be missed or sent for something that did not happen.
+function notify(userId, type, message, orderId) {
+  load().notifications.push({ id: newId(), userId, type, message, orderId, read: false, createdAt: now() });
+}
+
 function cancelOrderRecord(order, reason) {
   restoreStock(order);
   order.status = 'Cancelled';
   order.paymentStatus = 'cancelled';
   order.cancelReason = reason;
   order.cancelledAt = now();
+  notify(order.userId, 'payment_status', `Order ${order.id} was cancelled: ${reason.charAt(0).toLowerCase()}${reason.slice(1)}. Your items were released.`, order.id);
 }
 
 // Order ID: ORD-<date>-<customerCode>-<per-customer sequence>. The sequence is bumped in the same step
@@ -202,6 +212,7 @@ export async function createOrderFromCart(userId, address, idempotencyKey, timeo
   };
   d.orders.push(order);
   d.carts[userId] = {};
+  notify(userId, 'order_confirmation', `Order ${order.id} placed for ₹${order.total}. Complete the payment to confirm it.`, order.id);
   save();
   return { order, created: true, lowStock };
 }
@@ -262,6 +273,10 @@ export async function applyPayment(orderId, { method, success, transactionId, fa
     o.status = 'Order Placed';
     o.paymentStatus = 'paid';
     o.paidAt = now();
+    d.deliveries.push({ orderId: o.id, assignedTo: null, status: 'Order Placed', history: [{ status: 'Order Placed', at: o.paidAt }], updatedAt: o.paidAt });
+    notify(o.userId, 'payment_status', `Payment of ₹${payment.amount} received for order ${o.id} (${payment.method}). Your order is confirmed.`, o.id);
+  } else {
+    notify(o.userId, 'payment_status', `Payment failed for order ${o.id}: ${failureReason || 'declined'}. You can try again.`, o.id);
   }
   save();
   return { order: o, payment };
@@ -271,6 +286,65 @@ export async function listPaymentsForOrder(orderId) {
 }
 export async function listAllPayments() {
   return [...load().payments].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
+// ---------- delivery ----------
+// A delivery record is created when payment succeeds. Statuses move forward one step at a time.
+export async function getDelivery(orderId) {
+  return load().deliveries.find((x) => x.orderId === orderId) || null;
+}
+export async function listDeliveries({ status } = {}) {
+  return load().deliveries.filter((x) => (status ? x.status === status : true)).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+}
+
+function paidOrderAndDelivery(orderId) {
+  const d = load();
+  const o = d.orders.find((x) => x.id === orderId);
+  if (!o) throw fail('Order not found', 404);
+  const del = d.deliveries.find((x) => x.orderId === orderId);
+  if (!del) throw fail('Only paid orders can be delivered', 409);
+  return { o, del };
+}
+
+export async function assignDelivery(orderId, assignedTo) {
+  const { del } = paidOrderAndDelivery(orderId);
+  if (del.status === 'Delivered') throw fail('This order is already delivered', 409);
+  del.assignedTo = assignedTo;
+  del.updatedAt = now();
+  save();
+  return del;
+}
+
+export async function advanceDelivery(orderId, nextStatus) {
+  const { o, del } = paidOrderAndDelivery(orderId);
+  const expected = DELIVERY_STATUSES[DELIVERY_STATUSES.indexOf(del.status) + 1];
+  if (!expected) throw fail('This order is already delivered', 409);
+  if (nextStatus !== expected) throw fail(`The next status must be "${expected}"`, 409);
+  if (nextStatus === ASSIGNMENT_REQUIRED_FROM && !del.assignedTo) throw fail('Assign a delivery person before shipping', 409);
+
+  del.status = nextStatus;
+  del.history.push({ status: nextStatus, at: now() });
+  del.updatedAt = now();
+  o.status = nextStatus; // the order shows the same status the customer tracks
+  notify(o.userId, 'delivery_update', nextStatus === 'Delivered' ? `Order ${o.id} has been delivered. Enjoy!` : `Order ${o.id} is now: ${nextStatus}.`, o.id);
+  save();
+  return { order: o, delivery: del };
+}
+
+// ---------- notifications ----------
+export async function listNotifications(userId) {
+  return load().notifications.filter((n) => n.userId === userId).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+export async function markNotificationRead(userId, id) {
+  const n = load().notifications.find((x) => x.id === id && x.userId === userId);
+  if (!n) return null;
+  n.read = true;
+  save();
+  return n;
+}
+export async function markAllNotificationsRead(userId) {
+  load().notifications.filter((n) => n.userId === userId).forEach((n) => { n.read = true; });
+  save();
 }
 
 // ---------- inventory ----------
@@ -283,6 +357,6 @@ export async function listInventory({ lowOnly } = {}) {
 
 // Test helper
 export function _reset() {
-  db = { users: [], categories: [], products: [], carts: {}, orders: [], payments: [] };
+  db = { users: [], categories: [], products: [], carts: {}, orders: [], payments: [], deliveries: [], notifications: [] };
   save();
 }

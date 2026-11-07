@@ -8,10 +8,15 @@ import { badRequest, text } from '../middleware/validate.js';
 const timeoutMs = () => env.paymentTimeoutMinutes * 60000;
 
 // Adds the successful payment (if any) so the confirmation page has transaction details.
-async function present(order, { withCustomer = false } = {}) {
+export async function present(order, { withCustomer = false } = {}) {
   const payments = await store.listPaymentsForOrder(order.id);
   const { idempotencyKey, ...safe } = order; // internal field, not for clients
-  const out = { ...safe, payment: payments.find((p) => p.status === 'success') || null, attempts: payments.length };
+  const out = {
+    ...safe,
+    payment: payments.find((p) => p.status === 'success') || null,
+    attempts: payments.length,
+    delivery: (await store.getDelivery(order.id)) || null,
+  };
   if (withCustomer) {
     const u = await store.findUserById(order.userId);
     out.customer = u ? { name: u.name, email: u.email, phone: u.phone || '' } : null;
