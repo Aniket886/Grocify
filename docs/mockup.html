@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grocify Mock-up</title>
+<style>
+  :root { --g:#2e7d32; --gl:#e8f5e9; --b:#ddd; --t:#222; --bg:#fafafa; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, sans-serif; color:var(--t); background:var(--bg); }
+  header { background:var(--g); color:#fff; padding:10px 16px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  header b { font-size:20px; margin-right:auto; }
+  header button { background:#fff; color:var(--g); border:0; padding:6px 12px; border-radius:6px; cursor:pointer; }
+  main { max-width:960px; margin:16px auto; padding:0 16px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
+  .card { background:#fff; border:1px solid var(--b); border-radius:8px; padding:12px; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0; }
+  button.p { background:var(--g); color:#fff; border:0; padding:8px 14px; border-radius:6px; cursor:pointer; }
+  button.p:disabled { background:#aaa; cursor:not-allowed; }
+  button.s { background:#fff; border:1px solid var(--g); color:var(--g); padding:6px 10px; border-radius:6px; cursor:pointer; }
+  input, select { padding:8px; border:1px solid var(--b); border-radius:6px; }
+  table { width:100%; border-collapse:collapse; background:#fff; }
+  th, td { border:1px solid var(--b); padding:8px; text-align:left; }
+  .badge { padding:2px 8px; border-radius:10px; font-size:12px; background:var(--gl); }
+  .low { background:#ffebee; } .out { background:#eee; }
+  .steps { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
+  .step { padding:6px 10px; border-radius:14px; background:#eee; font-size:13px; }
+  .step.on { background:var(--g); color:#fff; }
+  .note { color:#777; font-size:12px; }
+  .toast { position:fixed; bottom:16px; right:16px; background:#333; color:#fff; padding:10px 14px; border-radius:6px; }
+</style>
+</head>
+<body>
+<header>
+  <b>Grocify</b>
+  <span id="nav"></span>
+</header>
+<main id="app"></main>
+<div id="toast" class="toast" style="display:none"></div>
+
+<script>
+// ---- Sample data (mock only) ----
+const categories = ["Fruits","Vegetables","Dairy","Staples","Snacks"];
+let products = [
+  {id:1,name:"Apple (1 kg)",cat:"Fruits",price:180,stock:25,limit:10,desc:"Fresh red apples"},
+  {id:2,name:"Banana (1 dozen)",cat:"Fruits",price:60,stock:8,limit:10,desc:"Ripe bananas"},
+  {id:3,name:"Tomato (1 kg)",cat:"Vegetables",price:40,stock:30,limit:10,desc:"Farm tomatoes"},
+  {id:4,name:"Onion (1 kg)",cat:"Vegetables",price:35,stock:0,limit:10,desc:"Red onions"},
+  {id:5,name:"Milk (1 L)",cat:"Dairy",price:56,stock:40,limit:15,desc:"Toned milk"},
+  {id:6,name:"Curd (500 g)",cat:"Dairy",price:35,stock:12,limit:10,desc:"Fresh curd"},
+  {id:7,name:"Rice (5 kg)",cat:"Staples",price:420,stock:18,limit:5,desc:"Sona masoori rice"},
+  {id:8,name:"Biscuits",cat:"Snacks",price:20,stock:50,limit:20,desc:"Tea biscuits"}
+];
+const STATUS = ["Order Placed","Packed","Shipped","Out for Delivery","Delivered"];
+let cart = {};          // productId -> qty
+let orders = [];        // {id,total,address,items,status,paid}
+let seq = 0;
+let user = null;        // null | "customer" | "admin"
+let pending = null;     // order waiting for payment
+let filter = {cat:"All", q:""};
+
+const $ = id => document.getElementById(id);
+const money = n => "₹" + n;
+function toast(m){ const t=$("toast"); t.textContent=m; t.style.display="block"; setTimeout(()=>t.style.display="none",2200); }
+const total = () => Object.entries(cart).reduce((s,[id,q]) => s + products.find(p=>p.id==id).price*q, 0);
+const stockBadge = p => p.stock===0 ? '<span class="badge out">Out of stock</span>' : p.stock<=p.limit ? '<span class="badge low">Low stock ('+p.stock+')</span>' : '<span class="badge">In stock</span>';
+
+// ---- Navigation ----
+function go(screen){ screens[screen](); nav(); }
+function nav(){
+  const n = $("nav");
+  if(user==="customer") n.innerHTML = '<button onclick="go(\'products\')">Shop</button> <button onclick="go(\'cart\')">Cart ('+Object.keys(cart).length+')</button> <button onclick="go(\'orders\')">My Orders</button> <button onclick="go(\'notes\')">Notifications</button> <button onclick="logout()">Logout</button>';
+  else if(user==="admin") n.innerHTML = '<button onclick="go(\'adash\')">Dashboard</button> <button onclick="go(\'aprod\')">Products</button> <button onclick="go(\'aord\')">Orders</button> <button onclick="go(\'ainv\')">Inventory</button> <button onclick="logout()">Logout</button>';
+  else n.innerHTML = "";
+}
+function logout(){ user=null; cart={}; go("login"); }
+
+const notes = [];
+function notify(m){ notes.unshift(m); }
+
+// ---- Screens ----
+const screens = {
+  login(){
+    $("app").innerHTML = `<div class="card" style="max-width:360px;margin:40px auto">
+      <h2>Login / Register</h2>
+      <div class="row"><input placeholder="Email" style="width:100%"></div>
+      <div class="row"><input type="password" placeholder="Password" style="width:100%"></div>
+      <div class="row"><button class="p" onclick="user='customer';go('products')">Login as Customer</button>
+      <button class="s" onclick="toast('Google sign-in is mocked');user='customer';go('products')">Google</button></div>
+      <div class="row"><button class="s" onclick="user='admin';go('adash')">Login as Admin (mock)</button></div>
+      <p class="note">Mock only. Real login uses Firebase Authentication.</p></div>`;
+  },
+  products(){
+    const list = products.filter(p => (filter.cat==="All"||p.cat===filter.cat) && p.name.toLowerCase().includes(filter.q.toLowerCase()));
+    $("app").innerHTML = `<h2>Products</h2>
+      <div class="row"><input id="q" placeholder="Search products" value="${filter.q}" oninput="filter.q=this.value;go('products')">
+      <select onchange="filter.cat=this.value;go('products')">${["All",...categories].map(c=>`<option ${c===filter.cat?"selected":""}>${c}</option>`).join("")}</select></div>
+      <div class="grid">${list.map(p=>`<div class="card"><b>${p.name}</b><div class="note">${p.cat}</div><p>${p.desc}</p>
+        <div>${money(p.price)} ${stockBadge(p)}</div>
+        <div class="row"><button class="p" ${p.stock===0?"disabled":""} onclick="addToCart(${p.id})">Add to Cart</button></div></div>`).join("")||"<p>No products found.</p>"}</div>`;
+    const q=$("q"); q.focus(); q.setSelectionRange(q.value.length,q.value.length);
+  },
+  cart(){
+    const rows = Object.entries(cart).map(([id,q])=>{const p=products.find(x=>x.id==id);
+      return `<tr><td>${p.name}</td><td>${money(p.price)}</td>
+      <td><button class="s" onclick="chg(${id},-1)">−</button> ${q} <button class="s" onclick="chg(${id},1)">+</button></td>
+      <td>${money(p.price*q)}</td><td><button class="s" onclick="delete cart[${id}];go('cart')">Remove</button></td></tr>`}).join("");
+    $("app").innerHTML = `<h2>Your Cart</h2>` + (rows ? `<table><tr><th>Item</th><th>Price</th><th>Qty</th><th>Subtotal</th><th></th></tr>${rows}</table>
+      <h3>Total: ${money(total())}</h3><button class="p" onclick="go('checkout')">Checkout</button>` : `<p>Cart is empty.</p><button class="p" onclick="go('products')">Shop now</button>`);
+  },
+  checkout(){
+    $("app").innerHTML = `<h2>Checkout</h2><div class="card">
+      <div class="row"><input id="addr" placeholder="Delivery address" style="width:100%" value="12, MG Road, Davangere"></div>
+      <div class="row"><input placeholder="PIN code" value="577006"></div>
+      <h3>Total: ${money(total())}</h3>
+      <button class="p" onclick="placeOrder()">Place Order and Pay</button></div>`;
+  },
+  payment(){
+    $("app").innerHTML = `<h2>Payment</h2><div class="card">
+      <p>Order <b>${pending.id}</b> · Amount <b>${money(pending.total)}</b></p>
+      <div class="row"><select id="method"><option>UPI</option><option>Card</option><option>Net Banking</option></select></div>
+      <div class="row"><button class="p" onclick="pay(true)">Pay (success)</button> <button class="s" onclick="pay(false)">Simulate failure</button></div>
+      <p class="note">Mock gateway. No card or UPI details are collected or stored.</p></div>`;
+  },
+  confirm(){
+    const o = orders[0];
+    $("app").innerHTML = `<div class="card"><h2>Payment Successful</h2>
+      <p>Order ID: <b>${o.id}</b><br>Transaction ID: <b>${o.txn}</b><br>Method: ${o.method}<br>Amount: ${money(o.total)}</p>
+      <button class="p" onclick="go('orders')">View Order</button></div>`;
+  },
+  orders(){
+    $("app").innerHTML = `<h2>My Orders</h2>` + (orders.length ? orders.map(o=>`<div class="card" style="margin-bottom:10px">
+      <b>${o.id}</b> · ${money(o.total)} · ${o.paid?"Paid":"Payment Pending"}
+      <div class="steps">${STATUS.map((s,i)=>`<span class="step ${i<=o.status?"on":""}">${s}</span>`).join("")}</div>
+      <div class="note">${o.address}</div></div>`).join("") : "<p>No orders yet.</p>");
+  },
+  notes(){
+    $("app").innerHTML = `<h2>Notifications</h2>` + (notes.length? notes.map(n=>`<div class="card" style="margin-bottom:6px">${n}</div>`).join("") : "<p>Nothing yet.</p>");
+  },
+  adash(){
+    const sales = orders.filter(o=>o.paid).reduce((s,o)=>s+o.total,0);
+    const low = products.filter(p=>p.stock<=p.limit).length;
+    $("app").innerHTML = `<h2>Admin Dashboard</h2><div class="grid">
+      <div class="card"><div class="note">Total sales</div><h2>${money(sales)}</h2></div>
+      <div class="card"><div class="note">Orders</div><h2>${orders.length}</h2></div>
+      <div class="card"><div class="note">Low-stock products</div><h2>${low}</h2></div></div>
+      <p class="note">Tip: place an order as a customer, then come back here.</p>`;
+  },
+  aprod(){
+    $("app").innerHTML = `<h2>Manage Products</h2>
+      <div class="row"><input id="np" placeholder="New product name"><input id="npr" type="number" placeholder="Price"><button class="p" onclick="addProd()">Add</button></div>
+      <table><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr>
+      ${products.map(p=>`<tr><td>${p.name}</td><td>${p.cat}</td><td>${money(p.price)}</td><td>${p.stock}</td>
+      <td><button class="s" onclick="products=products.filter(x=>x.id!=${p.id});go('aprod')">Delete</button></td></tr>`).join("")}</table>`;
+  },
+  aord(){
+    $("app").innerHTML = `<h2>Manage Orders</h2>` + (orders.length ? `<table><tr><th>Order</th><th>Total</th><th>Paid</th><th>Status</th><th>Action</th></tr>
+      ${orders.map((o,i)=>`<tr><td>${o.id}</td><td>${money(o.total)}</td><td>${o.paid?"Yes":"No"}</td><td>${STATUS[o.status]}</td>
+      <td>${o.status<4 && o.paid ? `<button class="p" onclick="advance(${i})">Mark ${STATUS[o.status+1]}</button>` : o.paid?"Done":"Awaiting payment"}</td></tr>`).join("")}</table>` : "<p>No orders yet.</p>");
+  },
+  ainv(){
+    $("app").innerHTML = `<h2>Inventory</h2><table><tr><th>Product</th><th>Stock</th><th>Limit</th><th>Status</th></tr>
+      ${products.map(p=>`<tr class="${p.stock<=p.limit?"low":""}"><td>${p.name}</td><td>${p.stock}</td><td>${p.limit}</td><td>${p.stock===0?"Out of stock":p.stock<=p.limit?"LOW STOCK":"OK"}</td></tr>`).join("")}</table>`;
+  }
+};
+
+// ---- Actions ----
+function addToCart(id){ const p=products.find(x=>x.id===id); const q=(cart[id]||0)+1; if(q>p.stock){toast("Only "+p.stock+" available");return;} cart[id]=q; toast("Added to cart"); nav(); }
+function chg(id,d){ const p=products.find(x=>x.id==id); const q=(cart[id]||0)+d; if(q<=0) delete cart[id]; else if(q>p.stock) toast("Only "+p.stock+" available"); else cart[id]=q; go("cart"); }
+function placeOrder(){
+  for(const [id,q] of Object.entries(cart)){ if(products.find(p=>p.id==id).stock<q){toast("An item is no longer available");return;} }
+  seq++;
+  const id = "ORD-20261105-AK7Q-" + String(seq).padStart(4,"0");
+  const items = Object.entries(cart).map(([pid,q])=>({pid:+pid,q}));
+  items.forEach(i=>{ products.find(p=>p.id===i.pid).stock -= i.q; });   // stock reduced with the order
+  pending = {id,total:total(),address:$("addr").value,items,status:0,paid:false};
+  orders.unshift(pending); cart={};
+  notify("Order "+id+" placed.");
+  go("payment");
+}
+function pay(ok){
+  const o = pending;
+  if(ok){ o.paid=true; o.method=$("method").value; o.txn="TXN"+Math.floor(Math.random()*1e8); notify("Payment received for "+o.id+"."); go("confirm"); }
+  else { notify("Payment failed for "+o.id+". You can retry."); toast("Payment failed. Order stays Payment Pending."); go("orders"); }
+}
+function advance(i){ const o=orders[i]; o.status++; notify("Order "+o.id+": "+STATUS[o.status]); go("aord"); }
+function addProd(){ const n=$("np").value, pr=+$("npr").value; if(!n||!pr) return toast("Enter name and price");
+  products.push({id:Date.now(),name:n,cat:"Snacks",price:pr,stock:20,limit:10,desc:"New product"}); go("aprod"); }
+
+go("login");
+</script>
+</body>
+</html>

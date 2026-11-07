@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+.env
+.env.*
+!.env.example
+logs/*
+!logs/.gitkeep
+*.log
+.firebase/
+firebase-debug.log
+serviceAccountKey.json
+.DS_Store
+.vscode/
+
+server/data/dev-db.json
+server/data/test-db*.json
