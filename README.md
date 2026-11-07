@@ -2,7 +2,7 @@
 
 Online Grocery E-Commerce System with Secure Digital Payments and Logistics Management (PBL, UC25CA2303).
 
-**Status: Phase 4 done** (login, products, cart, orders, payment, inventory). Delivery tracking, full admin reports and notifications come in Phase 5.
+**Status: Phase 5 done** (all ten functional requirements work). Next: Phase 6 (logging review, testing, refinement) and Phase 7 (final build, report, demo).
 
 ## Run it
 
@@ -35,7 +35,17 @@ To move to Firebase later, replace `localStore.js` with a Firestore version that
 | FR5 Payment: UPI / Card / Net Banking, status and transaction recorded, confirmation (mock provider) | Done |
 | FR6 Inventory: stock drops on order, admin monitors stock, low-stock flagged | Done |
 | FR10 Authentication required, separate customer and admin permissions, no payment details stored | Done |
-| FR7 Delivery tracking, FR8 reports and full admin, FR9 Notifications | Phase 5 |
+| FR7 Logistics: admin assigns a delivery person and moves orders Order Placed, Packed, Shipped, Out for Delivery, Delivered; customer tracks the status | Done |
+| FR8 Admin: dashboard, customers, products, categories, orders, payments, inventory, deliveries, sales and order reports | Done |
+| FR9 Notifications: order confirmation, payment status (success, failure, cancelled/expired), delivery updates (in-app) | Done |
+
+## How delivery and notifications work
+
+- A delivery record is created when payment succeeds. Statuses move forward **one step at a time** (no skipping or going back).
+- A delivery person must be assigned before an order can be marked **Shipped**.
+- Every status change, payment result and cancellation creates a notification for the customer in the same step as the change, so none is missed. The navbar shows the unread count.
+- Reports group orders by the day they were placed; revenue counts **paid** orders only. Optional date range on the report page.
+- Notifications are in-app only. Email or SMS could be added later.
 
 ## How orders work
 
