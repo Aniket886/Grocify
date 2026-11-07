@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 // Theme control for Grocify.
-// - Dark theme is the DEFAULT. The light theme is reachable from Settings.
-// - The current theme is applied to <html data-theme="..."> so every page inherits it.
+// - Pure niche e-commerce theme system: Dark theme is the DEFAULT, light mode is toggleable.
+// - The active theme is applied to <html data-theme="...">.
 const ThemeContext = createContext(null);
 export const useTheme = () => useContext(ThemeContext);
 
@@ -22,20 +22,23 @@ function writeStored(key, value) {
 }
 
 export function ThemeProvider({ children }) {
-  // Only "dark" or "light". New visitors land on dark.
+  // Only "dark" or "light". Visitors land on dark.
   const [theme, setThemeState] = useState(() => (readStored(THEME_KEY, 'dark') === 'light' ? 'light' : 'dark'));
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.removeAttribute('data-diwali');
+    // Explicitly purge any legacy attributes or keys
+    try {
+      document.documentElement.removeAttribute('data-diwali');
+      localStorage.removeItem('grocify_diwali');
+      sessionStorage.removeItem('grocify_diwali');
+    } catch { /* storage blocked */ }
   }, [theme]);
 
   const value = useMemo(() => ({
     theme,
-    diwali: false,
     setTheme: (t) => { setThemeState(t); writeStored(THEME_KEY, t); },
     toggleTheme: () => setThemeState((prev) => { const next = prev === 'dark' ? 'light' : 'dark'; writeStored(THEME_KEY, next); return next; }),
-    setDiwali: () => {},
   }), [theme]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

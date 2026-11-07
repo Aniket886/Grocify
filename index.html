@@ -8,10 +8,12 @@
     <meta name="description" content="Grocify — Curated provisions, artisanal pantry and essentials delivered fresh." />
     <title>Grocify — Curated Provisions & Essentials</title>
     <script>
-      // Set the data-theme attribute before React renders,
-      // so there is no flash of light theme when dark theme was chosen.
+      // Set the data-theme attribute before React renders and purge any legacy festival flags
       (function () {
         try {
+          localStorage.removeItem('grocify_diwali');
+          sessionStorage.removeItem('grocify_diwali');
+          document.documentElement.removeAttribute('data-diwali');
           var t = localStorage.getItem('grocify_theme');
           document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
         } catch (e) {

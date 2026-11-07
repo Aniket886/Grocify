@@ -1,7 +1,6 @@
 # Grocify Frontend — Design Specification
 
-A UI/UX redesign for a modern-classic look, a dark-by-default theme, Diwali
-seasonal theming, a much wider category taxonomy, interactive 360° product
+A UI/UX redesign for a modern-classic look, a dark-by-default theme, pure niche e-commerce theming, a much wider category taxonomy, interactive 360° product
 views and quick-access navigation buttons.
 
 > **Nothing in this redesign touches the backend.** No server routes, no
@@ -18,7 +17,7 @@ views and quick-access navigation buttons.
   theme is visible anywhere on the main site.
 - **No green.** The brand green is gone end-to-end. The new palette is
   deep indigo surfaces, antique gold accent, warm cream text and brick red
-  for festive highlights.
+  for conscious shopping.
 - **The backend is the source of truth.** The frontend presents a rich
   category taxonomy on top of whatever categories the admin has stocked.
 
@@ -42,7 +41,7 @@ Tokens live on `:root` in `src/styles/main.css`. A single
 | `--primary` | `#d4a24c` | Antique gold accent and CTAs |
 | `--primary-hover` | `#e8b865` | Hover state |
 | `--primary-ink` | `#1a1326` | Text on gold |
-| `--accent` | `#c04b4b` | Brick red for Diwali, warnings |
+| `--accent` | `#10b981` | Emerald accent and conscious indicators |
 | `--danger` | `#ef6a7a` | Destructive buttons |
 | `--success` | `#86d49b` | Confirmation text |
 
@@ -61,7 +60,7 @@ darker red accent (`#a53333`), ink text (`#211634`).
 
 ```
 App
-├── ThemeProvider           (theme + Diwali state, writes to <html>)
+├── ThemeProvider           (theme state, writes to <html>)
 └── BrowserRouter
     ├── AuthProvider
     └── CartProvider
@@ -79,7 +78,6 @@ New shared components:
   column lists sections, right column shows the active section's
   categories. Closes on outside click or Esc.
 - `BottomNav` — fixed to the viewport on screens narrower than 760px.
-- `DiwaliBanner` — top-of-page promo strip. Hidden when Diwali is off.
 - `ProductViewer360` — drag-to-rotate 360° viewer (see §7).
 - `Footer` — same contract as before; adds a "Settings" link.
 
@@ -87,13 +85,13 @@ New shared components:
 
 | Path | Page | Notes |
 |---|---|---|
-| `/` | Home | Hero, Diwali strip, section tiles, live catalogue |
+| `/` | Home | Centered hero, value perks dock, section tiles, live catalogue |
 | `/categories` | Categories | All sections as tiles |
 | `/s/:slug` | Section | A section's categories |
 | `/c/:slug` | CategoryView | A display category's products |
 | `/products`, `/products/:id` | ProductList, ProductDetail | Backend-backed list and detail; detail shows the 360° viewer for Electronics-style products |
 | `/cart`, `/checkout`, `/payment/:id`, `/orders`, `/orders/:id/confirmation`, `/orders/:id/track`, `/notifications`, `/profile` | Unchanged flows | Same server calls as before |
-| `/settings` | Settings | Only place to flip theme and Diwali on/off |
+| `/settings` | Settings | Appearance controls relocated directly into customer dashboard |
 | `/admin/*` | All existing admin screens | Unchanged |
 
 ## 6. Category taxonomy
@@ -107,7 +105,7 @@ shows a tasteful "coming soon" state — nothing is sent to the server.
 Sections shipped (20):
 
 - Grocery & Kitchen · Snacks & Drinks · Beauty & Personal Care · Household
-  & Essentials · Electronics · **Diwali Store** · Party · Gifting · Decor ·
+  & Essentials · Electronics · **Artisanal & Gourmet** · Party · Gifting · Decor ·
   Kids · Fashion · Jewelry · Health & Pharma · Pet Care · Sports · Hobby ·
   Bookstore · Spiritual · Travel Store · Imported.
 
@@ -144,18 +142,12 @@ component to lerp between frames; the structure is ready for it. If
 real 3D models (`.glb`) are ever supplied, swap the body for a `<model-viewer>`
 element from Google's web component.
 
-## 8. Diwali theme
+## 8. Artisanal & Niche E-Commerce Experience
 
-- A thin, slowly moving string of coloured lights sits at the top of every
-  page (`body::before`).
-- Pages that invite shopping show a `DiwaliBanner` strip: a warm brick
-  gradient, flickering diyas, title and quick chips for Gifting, Lights,
-  Decor, Sweets and Dry Fruits.
-- A dedicated `Diwali Store` section links to Diwali Gifting, Diwali
-  Lights, Diwali Decor, Rangoli, Pooja Thali, Sweets and Dry Fruits.
-- Turn off in Settings: this hides the light string and the banner. The
-  Diwali Store section and the hero's "Diwali Store" button stay, since
-  they are normal catalogue navigation.
+- Modern, minimalist spatial UI with Plus Jakarta Sans and Inter typography.
+- High-contrast emerald accents (#10b981) paired with midnight slate backgrounds (#090d16).
+- Symmetrical grid layouts optimized across mobile, tablet, laptop, and desktop.
+- Integrated dashboard settings allowing instant light/dark switching and express alert management.
 
 ## 9. Navigation buttons
 
@@ -202,7 +194,6 @@ Print appear on the pages where they apply:
 `src/context/ThemeContext.jsx`, `src/data/categoryTaxonomy.js`,
 `src/components/CategoryMegaMenu.jsx`,
 `src/components/BottomNav.jsx`,
-`src/components/DiwaliBanner.jsx`,
 `src/components/ProductViewer360.jsx`,
 `src/pages/customer/Categories.jsx`,
 `src/pages/customer/Section.jsx`,
