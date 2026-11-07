@@ -15,7 +15,7 @@ export default function Inventory() {
     <>
       <h2>Inventory</h2>
       <div className="row">
-        <label style={{ margin: 0 }}><input type="checkbox" style={{ width: 'auto' }} checked={lowOnly} onChange={(e) => setLowOnly(e.target.checked)} /> Show low stock only</label>
+        <label style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 6 }}><input type="checkbox" style={{ width: 'auto', flex: 'none', minWidth: 0 }} checked={lowOnly} onChange={(e) => setLowOnly(e.target.checked)} /> Show low stock only</label>
         <button className="secondary" onClick={load}>Refresh</button>
         <span className="muted">{lowOnly ? `${products.length} low-stock products` : `${lowCount} of ${products.length} products are low on stock`}</span>
       </div>
