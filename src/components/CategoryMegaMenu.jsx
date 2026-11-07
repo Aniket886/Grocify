@@ -87,14 +87,14 @@ export default function CategoryMegaMenu({ isOpen, onToggle, onClose }) {
               ))}
             </div>
             <div className="mega-cats">
-              <Link to={`/s/${active.slug}`} className="mega-cat featured" onClick={handleClose}>
+              <Link to={`/s/${active.slug}`} className="mega-cat mega-cat-all" onClick={handleClose}>
                 <span className="icon" aria-hidden="true">{active.icon}</span> All of {active.name}
               </Link>
               {active.categories.map((c) => (
                 <Link
                   key={c.slug}
                   to={`/c/${c.slug}`}
-                  className={`mega-cat ${c.featured ? 'featured' : ''}`}
+                  className="mega-cat"
                   onClick={handleClose}
                 >
                   <span className="icon" aria-hidden="true">{c.icon}</span> {c.name}
