@@ -1,44 +1,48 @@
-import { Link } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
+import { useTheme } from '../../context/ThemeContext.jsx';
 
-// Settings page.
+// Settings page: Relocated directly into the user account dashboard.
 export default function Settings() {
-  const { theme, setTheme } = useTheme();
   const { user } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/profile');
+    }
+  }, [user, navigate]);
 
   return (
-    <div className="card narrow">
-      <h2>Settings</h2>
-      <p className="muted">Personal preferences. Changes apply to your browser only.</p>
+    <div className="card narrow" style={{ maxWidth: 540, margin: '24px auto' }}>
+      <h2>⚙️ Settings &amp; Preferences</h2>
+      <p className="muted">Personal preferences and appearance controls have been moved directly to your account dashboard.</p>
 
-      <h3 style={{ marginTop: 20 }}>Appearance</h3>
-      <div className="row" role="radiogroup" aria-label="Theme">
-        <button
-          type="button"
-          className={theme === 'dark' ? 'primary' : 'ghost'}
-          onClick={() => setTheme('dark')}
-          aria-pressed={theme === 'dark'}
-        >🌙 Dark (default)</button>
-        <button
-          type="button"
-          className={theme === 'light' ? 'primary' : 'ghost'}
-          onClick={() => setTheme('light')}
-          aria-pressed={theme === 'light'}
-        >☀️ Light</button>
+      <div style={{ marginTop: 20 }}>
+        <h3>Appearance</h3>
+        <div className="row" role="radiogroup" aria-label="Theme">
+          <button
+            type="button"
+            className={theme === 'dark' ? 'primary' : 'ghost'}
+            onClick={() => setTheme('dark')}
+            aria-pressed={theme === 'dark'}
+          >🌙 Dark (default)</button>
+          <button
+            type="button"
+            className={theme === 'light' ? 'primary' : 'ghost'}
+            onClick={() => setTheme('light')}
+            aria-pressed={theme === 'light'}
+          >☀️ Light</button>
+        </div>
       </div>
-      <p className="muted">
-        Grocify is dark by default for a modern visual tone. You can switch to light mode at any time.
-      </p>
 
-      {user && (
-        <>
-          <h3 style={{ marginTop: 20 }}>Account</h3>
-          <div className="row">
-            <Link to="/profile"><button className="secondary">Edit profile and address</button></Link>
-          </div>
-        </>
-      )}
+      <div style={{ marginTop: 24, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+        <Link to="/profile">
+          <button className="primary" style={{ width: '100%' }}>Go to Account Dashboard →</button>
+        </Link>
+      </div>
     </div>
   );
 }

@@ -18,7 +18,6 @@ export default function Footer() {
             <div className="footer-pill-badges">
               <span className="footer-badge">Online Grocery System</span>
               <span className="footer-badge version-badge">v{__APP_VERSION__}</span>
-              <span className="footer-badge author-badge">Made with ❤️ Harshita</span>
             </div>
           </div>
 
@@ -34,15 +33,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Customer Support & Account */}
+          {/* Customer Care */}
           <div className="footer-col">
             <h4 className="footer-heading">Customer Care</h4>
             <ul className="footer-links">
               <li><Link to="/orders">My Orders &amp; Receipts</Link></li>
               <li><Link to="/cart">Shopping Basket</Link></li>
               <li><Link to="/notifications">Order Notifications</Link></li>
-              <li><Link to="/profile">Profile &amp; Delivery Address</Link></li>
-              <li><Link to="/settings">Theme &amp; Preferences</Link></li>
+              <li><Link to="/profile">Profile &amp; Dashboard</Link></li>
             </ul>
           </div>
 
@@ -58,14 +56,15 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom Bar: Copyright on left, Made with ❤️ Harshita on the right side */}
         <div className="footer-bottom-bar">
-          <p>© {new Date().getFullYear()} Grocify v{__APP_VERSION__}. All rights reserved.</p>
-          <div className="footer-credit">
-            Made with <span className="heart-icon" aria-label="love">❤️</span> Harshita
-          </div>
-          <div className="footer-sub-links">
-            <Link to="/settings">Settings</Link>
+          <p className="footer-copyright">
+            © {new Date().getFullYear()} Grocify v{__APP_VERSION__}. All rights reserved.
+          </p>
+          <div className="footer-right-credit">
+            <div className="footer-credit">
+              Made with <span className="heart-icon" aria-label="love">❤️</span> Harshita
+            </div>
           </div>
         </div>
       </div>

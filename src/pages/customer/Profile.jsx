@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
+import { useTheme } from '../../context/ThemeContext.jsx';
 import { useCart } from '../../context/CartContext.jsx';
 import { api } from '../../services/api.js';
 
 export default function Profile() {
   const { user, updateProfile, deleteAccount } = useAuth();
+  const { theme, setTheme } = useTheme();
   const { count: cartCount } = useCart();
   const navigate = useNavigate();
 
@@ -181,7 +183,55 @@ export default function Profile() {
         </div>
       </form>
 
-      {/* 4. Danger Zone: Permanent Account Deletion */}
+      {/* 4. Dashboard Settings & Preferences (Relocated directly to Dashboard) */}
+      <div className="card profile-settings-card" id="dashboard-settings">
+        <div className="settings-header-row">
+          <div>
+            <h3 style={{ margin: '0 0 4px 0' }}>⚙️ Dashboard Settings &amp; Preferences</h3>
+            <p className="muted" style={{ margin: 0 }}>Configure your visual theme, store preferences, and real-time alerts.</p>
+          </div>
+          <span className="settings-pill-badge">Active: {theme === 'dark' ? '🌙 Dark Mode' : '☀️ Light Mode'}</span>
+        </div>
+
+        <div className="settings-grid">
+          {/* Appearance Theme Setting */}
+          <div className="settings-item">
+            <div>
+              <strong>Visual Theme &amp; Tone</strong>
+              <p className="settings-desc">Switch between modern emerald dark theme and clean light presentation.</p>
+            </div>
+            <div className="settings-theme-toggle" role="radiogroup" aria-label="Theme selection">
+              <button
+                type="button"
+                className={`theme-pill-btn ${theme === 'dark' ? 'active' : ''}`}
+                onClick={() => setTheme('dark')}
+                aria-pressed={theme === 'dark'}
+              >
+                🌙 Dark Mode (Default)
+              </button>
+              <button
+                type="button"
+                className={`theme-pill-btn ${theme === 'light' ? 'active' : ''}`}
+                onClick={() => setTheme('light')}
+                aria-pressed={theme === 'light'}
+              >
+                ☀️ Light Mode
+              </button>
+            </div>
+          </div>
+
+          {/* Real-time Order Alerts */}
+          <div className="settings-item">
+            <div>
+              <strong>Live Delivery Tracking Alerts</strong>
+              <p className="settings-desc">Receive real-time milestone notifications as your order moves from packed to delivered.</p>
+            </div>
+            <span className="settings-active-chip">⚡ Enabled (12-Min Express)</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 5. Danger Zone: Permanent Account Deletion */}
       <div className="card danger-zone-card">
         <div className="danger-zone-content">
           <div>
@@ -205,7 +255,7 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* 5. Permanent Deletion Modal Pop-up */}
+      {/* 6. Permanent Deletion Modal Pop-up */}
       {showDeleteModal && (
         <div className="modal-backdrop-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title">
           <div className="modal-popover-box">
@@ -228,19 +278,19 @@ export default function Profile() {
               <input
                 id="confirm-delete-input"
                 type="text"
-                className="modal-input-delete"
+                className="modal-delete-input"
                 placeholder="Type DELETE"
-                autoFocus
                 value={confirmInput}
                 onChange={(e) => setConfirmInput(e.target.value)}
+                autoFocus
               />
 
-              {deleteError && <p className="error" style={{ margin: '8px 0' }}>{deleteError}</p>}
+              {deleteError && <p className="error" role="alert">{deleteError}</p>}
 
               <div className="modal-action-row">
                 <button
                   type="button"
-                  className="ghost"
+                  className="ghost modal-cancel-btn"
                   onClick={() => setShowDeleteModal(false)}
                   disabled={isDeleting}
                 >
@@ -248,10 +298,10 @@ export default function Profile() {
                 </button>
                 <button
                   type="submit"
-                  className="danger-delete-confirm-btn"
+                  className="danger modal-confirm-delete-btn"
                   disabled={confirmInput.trim().toUpperCase() !== 'DELETE' || isDeleting}
                 >
-                  {isDeleting ? 'Deleting Permanently...' : 'Yes, Delete Permanently'}
+                  {isDeleting ? 'Deleting...' : 'Permanently Delete'}
                 </button>
               </div>
             </form>
