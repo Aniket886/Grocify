@@ -1,0 +1,27 @@
+:root { --green:#2e7d32; --green-light:#e8f5e9; --border:#ddd; --text:#222; --bg:#fafafa; --danger:#c62828; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; color: var(--text); background: var(--bg); }
+a { color: var(--green); }
+.container { max-width: 980px; margin: 16px auto; padding: 0 16px; }
+.navbar { background: var(--green); color: #fff; padding: 10px 16px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.navbar a, .navbar button { color: #fff; text-decoration: none; background: none; border: 0; cursor: pointer; font-size: 15px; padding: 0; }
+.navbar .brand { font-weight: 700; font-size: 20px; margin-right: auto; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
+label { display: block; font-size: 14px; margin: 10px 0 4px; }
+input, select, textarea { padding: 8px; border: 1px solid var(--border); border-radius: 6px; font: inherit; width: 100%; }
+.row input, .row select { width: auto; flex: 1; min-width: 140px; }
+button.primary { background: var(--green); color: #fff; border: 0; padding: 8px 14px; border-radius: 6px; cursor: pointer; font: inherit; }
+button.primary:disabled { background: #aaa; cursor: not-allowed; }
+button.secondary { background: #fff; color: var(--green); border: 1px solid var(--green); padding: 6px 10px; border-radius: 6px; cursor: pointer; font: inherit; }
+button.danger { background: #fff; color: var(--danger); border: 1px solid var(--danger); padding: 6px 10px; border-radius: 6px; cursor: pointer; font: inherit; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { border: 1px solid var(--border); padding: 8px; text-align: left; }
+.badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; background: var(--green-light); }
+.badge.low_stock { background: #fff3e0; }
+.badge.out_of_stock { background: #eee; }
+.error { color: var(--danger); margin: 8px 0; }
+.success { color: var(--green); margin: 8px 0; }
+.muted { color: #777; font-size: 13px; }
+.narrow { max-width: 400px; margin: 30px auto; }
