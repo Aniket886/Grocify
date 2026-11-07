@@ -1,7 +1,7 @@
 import env from '../config/env.js';
-import logger from '../config/logger.js';
 import * as store from '../data/localStore.js';
 import provider from '../payments/index.js';
+import { expireUnpaidOrders } from '../services/orderService.js';
 import { PAYMENT_METHODS } from '../payments/PaymentProvider.js';
 import { badRequest, text } from '../middleware/validate.js';
 
@@ -26,7 +26,7 @@ export async function present(order, { withCustomer = false } = {}) {
 
 // Customers can only see their own orders; a wrong ID looks the same as a missing one.
 async function loadAccessible(req) {
-  await store.expireUnpaidOrders();
+  await expireUnpaidOrders();
   const order = await store.getOrder(req.params.id);
   if (!order || (req.user.role !== 'admin' && order.userId !== req.user.id)) throw badRequest('Order not found', 404);
   return order;
@@ -44,7 +44,7 @@ function readAddress(body, user) {
 }
 
 export async function place(req, res) {
-  await store.expireUnpaidOrders();
+  await expireUnpaidOrders();
   const address = readAddress(req.body, req.user);
   const key = req.get('Idempotency-Key') || null;
   if (key && key.length > 100) throw badRequest('Idempotency-Key is too long');
@@ -53,20 +53,20 @@ export async function place(req, res) {
   try {
     result = await store.createOrderFromCart(req.user.id, address, key, env.paymentTimeoutMinutes);
   } catch (err) {
-    if (err.status) logger.warn('Order failed', { userId: req.user.id, reason: err.message });
+    if (err.status) req.log.warn('Order failed', { userId: req.user.id, reason: err.message });
     throw err;
   }
   const { order, created, lowStock } = result;
   if (created) {
-    logger.info('Order created', { userId: req.user.id, orderId: order.id, total: order.total, items: order.items.length });
-    order.items.forEach((i) => logger.info('Stock reduced', { orderId: order.id, productId: i.productId, quantity: i.quantity }));
-    lowStock.forEach((p) => logger.warn('Low stock', p));
+    req.log.info('Order created', { userId: req.user.id, orderId: order.id, total: order.total, items: order.items.length });
+    order.items.forEach((i) => req.log.info('Stock reduced', { orderId: order.id, productId: i.productId, quantity: i.quantity }));
+    lowStock.forEach((p) => req.log.warn('Low stock', p));
   }
   res.status(created ? 201 : 200).json({ order: await present(order) });
 }
 
 export async function listMine(req, res) {
-  await store.expireUnpaidOrders();
+  await expireUnpaidOrders();
   const orders = await store.listOrdersByUser(req.user.id);
   res.json({ orders: await Promise.all(orders.map((o) => present(o))) });
 }
@@ -86,13 +86,13 @@ export async function pay(req, res) {
     throw badRequest(order.status === 'Cancelled' ? 'This order was cancelled, so it cannot be paid' : 'This order is already paid', 409);
   }
 
-  logger.info('Payment initiated', { orderId: order.id, method, provider: provider.name });
+  req.log.info('Payment initiated', { orderId: order.id, method, provider: provider.name });
   // Only the method is read from the request. Card or UPI details are never accepted or stored.
   const result = await provider.pay({ order, method, outcome: env.nodeEnv === 'production' ? undefined : req.body.outcome });
 
   const { order: updated, payment } = await store.applyPayment(order.id, { method, ...result });
-  if (payment.status === 'success') logger.info('Payment succeeded', { orderId: order.id, transactionId: payment.transactionId, amount: payment.amount });
-  else logger.warn('Payment failed', { orderId: order.id, reason: payment.failureReason });
+  if (payment.status === 'success') req.log.info('Payment succeeded', { orderId: order.id, transactionId: payment.transactionId, amount: payment.amount });
+  else req.log.warn('Payment failed', { orderId: order.id, reason: payment.failureReason });
 
   // A failed payment is a normal result: the order stays pending and the customer can retry.
   res.status(payment.status === 'success' ? 200 : 402).json({ order: await present(updated), payment });
@@ -101,13 +101,13 @@ export async function pay(req, res) {
 export async function cancel(req, res) {
   const order = await loadAccessible(req);
   const updated = await store.cancelPendingOrder(order.id, req.user.role === 'admin' ? 'Cancelled by admin' : 'Cancelled by customer');
-  logger.info('Order cancelled', { orderId: order.id, by: req.user.id });
+  req.log.info('Order cancelled', { orderId: order.id, by: req.user.id });
   res.json({ order: await present(updated) });
 }
 
 // ----- admin -----
 export async function adminList(req, res) {
-  await store.expireUnpaidOrders();
+  await expireUnpaidOrders();
   const orders = await store.listAllOrders({ status: req.query.status });
   res.json({ orders: await Promise.all(orders.map((o) => present(o, { withCustomer: true }))) });
 }

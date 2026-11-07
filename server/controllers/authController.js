@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import env from '../config/env.js';
-import logger from '../config/logger.js';
 import * as store from '../data/localStore.js';
 import { badRequest, text, email, password } from '../middleware/validate.js';
 
@@ -27,7 +26,7 @@ export async function register(req, res) {
 
   // Role is always "customer" here. Admins are created only by the seed script.
   const user = await store.createUser({ name, email: mail, phone, passwordHash: await bcrypt.hash(pass, 10), role: 'customer' });
-  logger.info('User registered', { userId: user.id });
+  req.log.info('User registered', { userId: user.id });
   res.status(201).json({ token: sign(user), user: publicUser(user) });
 }
 
@@ -36,10 +35,10 @@ export async function login(req, res) {
   const user = await store.findUserByEmail(mail);
   const ok = user && typeof req.body.password === 'string' && (await bcrypt.compare(req.body.password, user.passwordHash));
   if (!ok) {
-    logger.warn('Login failed', { email: mail });
+    req.log.warn('Login failed', { email: mail });
     throw badRequest('Incorrect email or password', 401); // same message for both cases
   }
-  logger.info('Login success', { userId: user.id, role: user.role });
+  req.log.info('Login success', { userId: user.id, role: user.role });
   res.json({ token: sign(user), user: publicUser(user) });
 }
 
@@ -60,6 +59,6 @@ export async function updateProfile(req, res) {
     };
   }
   const user = await store.updateUser(req.user.id, patch);
-  logger.info('Profile updated', { userId: user.id });
+  req.log.info('Profile updated', { userId: user.id });
   res.json({ user: publicUser(user) });
 }

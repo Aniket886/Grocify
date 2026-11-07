@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -16,15 +17,27 @@ import notificationRoutes from './routes/notifications.js';
 
 export default function createApp() {
   const app = express();
+
+  // Every request gets an ID (or keeps a safe one sent by the caller) so one request can be
+  // followed through the logs. It is returned in the X-Request-Id header.
+  app.use((req, res, next) => {
+    const incoming = req.get('X-Request-Id');
+    req.id = incoming && /^[\w.-]{1,64}$/.test(incoming) ? incoming : crypto.randomUUID();
+    res.setHeader('X-Request-Id', req.id);
+    req.log = logger.child({ requestId: req.id }); // every log line from this request carries its ID
+    next();
+  });
   app.use(helmet());
   app.use(cors({ origin: env.clientUrl }));
   app.use(express.json({ limit: '100kb' }));
 
-  // One line per request: method, path, status, duration, user
+  // One line per request: ID, method, path, status, duration, user, IP.
+  // Level follows the outcome: 5xx is an error, 4xx a warning, the rest info.
   app.use((req, res, next) => {
     const start = Date.now();
     res.on('finish', () => {
-      logger.info('request', { method: req.method, path: req.originalUrl.split('?')[0], status: res.statusCode, ms: Date.now() - start, userId: req.user?.id });
+      const level = res.statusCode >= 500 ? 'error' : res.statusCode >= 400 ? 'warn' : 'info';
+      logger[level]('request', { requestId: req.id, method: req.method, path: req.originalUrl.split('?')[0], status: res.statusCode, ms: Date.now() - start, userId: req.user?.id, ip: req.ip });
     });
     next();
   });

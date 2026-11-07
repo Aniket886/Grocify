@@ -1,5 +1,4 @@
 import env from '../config/env.js';
-import logger from '../config/logger.js';
 import * as store from '../data/localStore.js';
 import { badRequest, text, number } from '../middleware/validate.js';
 
@@ -37,20 +36,20 @@ export async function getOne(req, res) {
 
 export async function create(req, res) {
   const product = await store.createProduct(await readBody(req.body));
-  logger.info('Product created', { adminId: req.user.id, productId: product.id });
+  req.log.info('Product created', { adminId: req.user.id, productId: product.id });
   res.status(201).json({ product: present(product) });
 }
 
 export async function update(req, res) {
   if (!(await store.getProduct(req.params.id))) throw badRequest('Product not found', 404);
   const product = await store.updateProduct(req.params.id, await readBody(req.body));
-  logger.info('Product updated', { adminId: req.user.id, productId: product.id });
+  req.log.info('Product updated', { adminId: req.user.id, productId: product.id });
   res.json({ product: present(product) });
 }
 
 export async function remove(req, res) {
   if (!(await store.getProduct(req.params.id))) throw badRequest('Product not found', 404);
   await store.deleteProduct(req.params.id);
-  logger.info('Product deleted', { adminId: req.user.id, productId: req.params.id });
+  req.log.info('Product deleted', { adminId: req.user.id, productId: req.params.id });
   res.status(204).end();
 }
