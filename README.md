@@ -2,7 +2,9 @@
 
 Online Grocery E-Commerce System with Secure Digital Payments and Logistics Management (PBL, UC25CA2303).
 
-**Status: Phase 5 done** (all ten functional requirements work). Next: Phase 6 (logging review, testing, refinement) and Phase 7 (final build, report, demo).
+**Status: Phase 6 done** (all ten functional requirements work, hardened and tested: 44 automated tests). Next: Phase 7 (final build, 12-page report, demo).
+
+Docs: [Design](docs/Phase2-Design.md) · [Test report](docs/Test-Report.md) · [Logging](docs/Logging.md) · [Clickable mock-up](docs/mockup.html)
 
 ## Run it
 
