@@ -1,4 +1,3 @@
-import logger from '../config/logger.js';
 import * as store from '../data/localStore.js';
 import { DELIVERY_STATUSES } from '../utils/constants.js';
 import { badRequest, text } from '../middleware/validate.js';
@@ -20,12 +19,12 @@ export async function list(req, res) {
 export async function assign(req, res) {
   const name = text(req.body.assignedTo, 'Delivery person', { max: 80 });
   await store.assignDelivery(req.params.id, name);
-  logger.info('Delivery assigned', { adminId: req.user.id, orderId: req.params.id, assignedTo: name });
+  req.log.info('Delivery assigned', { adminId: req.user.id, orderId: req.params.id, assignedTo: name });
   res.json({ order: await present(await store.getOrder(req.params.id), { withCustomer: true }) });
 }
 
 export async function updateStatus(req, res) {
   const { order } = await store.advanceDelivery(req.params.id, req.body.status);
-  logger.info('Delivery status changed', { adminId: req.user.id, orderId: order.id, status: order.status });
+  req.log.info('Delivery status changed', { adminId: req.user.id, orderId: order.id, status: order.status });
   res.json({ order: await present(order, { withCustomer: true }) });
 }

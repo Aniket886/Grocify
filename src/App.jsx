@@ -2,6 +2,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 import Navbar from './components/Navbar.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 import AppRoutes from './routes/AppRoutes.jsx';
 
 export default function App() {
@@ -11,7 +12,9 @@ export default function App() {
         <CartProvider>
           <Navbar />
           <main className="container">
-            <AppRoutes />
+            <ErrorBoundary>
+              <AppRoutes />
+            </ErrorBoundary>
           </main>
         </CartProvider>
       </AuthProvider>

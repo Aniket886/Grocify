@@ -25,3 +25,15 @@ th, td { border: 1px solid var(--border); padding: 8px; text-align: left; }
 .success { color: var(--green); margin: 8px 0; }
 .muted { color: #777; font-size: 13px; }
 .narrow { max-width: 400px; margin: 30px auto; }
+
+/* Phase 6 polish */
+.container { overflow-x: auto; }                       /* wide admin tables scroll instead of breaking the page */
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid #1b5e20; outline-offset: 2px; }
+.navbar a:focus-visible, .navbar button:focus-visible { outline-color: #fff; }
+button { font: inherit; }
+@media (max-width: 600px) {
+  .container { padding: 0 10px; }
+  .navbar { gap: 10px; font-size: 14px; }
+  th, td { padding: 6px; font-size: 14px; }
+  .row input, .row select { min-width: 100px; }
+}
