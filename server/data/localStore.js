@@ -24,7 +24,14 @@ function load() {
 
 function save() {
   fs.mkdirSync(path.dirname(env.dataFile), { recursive: true });
-  fs.writeFileSync(env.dataFile, JSON.stringify(db, null, 2));
+  const payload = JSON.stringify(db, null, 2);
+  try {
+    const tmpFile = env.dataFile + '.' + crypto.randomBytes(4).toString('hex') + '.tmp';
+    fs.writeFileSync(tmpFile, payload, 'utf8');
+    fs.renameSync(tmpFile, env.dataFile);
+  } catch {
+    fs.writeFileSync(env.dataFile, payload, 'utf8');
+  }
 }
 
 const newId = () => crypto.randomUUID();

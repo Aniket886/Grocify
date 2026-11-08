@@ -2,23 +2,71 @@ import env from '../config/env.js';
 import * as store from '../data/localStore.js';
 import { badRequest, text, number } from '../middleware/validate.js';
 
-// Adds availability info the customer sees: in stock / low stock / out of stock.
+// Adds availability info and commercial display attributes the customer sees
 export function present(p) {
-  const availability = p.stock <= 0 ? 'out_of_stock' : p.stock <= p.lowStockLimit ? 'low_stock' : 'in_stock';
-  return { ...p, availability };
+  const lowLimit = p.lowStockLimit !== undefined && p.lowStockLimit !== null ? p.lowStockLimit : env.lowStockDefault;
+  const availability = p.stock <= 0 ? 'out_of_stock' : p.stock <= lowLimit ? 'low_stock' : 'in_stock';
+  const price = Number(p.price) || 0;
+  const originalPrice = p.originalPrice !== undefined && p.originalPrice !== null && p.originalPrice !== '' ? Number(p.originalPrice) : undefined;
+  let discountPercentage = p.discountPercentage !== undefined && p.discountPercentage !== null && p.discountPercentage !== '' ? Number(p.discountPercentage) : undefined;
+
+  if (originalPrice && originalPrice > price && !discountPercentage) {
+    discountPercentage = Math.round(((originalPrice - price) / originalPrice) * 100);
+  }
+
+  return {
+    ...p,
+    price,
+    originalPrice: originalPrice && originalPrice > price ? originalPrice : undefined,
+    discountPercentage: discountPercentage && discountPercentage > 0 ? discountPercentage : undefined,
+    availability,
+    unit: p.unit || '',
+    badge: p.badge || '',
+    origin: p.origin || '',
+    image: p.image || '',
+    isActive: p.isActive !== false,
+    featured: Boolean(p.featured),
+  };
 }
 
 async function readBody(body) {
   const categoryId = text(body.categoryId, 'Category', { max: 100 });
   if (!(await store.getCategory(categoryId))) throw badRequest('Category not found');
+
+  const price = number(body.price, 'Price', { min: 0 });
+  let originalPrice =
+    body.originalPrice !== undefined && body.originalPrice !== '' && body.originalPrice !== null
+      ? number(body.originalPrice, 'Original price (MRP)', { min: 0 })
+      : undefined;
+
+  let discountPercentage =
+    body.discountPercentage !== undefined && body.discountPercentage !== '' && body.discountPercentage !== null
+      ? number(body.discountPercentage, 'Discount percentage', { min: 0, max: 100 })
+      : undefined;
+
+  // Auto-calculate discount percentage if original price is higher than selling price
+  if (originalPrice && originalPrice > price && discountPercentage === undefined) {
+    discountPercentage = Math.round(((originalPrice - price) / originalPrice) * 100);
+  }
+
   return {
-    name: text(body.name, 'Name', { max: 100 }),
-    description: text(body.description, 'Description', { optional: true, max: 500 }),
+    name: text(body.name, 'Name', { max: 150 }),
+    description: text(body.description, 'Description', { optional: true, max: 1000 }),
     categoryId,
-    price: number(body.price, 'Price', { min: 0 }),
+    price,
+    originalPrice,
+    discountPercentage,
     stock: number(body.stock, 'Stock', { min: 0, integer: true }),
-    lowStockLimit: body.lowStockLimit === undefined || body.lowStockLimit === '' ? env.lowStockDefault : number(body.lowStockLimit, 'Low-stock limit', { min: 0, integer: true }),
-    image: text(body.image, 'Image', { optional: true, max: 300 }),
+    lowStockLimit:
+      body.lowStockLimit === undefined || body.lowStockLimit === ''
+        ? env.lowStockDefault
+        : number(body.lowStockLimit, 'Low-stock limit', { min: 0, integer: true }),
+    image: text(body.image, 'Image', { optional: true, max: 2000 }),
+    unit: text(body.unit, 'Unit / Pack size', { optional: true, max: 60 }),
+    badge: text(body.badge, 'Highlight badge', { optional: true, max: 60 }),
+    origin: text(body.origin, 'Origin / Region', { optional: true, max: 120 }),
+    isActive: body.isActive !== undefined ? Boolean(body.isActive) : true,
+    featured: Boolean(body.featured),
   };
 }
 
@@ -30,7 +78,7 @@ export async function list(req, res) {
 
 export async function getOne(req, res) {
   const p = await store.getProduct(req.params.id);
-  if (!p || !p.isActive) throw badRequest('Product not found', 404);
+  if (!p || (!p.isActive && req.user?.role !== 'admin')) throw badRequest('Product not found', 404);
   res.json({ product: present(p) });
 }
 

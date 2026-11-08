@@ -106,11 +106,13 @@ export default function Navbar() {
           {user?.role === 'admin' && (
             <>
               <NavLink to="/admin" end className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
+              <NavLink to="/admin/products" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Products</NavLink>
+              <NavLink to="/admin/inventory" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Inventory</NavLink>
+              <NavLink to="/admin/categories" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Categories</NavLink>
               <NavLink to="/admin/orders" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Orders</NavLink>
               <NavLink to="/admin/deliveries" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Deliveries</NavLink>
               <NavLink to="/admin/payments" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Payments</NavLink>
               <NavLink to="/admin/customers" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Customers</NavLink>
-              <NavLink to="/admin/inventory" className={({ isActive }) => `sub-pill-link ${isActive ? 'active' : ''}`}>Inventory</NavLink>
             </>
           )}
         </div>

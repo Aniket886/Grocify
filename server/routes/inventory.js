@@ -5,4 +5,6 @@ import * as c from '../controllers/inventoryController.js';
 
 const r = Router();
 r.get('/', authenticate, authorize('admin'), c.list);
+r.patch('/:id', authenticate, authorize('admin'), c.updateStock);
+r.put('/:id/stock', authenticate, authorize('admin'), c.updateStock);
 export default r;
