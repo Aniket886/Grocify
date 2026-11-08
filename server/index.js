@@ -5,11 +5,7 @@ import { expireUnpaidOrders } from './services/orderService.js';
 import * as store from './data/localStore.js';
 import bcrypt from 'bcryptjs';
 
-if (env.jwtSecretGenerated) {
-  logger.warn('JWT_SECRET is not set; using a temporary secret. Logins reset when the server restarts.');
-}
-
-// Ensure initial catalogue exists on boot (e.g. fresh Render container or clean local DB)
+// Ensure initial catalogue and primary accounts exist on boot (e.g. fresh Render container or clean local DB)
 const autoSeed = async () => {
   try {
     const existing = await store.listCategories();
@@ -29,11 +25,38 @@ const autoSeed = async () => {
       }
       logger.info('Auto-seeded initial grocery catalogue (5 categories, 14 products)');
     }
-    if (env.seedAdminEmail && env.seedAdminPassword) {
-      if (!(await store.findUserByEmail(env.seedAdminEmail))) {
-        await store.createUser({ name: 'Admin', email: env.seedAdminEmail, phone: '', role: 'admin', passwordHash: await bcrypt.hash(env.seedAdminPassword, 10) });
-        logger.info(`Admin account initialized for ${env.seedAdminEmail}`);
-      }
+
+    // 1. Ensure project owner / customer account (anikettegginamath@gmail.com) is permanently preserved across deployments
+    const aniketEmail = 'anikettegginamath@gmail.com';
+    const aniketUser = await store.findUserByEmail(aniketEmail);
+    if (!aniketUser) {
+      await store.createUser({
+        name: 'Aniket Tegginamath',
+        email: aniketEmail,
+        phone: '+91 98765 43210',
+        role: 'customer',
+        address: {
+          line: 'Vidyanagar, GMU Campus Road',
+          city: 'Hubballi',
+          pincode: '580031',
+        },
+        passwordHash: await bcrypt.hash('aniket123', 10),
+      });
+      logger.info(`Customer account automatically initialized & preserved for ${aniketEmail}`);
+    }
+
+    // 2. Ensure admin account exists even on ephemeral cloud deploys
+    const adminEmail = env.seedAdminEmail || 'admin@grocify.test';
+    const adminPassword = env.seedAdminPassword || 'Admin@123';
+    if (!(await store.findUserByEmail(adminEmail))) {
+      await store.createUser({
+        name: 'Admin',
+        email: adminEmail,
+        phone: '',
+        role: 'admin',
+        passwordHash: await bcrypt.hash(adminPassword, 10),
+      });
+      logger.info(`Admin account initialized for ${adminEmail}`);
     }
   } catch (err) {
     logger.error('Auto-seed check failed', { message: err.message });

@@ -13,12 +13,11 @@ serviceAccountKey.json
 .DS_Store
 .vscode/
 
-server/data/dev-db.json
+# Keep test databases ignored, but track dev-db.json so cloud deployments (Render) boot with persistent initial data
 server/data/test-db*.json
 
 # Anti-gravity skills
 skills/
-
 
 # Office temporary lock files
 ~$*

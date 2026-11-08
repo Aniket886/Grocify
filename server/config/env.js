@@ -13,16 +13,18 @@ const { version } = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 
 const isPlaceholder = (v) => !v || v.startsWith('[FILL');
 const pick = (v, fallback) => (isPlaceholder(v) ? fallback : v);
 
-const generatedSecret = isPlaceholder(process.env.JWT_SECRET);
+// A stable persistent fallback secret ensures login sessions survive server restarts and cloud re-deployments
+const defaultStableJwtSecret = 'grocify_production_jwt_secret_2026_super_secure_key_gm_university';
+const hasJwtSecret = !isPlaceholder(process.env.JWT_SECRET);
 
 const env = {
   version,
   nodeEnv: process.env.NODE_ENV || 'development',
   port: Number(process.env.PORT) || 5000,
   clientUrl: pick(process.env.CLIENT_URL, 'http://localhost:5173'),
-  // Local login tokens. If no secret is set, a random one is made per start (tokens reset on restart).
-  jwtSecret: generatedSecret ? crypto.randomBytes(32).toString('hex') : process.env.JWT_SECRET,
-  jwtSecretGenerated: generatedSecret,
+  // Local login tokens. Uses environment JWT_SECRET or stable secret so tokens survive server restarts
+  jwtSecret: hasJwtSecret ? process.env.JWT_SECRET : defaultStableJwtSecret,
+  jwtSecretGenerated: !hasJwtSecret,
   jwtExpiresIn: pick(process.env.JWT_EXPIRES_IN, '7d'),
   dataFile: process.env.DATA_FILE || path.join(root, 'server/data/dev-db.json'),
   logLevel: process.env.LOG_LEVEL || 'info',

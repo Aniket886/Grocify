@@ -1,0 +1,228 @@
+{
+  "users": [
+    {
+      "id": "4d0e11d2-7c99-4aaa-9a08-b23f5b0837ab",
+      "orderSeq": 0,
+      "customerCode": "VREU",
+      "createdAt": "2026-11-07T23:27:29.934Z",
+      "name": "Admin",
+      "email": "admin@grocify.test",
+      "phone": "",
+      "role": "admin",
+      "passwordHash": "$2b$10$eKj3ywK/64tE3Im5WKpcneZNJK0Yn3k4xjtjqShSx/1kwbRUre7h6"
+    },
+    {
+      "id": "96bd7889-9a1b-4cde-8f23-0123456789ab",
+      "orderSeq": 0,
+      "customerCode": "GC-2026",
+      "createdAt": "2026-11-08T00:00:00.000Z",
+      "name": "Aniket Tegginamath",
+      "email": "anikettegginamath@gmail.com",
+      "phone": "+91 98765 43210",
+      "role": "customer",
+      "address": {
+        "line": "Vidyanagar, GMU Campus Road",
+        "city": "Hubballi",
+        "pincode": "580031"
+      },
+      "passwordHash": "$2b$10$3.heh9Fqu8n35TJkWI80ce1AanZwNKRDmsDZE6fskpIUtsGXNaqeu"
+    }
+  ],
+  "categories": [
+    {
+      "id": "a607110d-e8bb-4400-b308-63347e5965fa",
+      "name": "Fruits"
+    },
+    {
+      "id": "befddcb8-4fd3-43f0-81a7-e927f714e096",
+      "name": "Vegetables"
+    },
+    {
+      "id": "acc072d4-6d75-4113-9832-89371188a18e",
+      "name": "Dairy"
+    },
+    {
+      "id": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
+      "name": "Staples"
+    },
+    {
+      "id": "0da29548-69d7-4c78-a6ec-f190c7661616",
+      "name": "Snacks"
+    }
+  ],
+  "products": [
+    {
+      "id": "96743a98-9849-45df-909d-c2b193fe2f67",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.829Z",
+      "name": "Apple (1 kg)",
+      "price": 180,
+      "stock": 25,
+      "description": "Fresh red apples",
+      "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "f8acc68f-47f3-46a2-8048-f6e97acf5952",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.831Z",
+      "name": "Banana (1 dozen)",
+      "price": 60,
+      "stock": 8,
+      "description": "Ripe bananas",
+      "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "d62b7174-ee5f-4178-a210-76d280b5b070",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.832Z",
+      "name": "Orange (1 kg)",
+      "price": 90,
+      "stock": 30,
+      "description": "Juicy oranges",
+      "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "83b86d9e-600f-4081-8e18-f4f990481aa2",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.835Z",
+      "name": "Tomato (1 kg)",
+      "price": 40,
+      "stock": 30,
+      "description": "Farm tomatoes",
+      "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "354cb0fd-e2f0-4530-91f8-c854eee64f1e",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.836Z",
+      "name": "Onion (1 kg)",
+      "price": 35,
+      "stock": 0,
+      "description": "Red onions",
+      "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "1c10e09e-cb81-4cbe-ba23-6a6161300bd7",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.838Z",
+      "name": "Potato (1 kg)",
+      "price": 30,
+      "stock": 45,
+      "description": "Fresh potatoes",
+      "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "5a30a362-f520-44f1-a381-164417e530ae",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.840Z",
+      "name": "Milk (1 L)",
+      "price": 56,
+      "stock": 40,
+      "description": "Toned milk",
+      "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "18110a31-050a-4018-89af-2be961079d7e",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.841Z",
+      "name": "Curd (500 g)",
+      "price": 35,
+      "stock": 12,
+      "description": "Fresh curd",
+      "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "96d47112-fa6b-4af9-b773-c6cbfe809481",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.842Z",
+      "name": "Paneer (200 g)",
+      "price": 85,
+      "stock": 15,
+      "description": "Soft paneer",
+      "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "01bc7020-94e8-4d72-ada3-0c93cf0262be",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.845Z",
+      "name": "Rice (5 kg)",
+      "price": 420,
+      "stock": 18,
+      "description": "Sona masoori rice",
+      "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "4c7233ed-700c-4aea-9d99-5b48a2379cc5",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.846Z",
+      "name": "Wheat Flour (5 kg)",
+      "price": 260,
+      "stock": 20,
+      "description": "Whole wheat atta",
+      "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "8de55fdd-5681-43ee-9e92-696e665681ea",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.847Z",
+      "name": "Toor Dal (1 kg)",
+      "price": 150,
+      "stock": 22,
+      "description": "Split pigeon peas",
+      "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "459cdeb5-2ee6-4c8d-9c7c-c177abbd729e",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.850Z",
+      "name": "Biscuits",
+      "price": 20,
+      "stock": 50,
+      "description": "Tea biscuits",
+      "categoryId": "0da29548-69d7-4c78-a6ec-f190c7661616",
+      "lowStockLimit": 10,
+      "image": ""
+    },
+    {
+      "id": "12939d4e-7b2c-401a-ab2f-bedf5a4f0e64",
+      "isActive": true,
+      "createdAt": "2026-11-07T23:27:29.852Z",
+      "name": "Namkeen (200 g)",
+      "price": 45,
+      "stock": 35,
+      "description": "Mixed namkeen",
+      "categoryId": "0da29548-69d7-4c78-a6ec-f190c7661616",
+      "lowStockLimit": 10,
+      "image": ""
+    }
+  ],
+  "carts": {},
+  "orders": [],
+  "payments": [],
+  "deliveries": [],
+  "notifications": []
+}
