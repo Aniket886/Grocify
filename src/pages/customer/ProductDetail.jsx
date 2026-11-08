@@ -40,7 +40,7 @@ export default function ProductDetail() {
     if (!user) return navigate('/login');
     try {
       await add(product.id, qty);
-      setMsg({ ok: true, text: `✓ Added ${qty} item(s) to your basket!` });
+      setMsg({ ok: true, text: `Added ${qty} item(s) to your basket.` });
     } catch (e) {
       setMsg({ ok: false, text: e.message });
     }
@@ -60,13 +60,13 @@ export default function ProductDetail() {
       </div>
 
       <div className="card product-detail-card">
-        {/* Media Column (360 Viewer or Photo) */}
+        {/* Media Column (360 Viewer or Real Photo) */}
         <div className="product-detail-media-pane">
           {showViewer ? (
             <div className="product-viewer-wrap">
               <ProductViewer360 label={product.name} />
               <div className="viewer-hint-caption">
-                <span>🔄 360° Interactive Spatial Inspection</span>
+                <span>360° Interactive Spatial Inspection</span>
               </div>
             </div>
           ) : (
@@ -80,7 +80,22 @@ export default function ProductDetail() {
                 />
               ) : (
                 <div className="product-detail-img-fallback">
-                  <span style={{ fontSize: 64 }}>🛍️</span>
+                  <svg
+                    width="64"
+                    height="64"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="detail-fallback-svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                    <path d="M3 6h18" />
+                    <path d="M16 10a4 4 0 0 1-8 0" />
+                  </svg>
                   <span className="muted">{product.name}</span>
                 </div>
               )}
@@ -93,8 +108,8 @@ export default function ProductDetail() {
           <div className="product-detail-header">
             <div className="badge-cluster">
               {product.badge && <span className="detail-badge-pill">{product.badge}</span>}
-              {product.unit && <span className="detail-unit-pill">📦 {product.unit}</span>}
-              {product.origin && <span className="detail-origin-pill">📍 {product.origin}</span>}
+              {product.unit && <span className="detail-unit-pill">{product.unit}</span>}
+              {product.origin && <span className="detail-origin-pill">{product.origin}</span>}
             </div>
             <h1 className="product-detail-title">{product.name}</h1>
           </div>
@@ -119,7 +134,7 @@ export default function ProductDetail() {
                 {availabilityText[product.availability]}
               </span>
               {product.stock > 0 && product.stock <= 10 && (
-                <span className="stock-hurry-text">Hurry, only {product.stock} units remaining!</span>
+                <span className="stock-hurry-text">Only {product.stock} units remaining</span>
               )}
             </div>
           </div>
@@ -128,13 +143,14 @@ export default function ProductDetail() {
           {user?.role !== 'admin' && (
             <div className="product-detail-actions">
               <div className="qty-picker-group">
-                <label htmlFor="detail-qty-input" className="qty-label">Quantity:</label>
+                <label htmlFor="detail-qty-input" className="qty-label">Quantity</label>
                 <div className="qty-input-controls">
                   <button
                     type="button"
                     className="qty-btn"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
                     disabled={qty <= 1 || isOutOfStock}
+                    aria-label="Decrease quantity"
                   >
                     -
                   </button>
@@ -153,6 +169,7 @@ export default function ProductDetail() {
                     className="qty-btn"
                     onClick={() => setQty((q) => q + 1)}
                     disabled={isOutOfStock || (product.stock && qty >= product.stock)}
+                    aria-label="Increase quantity"
                   >
                     +
                   </button>
@@ -165,7 +182,7 @@ export default function ProductDetail() {
                 disabled={isOutOfStock}
                 onClick={handleAdd}
               >
-                {isOutOfStock ? 'Currently Out of Stock' : 'Add to Basket 🛒'}
+                {isOutOfStock ? 'Currently Out of Stock' : 'Add to Basket'}
               </button>
             </div>
           )}
@@ -176,27 +193,43 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {/* Quality & Trust Highlights */}
+          {/* Quality & Trust Highlights with Clean Vector Icons */}
           <div className="detail-trust-highlights">
             <div className="trust-item">
-              <span className="trust-icon">🌱</span>
+              <div className="trust-icon-wrap" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              </div>
               <div>
-                <strong>Curated Quality</strong>
-                <p>Pure ingredients, ethically sourced and verified.</p>
+                <strong>Verified Quality</strong>
+                <p>Curated and tested to meet authentic purity standards.</p>
               </div>
             </div>
+
             <div className="trust-item">
-              <span className="trust-icon">⚡</span>
+              <div className="trust-icon-wrap" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+              </div>
               <div>
                 <strong>Express Safe Packing</strong>
                 <p>Temperature-controlled, tamper-evident packaging.</p>
               </div>
             </div>
+
             <div className="trust-item">
-              <span className="trust-icon">🛡️</span>
+              <div className="trust-icon-wrap" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+              </div>
               <div>
-                <strong>256-Bit Secure Payments</strong>
-                <p>Safe digital checkout with instant receipts.</p>
+                <strong>256-Bit Encrypted Payments</strong>
+                <p>Secure digital payment gateway with instant receipts.</p>
               </div>
             </div>
           </div>

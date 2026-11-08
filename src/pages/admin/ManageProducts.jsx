@@ -1,23 +1,23 @@
 import { useEffect, useState, useMemo } from 'react';
 import { api } from '../../services/api.js';
 
-// Curated photo presets for 1-click photo replacement
+// Curated photo presets for 1-click photo replacement using real high-definition photography
 const PHOTO_PRESETS = [
-  { label: 'Desi Ghee', emoji: '🧈', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%231e293b"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🧈</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">A2 Cultured Ghee</text></svg>' },
-  { label: 'Forest Honey', emoji: '🍯', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%23312e81"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🍯</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Raw Forest Honey</text></svg>' },
-  { label: 'Arabica Coffee', emoji: '☕', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%23442a22"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">☕</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Coorg Arabica Coffee</text></svg>' },
-  { label: 'Mustard Oil', emoji: '🫒', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%23292524"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🫒</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Cold-Pressed Mustard Oil</text></svg>' },
-  { label: 'Dark Chocolate', emoji: '🍫', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%233e2723"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🍫</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">70% Dark Chocolate</text></svg>' },
-  { label: 'Royal Saffron', emoji: '🌸', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%23581c87"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🌸</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Kashmiri Mogra Saffron</text></svg>' },
-  { label: 'Pink Salt', emoji: '🧂', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%232e1065"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🧂</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Himalayan Pink Salt</text></svg>' },
-  { label: 'Organic Rice', emoji: '🌾', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%23065f46"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🌾</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Organic Brown Rice</text></svg>' },
-  { label: 'Mango Box', emoji: '🥭', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%239a3412"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🥭</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Alphonso Mango Box</text></svg>' },
-  { label: 'Headphones', emoji: '🎧', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%23111827"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🎧</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Spatial Headphones</text></svg>' },
-  { label: 'Gift Hamper', emoji: '🎁', url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="100%" height="100%" fill="%239d174d"/><circle cx="200" cy="140" r="70" fill="rgba(255,255,255,0.08)"/><text x="200" y="165" font-size="75" text-anchor="middle">🎁</text><text x="200" y="255" font-size="16" font-family="sans-serif" font-weight="700" fill="%23f8fafc" text-anchor="middle">Artisan Gift Hamper</text></svg>' },
+  { label: 'Desi Ghee', url: 'https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Forest Honey', url: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Arabica Coffee', url: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Mustard Oil', url: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Dark Chocolate', url: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Royal Saffron', url: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Pink Salt', url: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Organic Rice', url: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Fresh Mangoes', url: 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Headphones', url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Gift Hamper', url: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80' },
 ];
 
 const UNIT_CHIPS = ['1 kg', '500 g', '250 g', '1 L', '500 ml', '1 Dozen', 'Pack of 2', 'Pack of 4'];
-const BADGE_CHIPS = ['🌿 100% Organic', '✨ Artisanal', '🔥 Bestseller', '⭐ Royal Grade-1', '❄️ Cold-Pressed', '🌾 Single-Origin', '🎧 360° Inspection', '🎁 Curated Gifting'];
+const BADGE_CHIPS = ['100% Organic', 'Artisanal', 'Bestseller', 'Royal Grade-1', 'Cold-Pressed', 'Single-Origin', '360° Inspection', 'Curated Gifting', 'Farm Fresh', 'Non-GMO'];
 
 const initialForm = {
   name: '',
@@ -421,7 +421,7 @@ export default function ManageProducts() {
                 <label htmlFor="prodBadge">Promotional Badge Tag</label>
                 <input
                   id="prodBadge"
-                  placeholder="e.g. 🌿 100% Organic"
+                  placeholder="e.g. 100% Organic"
                   value={form.badge}
                   onChange={(e) => handleFieldChange('badge', e.target.value)}
                 />
@@ -454,7 +454,11 @@ export default function ManageProducts() {
                   />
                 ) : (
                   <div className="photo-placeholder-box">
-                    <span className="photo-placeholder-icon">📷</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="photo-placeholder-icon">
+                      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                      <circle cx="9" cy="9" r="2" />
+                      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                    </svg>
                     <span>No image set</span>
                   </div>
                 )}
@@ -478,7 +482,8 @@ export default function ManageProducts() {
                         onClick={() => handleFieldChange('image', p.url)}
                         title={`Apply ${p.label} Photo`}
                       >
-                        <span>{p.emoji}</span> {p.label}
+                        <img src={p.url} alt={p.label} className="preset-mini-thumb" />
+                        <span>{p.label}</span>
                       </button>
                     ))}
                     {form.image && (
@@ -487,7 +492,7 @@ export default function ManageProducts() {
                         className="preset-btn text-danger"
                         onClick={() => handleFieldChange('image', '')}
                       >
-                        ✕ Clear Photo
+                        Clear Photo
                       </button>
                     )}
                   </div>
@@ -542,7 +547,10 @@ export default function ManageProducts() {
       <div className="admin-filters-card card">
         <div className="search-filter-grid">
           <div className="search-box-wrap">
-            <span className="search-icon">🔍</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="search-icon" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
             <input
               type="text"
               placeholder="Search by title, description, or origin..."
@@ -631,7 +639,11 @@ export default function ManageProducts() {
               <tr>
                 <td colSpan="7" className="empty-table-cell">
                   <div className="empty-state-box">
-                    <span className="empty-icon">📦</span>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="empty-icon" aria-hidden="true">
+                      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+                      <path d="m3.3 7 8.7 5 8.7-5" />
+                      <path d="M12 22V12" />
+                    </svg>
                     <p>No products match the selected criteria.</p>
                   </div>
                 </td>
@@ -648,7 +660,12 @@ export default function ManageProducts() {
                         {p.image ? (
                           <img src={p.image} alt={p.name} />
                         ) : (
-                          <span className="table-thumb-placeholder">🛒</span>
+                          <span className="table-thumb-placeholder">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                              <path d="M3 6h18" />
+                            </svg>
+                          </span>
                         )}
                       </div>
                     </td>
@@ -661,7 +678,7 @@ export default function ManageProducts() {
                       </div>
                       <div className="product-meta-row">
                         {p.badge && <span className="product-badge-tag">{p.badge}</span>}
-                        {p.origin && <span className="product-origin-tag">📍 {p.origin}</span>}
+                        {p.origin && <span className="product-origin-tag">{p.origin}</span>}
                       </div>
                     </td>
 
@@ -701,7 +718,7 @@ export default function ManageProducts() {
                         onClick={() => toggleProductActive(p)}
                         title="Click to toggle visibility"
                       >
-                        {p.isActive ? '● Active' : '○ Hidden'}
+                        {p.isActive ? 'Active' : 'Hidden'}
                       </button>
                     </td>
 
@@ -714,7 +731,7 @@ export default function ManageProducts() {
                           onClick={() => openEditForm(p)}
                           title="Edit Product"
                         >
-                          ✏️ Edit
+                          Edit
                         </button>
                         <button
                           type="button"
@@ -722,7 +739,7 @@ export default function ManageProducts() {
                           onClick={() => setDeleteTarget(p)}
                           title="Delete Product"
                         >
-                          🗑️
+                          Delete
                         </button>
                       </div>
                     </td>

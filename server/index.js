@@ -28,42 +28,42 @@ const autoSeed = async () => {
           ['Farm Fresh Malai Paneer', 95, 16, 'Soft melt-in-mouth cottage cheese', '200 g Pack', '🧀 High Protein', 'Daily Farmstead Dairy'],
         ],
         'Staples & Grains': [
-          ['Organic Sona Masoori Brown Rice', 390, 30, 'Unpolished aromatic brown rice', '5 kg Bag', '🌾 Whole Grain', 'Tungabhadra Basin'],
-          ['Stone-Ground Sharbati Atta', 285, 25, 'Chakki milled whole wheat flour', '5 kg Bag', '🌾 100% Sharbati', 'Sehore, MP'],
-          ['Unpolished Organic Toor Dal', 175, 28, 'Naturally sun-dried split pigeon peas', '1 kg Pouch', '🌿 Unpolished', 'Gulbarga'],
+          ['Organic Sona Masoori Brown Rice', 390, 30, 'Unpolished aromatic brown rice', '5 kg Bag', 'Whole Grain', 'Tungabhadra Basin', 'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=600&q=80'],
+          ['Stone-Ground Sharbati Atta', 285, 25, 'Chakki milled whole wheat flour', '5 kg Bag', '100% Sharbati', 'Sehore, MP', 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'],
+          ['Unpolished Organic Toor Dal', 175, 28, 'Naturally sun-dried split pigeon peas', '1 kg Pouch', 'Unpolished', 'Gulbarga', 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=600&q=80'],
         ],
         'Artisanal & Gourmet': [
-          ['A2 Gir Cow Cultured Desi Ghee', 649, 24, 'Bilona churned cultured ghee from grass-fed cows', '500 ml Glass Jar', '✨ Artisanal Bestseller', 'Gir Sanctuary, Gujarat'],
-          ['Artisanal Multifloral Forest Honey', 380, 18, 'Raw, unprocessed wild forest honey', '500 g Jar', '🌿 100% Raw Organic', 'Western Ghats Bio-Reserve'],
-          ['Single-Origin Arabica Roasted Beans', 420, 15, 'Medium roast estate coffee with cocoa notes', '250 g Pouch', '☕ Single-Origin', 'Coorg High Estates'],
-          ['GI-Tagged Kashmiri Mogra Saffron (Kesar)', 350, 8, 'Grade-1 royal saffron all-red stigma threads', '1 g Vial', '⭐ Royal Grade-1', 'Pampore, Kashmir Valley'],
+          ['A2 Gir Cow Cultured Desi Ghee', 649, 24, 'Bilona churned cultured ghee from grass-fed cows', '500 ml Glass Jar', 'Artisanal Bestseller', 'Gir Sanctuary, Gujarat', 'https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=600&q=80'],
+          ['Artisanal Multifloral Forest Honey', 380, 18, 'Raw, unprocessed wild forest honey', '500 g Jar', '100% Raw Organic', 'Western Ghats Bio-Reserve', 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80'],
+          ['Single-Origin Arabica Roasted Beans', 420, 15, 'Medium roast estate coffee with cocoa notes', '250 g Pouch', 'Single-Origin', 'Coorg High Estates', 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80'],
+          ['GI-Tagged Kashmiri Mogra Saffron (Kesar)', 350, 8, 'Grade-1 royal saffron all-red stigma threads', '1 g Vial', 'Royal Grade-1', 'Pampore, Kashmir Valley', 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80'],
         ],
         'Cold-Pressed Oils & Masalas': [
-          ['Wood Cold-Pressed Mustard Oil', 235, 35, 'Kachi ghani slow pressed oil in wooden Kolhu', '1 L Bottle', '❄️ Cold-Pressed', 'Alwar, Rajasthan'],
-          ['Fine Himalayan Pink Rock Salt', 95, 40, 'Pure unrefined rock salt with 84 trace minerals', '1 kg Pack', '💎 Mineral Rich', 'Himalayan Foothills'],
-          ['Virgin Cold-Pressed Coconut Oil', 260, 20, 'Extra virgin coconut oil from fresh white kernel', '500 ml Jar', '🥥 Extra Virgin', 'Udupi Coastal Groves'],
+          ['Wood Cold-Pressed Mustard Oil', 235, 35, 'Kachi ghani slow pressed oil in wooden Kolhu', '1 L Bottle', 'Cold-Pressed', 'Alwar, Rajasthan', 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80'],
+          ['Fine Himalayan Pink Rock Salt', 95, 40, 'Pure unrefined rock salt with 84 trace minerals', '1 kg Pack', 'Mineral Rich', 'Himalayan Foothills', 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80'],
+          ['Virgin Cold-Pressed Coconut Oil', 260, 20, 'Extra virgin coconut oil from fresh white kernel', '500 ml Jar', 'Extra Virgin', 'Udupi Coastal Groves', 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=600&q=80'],
         ],
         'Snacks & Confections': [
-          ['Artisanal 70% Dark Chocolate with Quinoa', 195, 22, 'Handcrafted bean-to-bar chocolate with toasted quinoa', '80 g Bar', '🍫 Bean-to-Bar', 'Idukki Cacao'],
-          ['Sparkling Ginger-Lime Raw Kombucha', 160, 14, 'Live fermented green tea tonic with fresh lime', '330 ml Bottle', '🫧 Live Probiotic', 'Artisanal Fermentary'],
-          ['Slow Roasted 7-Grain Super Seeds Mix', 180, 25, 'High omega-3 blend of 7 roasted super seeds', '200 g Pouch', '⚡ Superfood', 'Organic Harvest Co.'],
-          ['Royal Kashmiri Jumbo Walnut Kernels', 490, 15, 'Handpicked extra-large walnut halves', '400 g Pack', '🧠 High Omega-3', 'Sopore, Kashmir'],
+          ['Artisanal 70% Dark Chocolate with Quinoa', 195, 22, 'Handcrafted bean-to-bar chocolate with toasted quinoa', '80 g Bar', 'Bean-to-Bar', 'Idukki Cacao', 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80'],
+          ['Sparkling Ginger-Lime Raw Kombucha', 160, 14, 'Live fermented green tea tonic with fresh lime', '330 ml Bottle', 'Live Probiotic', 'Artisanal Fermentary', 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80'],
+          ['Slow Roasted 7-Grain Super Seeds Mix', 180, 25, 'High omega-3 blend of 7 roasted super seeds', '200 g Pouch', 'Superfood', 'Organic Harvest Co.', 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'],
+          ['Royal Kashmiri Jumbo Walnut Kernels', 490, 15, 'Handpicked extra-large walnut halves', '400 g Pack', 'High Omega-3', 'Sopore, Kashmir', 'https://images.unsplash.com/photo-1568283096533-078a24930eb8?auto=format&fit=crop&w=600&q=80'],
         ],
         'Household & Essentials': [
-          ['Eco-Friendly Bamboo Toothbrushes', 160, 30, 'Moso bamboo ergonomic toothbrushes with charcoal bristles', 'Pack of 4', '🌱 Biodegradable', 'Sustainable Living'],
-          ['Neem & Citrus Natural Floor Cleaner', 199, 20, 'Non-toxic bio-enzyme cleaner with cold-pressed neem', '1 L Bottle', '🍋 Pet-Safe Non-Toxic', 'Bio-Enzyme Labs'],
+          ['Eco-Friendly Bamboo Toothbrushes', 160, 30, 'Moso bamboo ergonomic toothbrushes with charcoal bristles', 'Pack of 4', 'Biodegradable', 'Sustainable Living', 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80'],
+          ['Neem & Citrus Natural Floor Cleaner', 199, 20, 'Non-toxic bio-enzyme cleaner with cold-pressed neem', '1 L Bottle', 'Pet-Safe Non-Toxic', 'Bio-Enzyme Labs', 'https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=600&q=80'],
         ],
         'Electronics & Spatial Devices': [
-          ['Grocify Spatial Wireless Pro Headphones', 2499, 10, 'Spatial audio over-ear headphones with active noise cancellation and 360 virtual viewer', 'Audio Device', '🎧 360° Inspection', 'Grocify Hardware Lab'],
+          ['Grocify Spatial Wireless Pro Headphones', 2499, 10, 'Spatial audio over-ear headphones with active noise cancellation and 360 virtual viewer', 'Audio Device', '360° Inspection', 'Grocify Hardware Lab', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80'],
         ],
         'Curated Gifting': [
-          ['Curated Artisan Festive Gourmet Box', 1499, 6, 'Signature gift hamper with Forest Honey, A2 Ghee, Walnuts and Dark Chocolate', 'Luxury Hamper', '🎁 Handcrafted Gifting', 'Grocify Collection'],
+          ['Curated Artisan Festive Gourmet Box', 1499, 6, 'Signature gift hamper with Forest Honey, A2 Ghee, Walnuts and Dark Chocolate', 'Luxury Hamper', 'Handcrafted Gifting', 'Grocify Collection', 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80'],
         ]
       };
 
       for (const [catName, items] of Object.entries(sample)) {
         const cat = await store.createCategory(catName);
-        for (const [name, price, stock, description, unit, badge, origin] of items) {
+        for (const [name, price, stock, description, unit, badge, origin, image] of items) {
           const originalPrice = Math.round(price * 1.18);
           const discountPercentage = Math.round(((originalPrice - price) / originalPrice) * 100);
           await store.createProduct({
@@ -78,7 +78,7 @@ const autoSeed = async () => {
             unit: unit || '',
             badge: badge || '',
             origin: origin || '',
-            image: '',
+            image: image || '',
             isActive: true,
           });
         }

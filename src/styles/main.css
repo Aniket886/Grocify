@@ -2517,23 +2517,42 @@ tbody tr:hover { background: var(--surface-2); }
    PRODUCT CARDS & PRODUCT DETAIL ENHANCEMENTS (PBL E-COMMERCE)
    ========================================================================== */
 
+.card.product-card {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(9, 14, 26, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.28s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card.product-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 185, 129, 0.08);
+}
+
 .product-card-media-wrap {
   position: relative;
   display: block;
   width: 100%;
-  height: 160px;
-  background: #0f172a;
+  height: 180px;
+  background: #060a12;
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 12px;
   text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .product-card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.25s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: block;
 }
 
@@ -2547,24 +2566,32 @@ tbody tr:hover { background: var(--surface-2); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 42px;
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #060a12 100%);
+  color: #64748b;
   user-select: none;
+}
+
+.product-fallback-icon,
+.detail-fallback-svg {
+  stroke: #64748b;
+  opacity: 0.6;
 }
 
 .product-card-floating-badge {
   position: absolute;
   top: 8px;
   left: 8px;
-  background: rgba(15, 23, 42, 0.88);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(9, 14, 26, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(16, 185, 129, 0.35);
   color: #34d399;
-  font-size: 0.7rem;
+  font-size: 0.64rem;
   font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   padding: 3px 8px;
-  border-radius: 9999px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .product-card-discount-pill {
@@ -2573,12 +2600,12 @@ tbody tr:hover { background: var(--surface-2); }
   right: 8px;
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 800;
+  letter-spacing: 0.03em;
   padding: 3px 8px;
-  border-radius: 9999px;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.45);
-  letter-spacing: 0.02em;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.45);
 }
 
 .product-card-content {
@@ -2913,8 +2940,24 @@ tbody tr:hover { background: var(--surface-2); }
   color: #94a3b8;
 }
 
-.trust-icon {
-  font-size: 1.3rem;
+.trust-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.preset-mini-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  object-fit: cover;
   flex-shrink: 0;
 }
 

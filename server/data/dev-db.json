@@ -105,7 +105,12 @@
       "description": "Fresh red apples",
       "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
+      "badge": "Farm Fresh",
+      "unit": "1 kg",
+      "origin": "Shimla, Himachal Pradesh",
+      "originalPrice": 150,
+      "discountPercentage": 17
     },
     {
       "id": "f8acc68f-47f3-46a2-8048-f6e97acf5952",
@@ -117,7 +122,12 @@
       "description": "Ripe bananas",
       "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=600&q=80",
+      "badge": "Daily Harvest",
+      "unit": "1 Dozen",
+      "origin": "Solapur, Maharashtra",
+      "originalPrice": 70,
+      "discountPercentage": 14
     },
     {
       "id": "d62b7174-ee5f-4178-a210-76d280b5b070",
@@ -129,7 +139,12 @@
       "description": "Juicy oranges",
       "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=600&q=80",
+      "badge": "Rich in Vitamin C",
+      "unit": "1 kg",
+      "origin": "Nagpur, Maharashtra",
+      "originalPrice": 100,
+      "discountPercentage": 15
     },
     {
       "id": "83b86d9e-600f-4081-8e18-f4f990481aa2",
@@ -141,7 +156,12 @@
       "description": "Farm tomatoes",
       "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80",
+      "badge": "Organic Produce",
+      "unit": "1 kg",
+      "origin": "Kolar, Karnataka",
+      "originalPrice": 45,
+      "discountPercentage": 11
     },
     {
       "id": "354cb0fd-e2f0-4530-91f8-c854eee64f1e",
@@ -153,7 +173,12 @@
       "description": "Red onions",
       "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=600&q=80",
+      "badge": "Kitchen Essential",
+      "unit": "1 kg",
+      "origin": "Nashik, Maharashtra",
+      "originalPrice": 40,
+      "discountPercentage": 12
     },
     {
       "id": "1c10e09e-cb81-4cbe-ba23-6a6161300bd7",
@@ -165,7 +190,12 @@
       "description": "Fresh potatoes",
       "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80",
+      "badge": "Farm Harvest",
+      "unit": "1 kg",
+      "origin": "Agra, Uttar Pradesh",
+      "originalPrice": 35,
+      "discountPercentage": 14
     },
     {
       "id": "5a30a362-f520-44f1-a381-164417e530ae",
@@ -177,7 +207,12 @@
       "description": "Toned milk",
       "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80",
+      "badge": "Pure Pasteurized",
+      "unit": "1 L",
+      "origin": "Amul Dairy, Anand",
+      "originalPrice": 65,
+      "discountPercentage": 8
     },
     {
       "id": "18110a31-050a-4018-89af-2be961079d7e",
@@ -189,7 +224,12 @@
       "description": "Fresh curd",
       "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80",
+      "badge": "Traditional Probiotic",
+      "unit": "500 g",
+      "origin": "Punjab Dairy",
+      "originalPrice": 45,
+      "discountPercentage": 11
     },
     {
       "id": "96d47112-fa6b-4af9-b773-c6cbfe809481",
@@ -201,7 +241,12 @@
       "description": "Soft paneer",
       "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
+      "badge": "Fresh Dairy",
+      "unit": "200 g",
+      "origin": "Haryana Dairy",
+      "originalPrice": 95,
+      "discountPercentage": 11
     },
     {
       "id": "01bc7020-94e8-4d72-ada3-0c93cf0262be",
@@ -213,7 +258,12 @@
       "description": "Sona masoori rice",
       "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
+      "badge": "Aged Long Grain",
+      "unit": "5 kg",
+      "origin": "Dehradun, Uttarakhand",
+      "originalPrice": 320,
+      "discountPercentage": 12
     },
     {
       "id": "4c7233ed-700c-4aea-9d99-5b48a2379cc5",
@@ -225,7 +275,12 @@
       "description": "Whole wheat atta",
       "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
+      "badge": "Stone Ground",
+      "unit": "5 kg",
+      "origin": "Sehore, Madhya Pradesh",
+      "originalPrice": 240,
+      "discountPercentage": 12
     },
     {
       "id": "8de55fdd-5681-43ee-9e92-696e665681ea",
@@ -237,7 +292,12 @@
       "description": "Split pigeon peas",
       "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=600&q=80",
+      "badge": "Protein Rich",
+      "unit": "1 kg",
+      "origin": "Latur, Maharashtra",
+      "originalPrice": 170,
+      "discountPercentage": 12
     },
     {
       "id": "459cdeb5-2ee6-4c8d-9c7c-c177abbd729e",
@@ -249,7 +309,12 @@
       "description": "Tea biscuits",
       "categoryId": "0da29548-69d7-4c78-a6ec-f190c7661616",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80",
+      "badge": "Artisan Crisp",
+      "unit": "250 g",
+      "origin": "Bakers Guild",
+      "originalPrice": 55,
+      "discountPercentage": 18
     },
     {
       "id": "12939d4e-7b2c-401a-ab2f-bedf5a4f0e64",
@@ -261,7 +326,12 @@
       "description": "Mixed namkeen",
       "categoryId": "0da29548-69d7-4c78-a6ec-f190c7661616",
       "lowStockLimit": 10,
-      "image": ""
+      "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80",
+      "badge": "Traditional Savory",
+      "unit": "200 g",
+      "origin": "Bikaner, Rajasthan",
+      "originalPrice": 60,
+      "discountPercentage": 17
     },
     {
       "id": "5f79e381-f4bb-429b-8840-3f2ca43d8f47",
@@ -275,10 +345,10 @@
       "stock": 24,
       "lowStockLimit": 6,
       "unit": "500 ml",
-      "badge": "✨ Artisanal Bestseller",
-      "origin": "Gir Sanctuary, Gujarat",
+      "badge": "Artisanal Bestseller",
+      "origin": "Vrindavan, Uttar Pradesh",
       "description": "Traditional bilona churned cultured ghee from grass-fed Gir cows. Rich golden granular texture with therapeutic aroma.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%230f172a%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231e293b%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A7%88%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EA2%20Cultured%20Ghee%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=600&q=80",
       "featured": true
     },
     {
@@ -293,10 +363,10 @@
       "stock": 18,
       "lowStockLimit": 5,
       "unit": "500 g",
-      "badge": "🌿 100% Raw & Organic",
-      "origin": "Western Ghats Bio-Reserve",
+      "badge": "100% Raw & Organic",
+      "origin": "Nilgiri Biosphere, Tamil Nadu",
       "description": "Unprocessed, unpasteurized forest nectar harvested by tribal apiculturists. Naturally rich in active pollen and bio-enzymes.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e1b4b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23312e81%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8D%AF%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3ERaw%20Forest%20Honey%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80",
       "featured": true
     },
     {
@@ -311,10 +381,10 @@
       "stock": 15,
       "lowStockLimit": 4,
       "unit": "250 g",
-      "badge": "☕ Single-Origin",
-      "origin": "Coorg High Estates (1300m)",
+      "badge": "Single-Origin",
+      "origin": "Coorg Highlands, Karnataka",
       "description": "Medium roast estate coffee with tasting notes of dark cocoa, roasted hazelnuts, and wild berries. Whole roasted beans.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23271c19%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23442a22%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%E2%98%95%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3ECoorg%20Arabica%20Beans%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80",
       "featured": true
     },
     {
@@ -329,10 +399,10 @@
       "stock": 35,
       "lowStockLimit": 10,
       "unit": "1 L",
-      "badge": "❄️ Cold-Pressed",
-      "origin": "Alwar Farms, Rajasthan",
+      "badge": "Cold-Pressed",
+      "origin": "Alwar, Rajasthan",
       "description": "Slow-pressed in traditional wooden Kolhu at under 40°C. Pungent natural aroma and rich monounsaturated healthy fats.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231c1917%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23292524%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%AB%92%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3ECold-Pressed%20Mustard%20Oil%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -346,11 +416,11 @@
       "discountPercentage": 18,
       "stock": 22,
       "lowStockLimit": 5,
-      "unit": "80 g Bar",
-      "badge": "🍫 Handcrafted Bean-to-Bar",
-      "origin": "Idukki Single-Estate Cacao",
+      "unit": "80 g",
+      "badge": "Handcrafted Bean-to-Bar",
+      "origin": "Idukki, Kerala",
       "description": "Small-batch bean-to-bar dark chocolate with toasted crispy organic quinoa puffs. Vegan, gluten-free, and refined sugar-free.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231a0f0a%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233e2723%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8D%AB%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3E70%25%20Dark%20Chocolate%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80",
       "featured": true
     },
     {
@@ -364,11 +434,11 @@
       "discountPercentage": 17,
       "stock": 8,
       "lowStockLimit": 3,
-      "unit": "1 g Glass Vial",
-      "badge": "⭐ Grade-1 Royal Saffron",
-      "origin": "Pampore, Kashmir Valley",
+      "unit": "1 g",
+      "badge": "Grade-1 Royal Saffron",
+      "origin": "Pampore, Kashmir",
       "description": "Deep crimson all-red stigma threads with intense saffronin aroma and coloring power. Certified grade 1 pure Mogra kesar.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%233b0764%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23581c87%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8C%B8%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EKashmiri%20Mogra%20Saffron%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80",
       "featured": true
     },
     {
@@ -383,10 +453,10 @@
       "stock": 40,
       "lowStockLimit": 10,
       "unit": "1 kg",
-      "badge": "💎 84 Trace Minerals",
-      "origin": "Himalayan Foothills",
+      "badge": "84 Trace Minerals",
+      "origin": "Western Himalayas",
       "description": "100% natural unrefined pink salt containing 84 essential ionic minerals. Free of anti-caking agents and chemical bleaching.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e1b4b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%232e1065%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A7%82%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EHimalayan%20Pink%20Salt%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -400,11 +470,11 @@
       "discountPercentage": 15,
       "stock": 30,
       "lowStockLimit": 8,
-      "unit": "5 kg Eco-Bag",
-      "badge": "🌾 Unpolished Whole Grain",
-      "origin": "Tungabhadra Basin, Karnataka",
+      "unit": "5 kg",
+      "badge": "Unpolished Whole Grain",
+      "origin": "Raichur, Karnataka",
       "description": "Pesticide-free, single-harvest aromatic brown rice. High dietary fiber and low glycemic index for wholesome everyday meals.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23064e3b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23065f46%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8C%BE%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EBrown%20Sona%20Masoori%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -419,10 +489,10 @@
       "stock": 28,
       "lowStockLimit": 6,
       "unit": "1 kg",
-      "badge": "🌿 High-Protein Pulse",
-      "origin": "Gulbarga, Karnataka",
+      "badge": "High-Protein Pulse",
+      "origin": "Latur, Maharashtra",
       "description": "Naturally sun-dried split pigeon peas without water, oil, or leather polishing. Retains natural yellow color and vital nutrients.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23451a03%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2378350f%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A5%A3%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EOrganic%20Toor%20Dal%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -437,10 +507,10 @@
       "stock": 25,
       "lowStockLimit": 5,
       "unit": "5 kg",
-      "badge": "🌾 100% Sharbati Grain",
+      "badge": "100% Sharbati Grain",
       "origin": "Sehore, Madhya Pradesh",
       "description": "Golden Sharbati wheat slow chakki milled to retain wheat germ and bran. Makes exceptionally soft, golden, puffed rotis.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231c1917%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2344403c%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8C%BE%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3ESharbati%20Whole%20Atta%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -454,11 +524,11 @@
       "discountPercentage": 16,
       "stock": 20,
       "lowStockLimit": 5,
-      "unit": "500 ml Glass Jar",
-      "badge": "🥥 Extra Virgin",
-      "origin": "Udupi Coastal Groves",
+      "unit": "500 ml",
+      "badge": "Extra Virgin",
+      "origin": "Pollachi, Tamil Nadu",
       "description": "Extracted from fresh white coconut flesh without heat treatment. Delicate fresh coconut aroma suitable for cooking and wellness.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%230f172a%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231e293b%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A5%A5%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EVirgin%20Coconut%20Oil%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -472,11 +542,11 @@
       "discountPercentage": 15,
       "stock": 4,
       "lowStockLimit": 5,
-      "unit": "1 Dozen Box",
-      "badge": "🥭 GI-Tagged Ratnagiri",
-      "origin": "Ratnagiri Orchards",
+      "unit": "1 Dozen (Box of 12)",
+      "badge": "GI-Tagged Ratnagiri",
+      "origin": "Ratnagiri, Maharashtra",
       "description": "Carbide-free, naturally straw-ripened royal Alphonso mangoes. Saffron-hued velvety pulp with intoxicating tropical fragrance.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%237c2d12%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239a3412%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A5%AD%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EAlphonso%20Mango%20Box%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=600&q=80",
       "featured": true
     },
     {
@@ -490,11 +560,11 @@
       "discountPercentage": 14,
       "stock": 16,
       "lowStockLimit": 5,
-      "unit": "200 g Vacuum Pack",
-      "badge": "🥛 Zero Preservatives",
-      "origin": "Daily Farmstead Dairy",
+      "unit": "400 g",
+      "badge": "Zero Preservatives",
+      "origin": "Dharwad Farm, Karnataka",
       "description": "Fresh cow milk cottage cheese vacuum sealed within 4 hours of milking. Soft melt-in-mouth texture for curries and grills.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23172554%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231e3a8a%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A7%80%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EFresh%20Malai%20Paneer%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -508,11 +578,11 @@
       "discountPercentage": 15,
       "stock": 12,
       "lowStockLimit": 4,
-      "unit": "450 g Loaf",
-      "badge": "🥖 36-Hour Ferment",
-      "origin": "Artisan Bakehouse, Hubballi",
+      "unit": "550 g Loaf",
+      "badge": "36-Hour Ferment",
+      "origin": "Artisan Hearth Bakery, Bengaluru",
       "description": "Crafted with live sourdough starter, organic wheat flour, sea salt and water. Blistered crust with open airy crumb.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23422006%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23713f12%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A5%96%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EWild%20Sourdough%20Boule%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -527,10 +597,10 @@
       "stock": 14,
       "lowStockLimit": 4,
       "unit": "330 ml Glass Bottle",
-      "badge": "🫧 Live Probiotic Brew",
-      "origin": "Artisanal Fermentary",
+      "badge": "Live Probiotic Brew",
+      "origin": "Microbrewery, Goa",
       "description": "Fermented green tea infused with organic cold-pressed ginger juice and fresh lime. Naturally bubbly with digestive probiotics.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23064e3b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23047857%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A7%83%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3ERaw%20Ginger%20Kombucha%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80",
       "featured": true
     },
     {
@@ -544,11 +614,11 @@
       "discountPercentage": 18,
       "stock": 25,
       "lowStockLimit": 6,
-      "unit": "200 g Stand-up Pouch",
-      "badge": "⚡ High Omega-3 & Fiber",
-      "origin": "Organic Harvest Co.",
+      "unit": "250 g Pouch",
+      "badge": "High Omega-3 & Fiber",
+      "origin": "Clean Harvest Labs, Pune",
       "description": "Crunchy blend of chia, pumpkin, flax, sunflower, watermelon seeds, sesame and black chia with rock salt seasoning.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231c1917%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23292524%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A5%9C%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3E7-Grain%20Super%20Seeds%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -562,11 +632,11 @@
       "discountPercentage": 16,
       "stock": 15,
       "lowStockLimit": 4,
-      "unit": "400 g Zipper Pack",
-      "badge": "🧠 Handpicked Halves",
-      "origin": "Sopore, Kashmir",
+      "unit": "500 g Vacuum Pack",
+      "badge": "Handpicked Halves",
+      "origin": "Anantnag, Kashmir",
       "description": "Snow-white extra large walnut halves. Packed with brain-boosting DHA, zinc, and natural plant omega-3 fatty acids.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232e1065%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%233b0764%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A5%9C%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EKashmiri%20Walnut%20Halves%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1568283096533-078a24930eb8?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -580,11 +650,11 @@
       "discountPercentage": 17,
       "stock": 18,
       "lowStockLimit": 4,
-      "unit": "100 g Tin Caddy",
-      "badge": "🍃 Spring Harvest",
-      "origin": "Gopaldhara Tea Estate (6000ft)",
+      "unit": "100 g Tin",
+      "badge": "Spring Harvest",
+      "origin": "Makaibari Estate, Darjeeling",
       "description": "Rare first-flush spring harvest leaves. Delicate muscatel floral cup with light golden liquor and crisp clean finish.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23022c22%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23064e3b%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8D%B5%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EFirst-Flush%20Darjeeling%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -599,10 +669,10 @@
       "stock": 30,
       "lowStockLimit": 8,
       "unit": "Pack of 4",
-      "badge": "🌱 100% Biodegradable",
-      "origin": "Sustainable Living Collective",
+      "badge": "100% Biodegradable",
+      "origin": "Sustainable Living Co.",
       "description": "Moso bamboo ergonomic handles with charcoal-infused BPA-free soft bristles. Plastic-free zero-waste bathroom essential.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23064e3b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2314532d%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%AA%A5%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EBamboo%20Toothbrush%204-Pack%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -616,11 +686,11 @@
       "discountPercentage": 20,
       "stock": 20,
       "lowStockLimit": 5,
-      "unit": "1 L Recycled Bottle",
-      "badge": "🍋 Pet-Safe & Non-Toxic",
-      "origin": "Bio-Enzyme Labs",
+      "unit": "1 L Bottle",
+      "badge": "Pet-Safe & Non-Toxic",
+      "origin": "Pure Eco Bio-Labs",
       "description": "Enzyme-based disinfectant floor cleaner with natural cold-pressed neem extract and orange peel oil. Completely chemical-free.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e1b4b%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231e293b%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A7%B4%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3ECitrus%20Floor%20Cleaner%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=600&q=80",
       "featured": false
     },
     {
@@ -634,11 +704,11 @@
       "discountPercentage": 28,
       "stock": 10,
       "lowStockLimit": 3,
-      "unit": "Audio Device",
-      "badge": "🎧 360° Inspection Viewable",
-      "origin": "Grocify Hardware Lab",
+      "unit": "Unit with Travel Case",
+      "badge": "360° Inspection Viewable",
+      "origin": "Acoustic Precision Labs",
       "description": "Spatial audio over-ear headphones with active noise cancellation, 40-hour battery life, and interactive 3D virtual inspection.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23090d16%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23111827%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8E%A7%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3ESpatial%20Pro%20Headphones%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
       "featured": true
     },
     {
@@ -652,11 +722,11 @@
       "discountPercentage": 21,
       "stock": 6,
       "lowStockLimit": 2,
-      "unit": "Luxury Gift Hamper",
-      "badge": "🎁 Handcrafted Festive Hamper",
+      "unit": "Signature Gift Hamper",
+      "badge": "Handcrafted Festive Hamper",
       "origin": "Grocify Curated Collection",
       "description": "Signature gift hamper with Forest Honey (250g), A2 Cultured Ghee (250ml), Kashmiri Walnuts (200g), and 70% Dark Chocolate.",
-      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20300%22%20width%3D%22400%22%20height%3D%22300%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23831843%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239d174d%22%2F%3E%0A%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23bg)%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22200%22%20cy%3D%22130%22%20r%3D%2270%22%20fill%3D%22rgba(255%2C255%2C255%2C0.08)%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22155%22%20font-size%3D%2272%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8E%81%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22200%22%20y%3D%22245%22%20font-size%3D%2216%22%20font-family%3D%22-apple-system%2CBlinkMacSystemFont%2CSegoe%20UI%2CRoboto%2Csans-serif%22%20font-weight%3D%22700%22%20fill%3D%22%23f8fafc%22%20text-anchor%3D%22middle%22%3EFestive%20Gourmet%20Hamper%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "image": "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80",
       "featured": true
     }
   ],

@@ -123,7 +123,7 @@ export default function Inventory() {
           <p className="muted">Live multi-product inventory monitoring, instant restock actions, and valuation analytics.</p>
         </div>
         <button type="button" className="secondary" onClick={load} disabled={loading}>
-          {loading ? 'Refreshing…' : '🔄 Refresh Data'}
+          {loading ? 'Refreshing…' : 'Refresh Data'}
         </button>
       </div>
 
@@ -175,27 +175,30 @@ export default function Inventory() {
             className={`inv-tab-btn tab-low ${statusFilter === 'low_stock' ? 'active' : ''}`}
             onClick={() => setStatusFilter('low_stock')}
           >
-            ⚠️ Low Stock ({stats.lowStockCount})
+            Low Stock ({stats.lowStockCount})
           </button>
           <button
             type="button"
             className={`inv-tab-btn tab-out ${statusFilter === 'out_of_stock' ? 'active' : ''}`}
             onClick={() => setStatusFilter('out_of_stock')}
           >
-            🚫 Out of Stock ({stats.outOfStockCount})
+            Out of Stock ({stats.outOfStockCount})
           </button>
           <button
             type="button"
             className={`inv-tab-btn tab-healthy ${statusFilter === 'healthy' ? 'active' : ''}`}
             onClick={() => setStatusFilter('healthy')}
           >
-            ✅ Healthy ({stats.healthyCount})
+            Healthy ({stats.healthyCount})
           </button>
         </div>
 
         <div className="search-filter-grid" style={{ marginTop: 14 }}>
           <div className="search-box-wrap">
-            <span className="search-icon">🔍</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="search-icon" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
             <input
               type="text"
               placeholder="Search product name or SKU..."
@@ -246,7 +249,10 @@ export default function Inventory() {
               <tr>
                 <td colSpan="7" className="empty-table-cell">
                   <div className="empty-state-box">
-                    <span className="empty-icon">📊</span>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="empty-icon" aria-hidden="true">
+                      <path d="M3 3v18h18" />
+                      <path d="m19 9-5 5-4-4-3 3" />
+                    </svg>
                     <p>No inventory records match the selected filter.</p>
                   </div>
                 </td>
@@ -403,7 +409,11 @@ export default function Inventory() {
       </div>
 
       <div className="inventory-footer-note card">
-        <span className="note-icon">💡</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="note-icon" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 16v-4" />
+          <path d="M12 8h.01" />
+        </svg>
         <p className="muted" style={{ margin: 0, fontSize: 13 }}>
           <strong>Automated Inventory Synchronization:</strong> Stock levels decrease automatically when customers place orders, and return to warehouse inventory if an unpaid order expires or is cancelled. All stock adjustments take effect immediately across all storefront collections.
         </p>
