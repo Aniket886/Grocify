@@ -13,7 +13,7 @@
     },
     {
       "id": "96bd7889-9a1b-4cde-8f23-0123456789ab",
-      "orderSeq": 0,
+      "orderSeq": 2,
       "customerCode": "GC-2026",
       "createdAt": "2026-11-08T00:00:00.000Z",
       "name": "Aniket Tegginamath",
@@ -342,7 +342,7 @@
       "price": 649,
       "originalPrice": 750,
       "discountPercentage": 13,
-      "stock": 24,
+      "stock": 23,
       "lowStockLimit": 6,
       "unit": "500 ml",
       "badge": "Artisanal Bestseller",
@@ -360,7 +360,7 @@
       "price": 380,
       "originalPrice": 450,
       "discountPercentage": 15,
-      "stock": 18,
+      "stock": 17,
       "lowStockLimit": 5,
       "unit": "500 g",
       "badge": "100% Raw & Organic",
@@ -432,7 +432,7 @@
       "price": 350,
       "originalPrice": 420,
       "discountPercentage": 17,
-      "stock": 8,
+      "stock": 6,
       "lowStockLimit": 3,
       "unit": "1 g",
       "badge": "Grade-1 Royal Saffron",
@@ -558,7 +558,7 @@
       "price": 95,
       "originalPrice": 110,
       "discountPercentage": 14,
-      "stock": 16,
+      "stock": 14,
       "lowStockLimit": 5,
       "unit": "400 g",
       "badge": "Zero Preservatives",
@@ -576,7 +576,7 @@
       "price": 140,
       "originalPrice": 165,
       "discountPercentage": 15,
-      "stock": 12,
+      "stock": 11,
       "lowStockLimit": 4,
       "unit": "550 g Loaf",
       "badge": "36-Hour Ferment",
@@ -730,9 +730,133 @@
       "featured": true
     }
   ],
-  "carts": {},
-  "orders": [],
-  "payments": [],
-  "deliveries": [],
-  "notifications": []
+  "carts": {
+    "96bd7889-9a1b-4cde-8f23-0123456789ab": {}
+  },
+  "orders": [
+    {
+      "id": "ORD-20261108-GC-2026-0001",
+      "userId": "96bd7889-9a1b-4cde-8f23-0123456789ab",
+      "items": [
+        {
+          "productId": "5f79e381-f4bb-429b-8840-3f2ca43d8f47",
+          "name": "A2 Gir Cow Cultured Desi Ghee",
+          "price": 649,
+          "quantity": 1
+        },
+        {
+          "productId": "9ded6328-18e0-4c4b-b1ca-3ec460070d0e",
+          "name": "GI-Tagged Kashmiri Mogra Saffron (Kesar)",
+          "price": 350,
+          "quantity": 2
+        }
+      ],
+      "address": {
+        "name": "Aniket Tegginamath",
+        "phone": "+91 98765 43210",
+        "line": "42 Orchid Heights, Vidyanagar",
+        "city": "Davangere",
+        "pincode": "577004"
+      },
+      "total": 1349,
+      "status": "Order Placed",
+      "paymentStatus": "paid",
+      "createdAt": "2026-11-08T16:33:44.609Z",
+      "expiresAt": "2026-11-08T16:48:44.609Z",
+      "idempotencyKey": null,
+      "paidAt": "2026-11-08T16:33:44.619Z"
+    },
+    {
+      "id": "ORD-20261108-GC-2026-0002",
+      "userId": "96bd7889-9a1b-4cde-8f23-0123456789ab",
+      "items": [
+        {
+          "productId": "5ce3e7b3-2115-4b8a-bbb4-f2806c0c8bd1",
+          "name": "Artisanal Multifloral Forest Honey",
+          "price": 380,
+          "quantity": 1
+        },
+        {
+          "productId": "c93fe39e-3303-4664-9b6e-cf3967f8e9f4",
+          "name": "Farm Fresh Soft Malai Paneer",
+          "price": 95,
+          "quantity": 2
+        },
+        {
+          "productId": "e9b62b43-1b64-408f-8673-0086c2882cc4",
+          "name": "Artisan Wild Sourdough Boule",
+          "price": 140,
+          "quantity": 1
+        }
+      ],
+      "address": {
+        "name": "Aniket Tegginamath",
+        "phone": "+91 98765 43210",
+        "line": "42 Orchid Heights",
+        "city": "Davangere",
+        "pincode": "577004"
+      },
+      "total": 710,
+      "status": "Payment Pending",
+      "paymentStatus": "pending",
+      "createdAt": "2026-11-08T16:35:35.735Z",
+      "expiresAt": "2026-11-08T16:50:35.735Z",
+      "idempotencyKey": null
+    }
+  ],
+  "payments": [
+    {
+      "id": "b132a152-8da3-49ba-aa47-b8d7b92d5568",
+      "orderId": "ORD-20261108-GC-2026-0001",
+      "userId": "96bd7889-9a1b-4cde-8f23-0123456789ab",
+      "method": "UPI",
+      "status": "success",
+      "transactionId": "MOCK-062A6B9E0269",
+      "amount": 1349,
+      "createdAt": "2026-11-08T16:33:44.619Z"
+    }
+  ],
+  "deliveries": [
+    {
+      "orderId": "ORD-20261108-GC-2026-0001",
+      "assignedTo": null,
+      "status": "Order Placed",
+      "history": [
+        {
+          "status": "Order Placed",
+          "at": "2026-11-08T16:33:44.619Z"
+        }
+      ],
+      "updatedAt": "2026-11-08T16:33:44.619Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "8cb65f09-cd74-4cb1-ba9a-9bad52ced866",
+      "userId": "96bd7889-9a1b-4cde-8f23-0123456789ab",
+      "type": "order_confirmation",
+      "message": "Order ORD-20261108-GC-2026-0001 placed for ₹1349. Complete the payment to confirm it.",
+      "orderId": "ORD-20261108-GC-2026-0001",
+      "read": false,
+      "createdAt": "2026-11-08T16:33:44.609Z"
+    },
+    {
+      "id": "86e85b1e-9476-4d1e-870d-18e071f16b3c",
+      "userId": "96bd7889-9a1b-4cde-8f23-0123456789ab",
+      "type": "payment_status",
+      "message": "Payment of ₹1349 received for order ORD-20261108-GC-2026-0001 (UPI). Your order is confirmed.",
+      "orderId": "ORD-20261108-GC-2026-0001",
+      "read": false,
+      "createdAt": "2026-11-08T16:33:44.619Z"
+    },
+    {
+      "id": "8db2b366-10a3-4d7f-9a3e-13142a10c7c2",
+      "userId": "96bd7889-9a1b-4cde-8f23-0123456789ab",
+      "type": "order_confirmation",
+      "message": "Order ORD-20261108-GC-2026-0002 placed for ₹710. Complete the payment to confirm it.",
+      "orderId": "ORD-20261108-GC-2026-0002",
+      "read": false,
+      "createdAt": "2026-11-08T16:35:35.735Z"
+    }
+  ]
 }

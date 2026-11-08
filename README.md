@@ -103,20 +103,24 @@ Beyond the basic shopping flow, the design focuses on what makes real shops fail
 
 <table>
 <tr>
-<td align="center"><img src="docs/screenshots/01-products.jpg" alt="Product list" width="400"><br><sub><b>Products:</b> category filter, search, availability</sub></td>
-<td align="center"><img src="docs/screenshots/02-cart.jpg" alt="Cart" width="400"><br><sub><b>Cart:</b> quantity controls and automatic total</sub></td>
+<td align="center"><img src="docs/screenshots/00-home.png" alt="Storefront Hero" width="400"><br><sub><b>Storefront:</b> curated hero & collection navigation</sub></td>
+<td align="center"><img src="docs/screenshots/01-products.png" alt="Product Catalogue" width="400"><br><sub><b>Products:</b> category filter, search, badges & Indian grocery photography</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="docs/screenshots/03-payment.jpg" alt="Payment" width="400"><br><sub><b>Payment:</b> UPI, card or net banking (test mode)</sub></td>
-<td align="center"><img src="docs/screenshots/05-tracking.jpg" alt="Order tracking" width="400"><br><sub><b>Tracking:</b> five-step delivery timeline</sub></td>
+<td align="center"><img src="docs/screenshots/02-cart.png" alt="Cart" width="400"><br><sub><b>Cart:</b> quantity controls, instant subtotals and checkout</sub></td>
+<td align="center"><img src="docs/screenshots/03-payment.png" alt="Digital Payment" width="400"><br><sub><b>Payment:</b> UPI, card or net banking with retry logic</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="docs/screenshots/07-admin-deliveries.jpg" alt="Admin deliveries" width="400"><br><sub><b>Admin deliveries:</b> assign and advance</sub></td>
-<td align="center"><img src="docs/screenshots/09-admin-reports.jpg" alt="Admin reports" width="400"><br><sub><b>Admin reports:</b> revenue, status, top products</sub></td>
+<td align="center"><img src="docs/screenshots/05-tracking.png" alt="Order tracking" width="400"><br><sub><b>Tracking:</b> real-time five-step delivery timeline</sub></td>
+<td align="center"><img src="docs/screenshots/08-admin-inventory.png" alt="Admin inventory" width="400"><br><sub><b>Inventory Operations:</b> SKU monitoring & instant restock</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/screenshots/07-admin-deliveries.png" alt="Admin deliveries" width="400"><br><sub><b>Logistics:</b> order assignment and step advancement</sub></td>
+<td align="center"><img src="docs/screenshots/09-admin-reports.png" alt="Admin reports" width="400"><br><sub><b>Analytics:</b> revenue, order breakdown & top-selling items</sub></td>
 </tr>
 </table>
 
-More screens (confirmation, dashboard, inventory) are in [`docs/screenshots`](docs/screenshots). A clickable design mock-up is in [`docs/mockup.html`](docs/mockup.html).
+More screens (confirmation, dashboard, inventory management) are in [`docs/screenshots`](docs/screenshots). A clickable design mock-up is in [`docs/mockup.html`](docs/mockup.html).
 
 ## 🧰 Tech stack
 
