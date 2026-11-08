@@ -105,7 +105,7 @@
       "description": "Fresh red apples",
       "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/apple.jpg",
       "badge": "Farm Fresh",
       "unit": "1 kg",
       "origin": "Shimla, Himachal Pradesh",
@@ -122,7 +122,7 @@
       "description": "Ripe bananas",
       "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/banana.jpg",
       "badge": "Daily Harvest",
       "unit": "1 Dozen",
       "origin": "Solapur, Maharashtra",
@@ -139,7 +139,7 @@
       "description": "Juicy oranges",
       "categoryId": "a607110d-e8bb-4400-b308-63347e5965fa",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/orange.jpg",
       "badge": "Rich in Vitamin C",
       "unit": "1 kg",
       "origin": "Nagpur, Maharashtra",
@@ -156,7 +156,7 @@
       "description": "Farm tomatoes",
       "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/tomato.jpg",
       "badge": "Organic Produce",
       "unit": "1 kg",
       "origin": "Kolar, Karnataka",
@@ -173,7 +173,7 @@
       "description": "Red onions",
       "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/onion.jpg",
       "badge": "Kitchen Essential",
       "unit": "1 kg",
       "origin": "Nashik, Maharashtra",
@@ -190,7 +190,7 @@
       "description": "Fresh potatoes",
       "categoryId": "befddcb8-4fd3-43f0-81a7-e927f714e096",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/potato.jpg",
       "badge": "Farm Harvest",
       "unit": "1 kg",
       "origin": "Agra, Uttar Pradesh",
@@ -207,7 +207,7 @@
       "description": "Toned milk",
       "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/milk.jpg",
       "badge": "Pure Pasteurized",
       "unit": "1 L",
       "origin": "Amul Dairy, Anand",
@@ -224,7 +224,7 @@
       "description": "Fresh curd",
       "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/curd.jpg",
       "badge": "Traditional Probiotic",
       "unit": "500 g",
       "origin": "Punjab Dairy",
@@ -241,7 +241,7 @@
       "description": "Soft paneer",
       "categoryId": "acc072d4-6d75-4113-9832-89371188a18e",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/paneer.jpg",
       "badge": "Fresh Dairy",
       "unit": "200 g",
       "origin": "Haryana Dairy",
@@ -258,7 +258,7 @@
       "description": "Sona masoori rice",
       "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/rice.jpg",
       "badge": "Aged Long Grain",
       "unit": "5 kg",
       "origin": "Dehradun, Uttarakhand",
@@ -275,7 +275,7 @@
       "description": "Whole wheat atta",
       "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/wheat_flour.jpg",
       "badge": "Stone Ground",
       "unit": "5 kg",
       "origin": "Sehore, Madhya Pradesh",
@@ -292,7 +292,7 @@
       "description": "Split pigeon peas",
       "categoryId": "50d86752-c3ff-4956-9f2e-2327bdf1dcfe",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/toor_dal.jpg",
       "badge": "Protein Rich",
       "unit": "1 kg",
       "origin": "Latur, Maharashtra",
@@ -309,7 +309,7 @@
       "description": "Tea biscuits",
       "categoryId": "0da29548-69d7-4c78-a6ec-f190c7661616",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/biscuits.jpg",
       "badge": "Artisan Crisp",
       "unit": "250 g",
       "origin": "Bakers Guild",
@@ -326,7 +326,7 @@
       "description": "Mixed namkeen",
       "categoryId": "0da29548-69d7-4c78-a6ec-f190c7661616",
       "lowStockLimit": 10,
-      "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/namkeen.jpg",
       "badge": "Traditional Savory",
       "unit": "200 g",
       "origin": "Bikaner, Rajasthan",
@@ -348,7 +348,7 @@
       "badge": "Artisanal Bestseller",
       "origin": "Vrindavan, Uttar Pradesh",
       "description": "Traditional bilona churned cultured ghee from grass-fed Gir cows. Rich golden granular texture with therapeutic aroma.",
-      "image": "https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/desi_ghee.jpg",
       "featured": true
     },
     {
@@ -366,7 +366,7 @@
       "badge": "100% Raw & Organic",
       "origin": "Nilgiri Biosphere, Tamil Nadu",
       "description": "Unprocessed, unpasteurized forest nectar harvested by tribal apiculturists. Naturally rich in active pollen and bio-enzymes.",
-      "image": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/forest_honey.jpg",
       "featured": true
     },
     {
@@ -384,7 +384,7 @@
       "badge": "Single-Origin",
       "origin": "Coorg Highlands, Karnataka",
       "description": "Medium roast estate coffee with tasting notes of dark cocoa, roasted hazelnuts, and wild berries. Whole roasted beans.",
-      "image": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/arabica_coffee.jpg",
       "featured": true
     },
     {
@@ -402,7 +402,7 @@
       "badge": "Cold-Pressed",
       "origin": "Alwar, Rajasthan",
       "description": "Slow-pressed in traditional wooden Kolhu at under 40°C. Pungent natural aroma and rich monounsaturated healthy fats.",
-      "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/mustard_oil.jpg",
       "featured": false
     },
     {
@@ -420,7 +420,7 @@
       "badge": "Handcrafted Bean-to-Bar",
       "origin": "Idukki, Kerala",
       "description": "Small-batch bean-to-bar dark chocolate with toasted crispy organic quinoa puffs. Vegan, gluten-free, and refined sugar-free.",
-      "image": "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/dark_chocolate.jpg",
       "featured": true
     },
     {
@@ -438,7 +438,7 @@
       "badge": "Grade-1 Royal Saffron",
       "origin": "Pampore, Kashmir",
       "description": "Deep crimson all-red stigma threads with intense saffronin aroma and coloring power. Certified grade 1 pure Mogra kesar.",
-      "image": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/kashmiri_saffron.jpg",
       "featured": true
     },
     {
@@ -456,7 +456,7 @@
       "badge": "84 Trace Minerals",
       "origin": "Western Himalayas",
       "description": "100% natural unrefined pink salt containing 84 essential ionic minerals. Free of anti-caking agents and chemical bleaching.",
-      "image": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/pink_rock_salt.jpg",
       "featured": false
     },
     {
@@ -474,7 +474,7 @@
       "badge": "Unpolished Whole Grain",
       "origin": "Raichur, Karnataka",
       "description": "Pesticide-free, single-harvest aromatic brown rice. High dietary fiber and low glycemic index for wholesome everyday meals.",
-      "image": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/brown_rice.jpg",
       "featured": false
     },
     {
@@ -492,7 +492,7 @@
       "badge": "High-Protein Pulse",
       "origin": "Latur, Maharashtra",
       "description": "Naturally sun-dried split pigeon peas without water, oil, or leather polishing. Retains natural yellow color and vital nutrients.",
-      "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/unpolished_toor_dal.jpg",
       "featured": false
     },
     {
@@ -510,7 +510,7 @@
       "badge": "100% Sharbati Grain",
       "origin": "Sehore, Madhya Pradesh",
       "description": "Golden Sharbati wheat slow chakki milled to retain wheat germ and bran. Makes exceptionally soft, golden, puffed rotis.",
-      "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/sharbati_atta.jpg",
       "featured": false
     },
     {
@@ -528,7 +528,7 @@
       "badge": "Extra Virgin",
       "origin": "Pollachi, Tamil Nadu",
       "description": "Extracted from fresh white coconut flesh without heat treatment. Delicate fresh coconut aroma suitable for cooking and wellness.",
-      "image": "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/coconut_oil.jpg",
       "featured": false
     },
     {
@@ -546,7 +546,7 @@
       "badge": "GI-Tagged Ratnagiri",
       "origin": "Ratnagiri, Maharashtra",
       "description": "Carbide-free, naturally straw-ripened royal Alphonso mangoes. Saffron-hued velvety pulp with intoxicating tropical fragrance.",
-      "image": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/alphonso_mangoes.jpg",
       "featured": true
     },
     {
@@ -564,7 +564,7 @@
       "badge": "Zero Preservatives",
       "origin": "Dharwad Farm, Karnataka",
       "description": "Fresh cow milk cottage cheese vacuum sealed within 4 hours of milking. Soft melt-in-mouth texture for curries and grills.",
-      "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/malai_paneer.jpg",
       "featured": false
     },
     {
@@ -582,7 +582,7 @@
       "badge": "36-Hour Ferment",
       "origin": "Artisan Hearth Bakery, Bengaluru",
       "description": "Crafted with live sourdough starter, organic wheat flour, sea salt and water. Blistered crust with open airy crumb.",
-      "image": "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/sourdough_boule.jpg",
       "featured": false
     },
     {
@@ -600,7 +600,7 @@
       "badge": "Live Probiotic Brew",
       "origin": "Microbrewery, Goa",
       "description": "Fermented green tea infused with organic cold-pressed ginger juice and fresh lime. Naturally bubbly with digestive probiotics.",
-      "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/kombucha.jpg",
       "featured": true
     },
     {
@@ -618,7 +618,7 @@
       "badge": "High Omega-3 & Fiber",
       "origin": "Clean Harvest Labs, Pune",
       "description": "Crunchy blend of chia, pumpkin, flax, sunflower, watermelon seeds, sesame and black chia with rock salt seasoning.",
-      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/super_seeds_mix.jpg",
       "featured": false
     },
     {
@@ -636,7 +636,7 @@
       "badge": "Handpicked Halves",
       "origin": "Anantnag, Kashmir",
       "description": "Snow-white extra large walnut halves. Packed with brain-boosting DHA, zinc, and natural plant omega-3 fatty acids.",
-      "image": "https://images.unsplash.com/photo-1568283096533-078a24930eb8?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/walnut_kernels.jpg",
       "featured": false
     },
     {
@@ -654,7 +654,7 @@
       "badge": "Spring Harvest",
       "origin": "Makaibari Estate, Darjeeling",
       "description": "Rare first-flush spring harvest leaves. Delicate muscatel floral cup with light golden liquor and crisp clean finish.",
-      "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/darjeeling_tea.jpg",
       "featured": false
     },
     {
@@ -672,7 +672,7 @@
       "badge": "100% Biodegradable",
       "origin": "Sustainable Living Co.",
       "description": "Moso bamboo ergonomic handles with charcoal-infused BPA-free soft bristles. Plastic-free zero-waste bathroom essential.",
-      "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/bamboo_toothbrushes.jpg",
       "featured": false
     },
     {
@@ -690,7 +690,7 @@
       "badge": "Pet-Safe & Non-Toxic",
       "origin": "Pure Eco Bio-Labs",
       "description": "Enzyme-based disinfectant floor cleaner with natural cold-pressed neem extract and orange peel oil. Completely chemical-free.",
-      "image": "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/floor_cleaner.jpg",
       "featured": false
     },
     {
@@ -708,7 +708,7 @@
       "badge": "360° Inspection Viewable",
       "origin": "Acoustic Precision Labs",
       "description": "Spatial audio over-ear headphones with active noise cancellation, 40-hour battery life, and interactive 3D virtual inspection.",
-      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/headphones.jpg",
       "featured": true
     },
     {
@@ -726,7 +726,7 @@
       "badge": "Handcrafted Festive Hamper",
       "origin": "Grocify Curated Collection",
       "description": "Signature gift hamper with Forest Honey (250g), A2 Cultured Ghee (250ml), Kashmiri Walnuts (200g), and 70% Dark Chocolate.",
-      "image": "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80",
+      "image": "/images/products/festive_hamper.png",
       "featured": true
     }
   ],

@@ -20,6 +20,7 @@ import notificationRoutes from './routes/notifications.js';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = path.join(rootDir, 'dist');
+const publicDir = path.join(rootDir, 'public');
 
 export default function createApp() {
   const app = express();
@@ -58,6 +59,9 @@ export default function createApp() {
   app.use('/api/inventory', inventoryRoutes);
   app.use('/api/admin', adminRoutes);
   app.use('/api/notifications', notificationRoutes);
+
+  // Serve static assets from public/images directly (works in both dev and production)
+  app.use('/images', express.static(path.join(publicDir, 'images')));
 
   // In production (e.g. Render / Cloud), serve compiled Vite frontend and support client-side SPA routing
   // Dynamically substitutes request host into Open Graph meta tags so preview images always resolve cleanly

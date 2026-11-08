@@ -1,19 +1,27 @@
 import { useEffect, useState, useMemo } from 'react';
 import { api } from '../../services/api.js';
 
-// Curated photo presets for 1-click photo replacement using real high-definition photography
+// Curated photo presets for 1-click photo replacement using verified authentic Indian grocery photography
 const PHOTO_PRESETS = [
-  { label: 'Desi Ghee', url: 'https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Forest Honey', url: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Arabica Coffee', url: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Mustard Oil', url: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Dark Chocolate', url: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Royal Saffron', url: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Pink Salt', url: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Organic Rice', url: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Fresh Mangoes', url: 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Headphones', url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Gift Hamper', url: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80' },
+  { label: 'Royal Saffron (Kesar)', url: '/images/products/kashmiri_saffron.jpg' },
+  { label: 'Desi Ghee', url: '/images/products/desi_ghee.jpg' },
+  { label: 'Forest Honey', url: '/images/products/forest_honey.jpg' },
+  { label: 'Arabica Coffee', url: '/images/products/arabica_coffee.jpg' },
+  { label: 'Mustard Oil', url: '/images/products/mustard_oil.jpg' },
+  { label: 'Dark Chocolate', url: '/images/products/dark_chocolate.jpg' },
+  { label: 'Himalayan Pink Salt', url: '/images/products/pink_rock_salt.jpg' },
+  { label: 'Brown Rice', url: '/images/products/brown_rice.jpg' },
+  { label: 'Alphonso Mangoes', url: '/images/products/alphonso_mangoes.jpg' },
+  { label: 'Soft Malai Paneer', url: '/images/products/malai_paneer.jpg' },
+  { label: 'Toor Dal', url: '/images/products/toor_dal.jpg' },
+  { label: 'Sharbati Atta', url: '/images/products/sharbati_atta.jpg' },
+  { label: 'Virgin Coconut Oil', url: '/images/products/coconut_oil.jpg' },
+  { label: 'Super Seeds Mix', url: '/images/products/super_seeds_mix.jpg' },
+  { label: 'Walnut Kernels', url: '/images/products/walnut_kernels.jpg' },
+  { label: 'Darjeeling Tea', url: '/images/products/darjeeling_tea.jpg' },
+  { label: 'Natural Floor Cleaner', url: '/images/products/floor_cleaner.jpg' },
+  { label: 'Festive Hamper', url: '/images/products/festive_hamper.png' },
+  { label: 'Spatial Headphones', url: '/images/products/headphones.jpg' },
 ];
 
 const UNIT_CHIPS = ['1 kg', '500 g', '250 g', '1 L', '500 ml', '1 Dozen', 'Pack of 2', 'Pack of 4'];
