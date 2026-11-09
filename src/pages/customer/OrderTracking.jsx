@@ -1,230 +1,175 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { api } from '../../services/api.js';
-import StatusBadge from '../../components/StatusBadge.jsx';
 import DeliveryTimeline from '../../components/DeliveryTimeline.jsx';
 
 const STEPS = ['Order Placed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered'];
+
+const STEP_INFO = {
+  'Order Placed': { company: 'Grocify HQ', action: 'Order confirmed and sent to warehouse', icon: '📋' },
+  'Packed': { company: 'Grocify Warehouse', action: 'Items picked, quality-checked and packed', icon: '📦' },
+  'Shipped': { company: 'Grocify Logistics Hub', action: 'Package dispatched via express courier', icon: '🚚' },
+  'Out for Delivery': { company: 'Local Delivery Station', action: 'Driver assigned and en route to your address', icon: '🛵' },
+  'Delivered': { company: 'Your Doorstep', action: 'Handed over and confirmed by recipient', icon: '🏠' },
+};
 
 export default function OrderTracking() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const [error, setError] = useState('');
 
-  // Demo auto-progression & countdown state
   const demoKey = `grocify_demo_step_${id}`;
   const [demoStep, setDemoStep] = useState(() => {
-    try {
-      const saved = localStorage.getItem(demoKey);
-      return saved !== null ? parseInt(saved, 10) : 0;
-    } catch {
-      return 0;
-    }
+    try { const s = localStorage.getItem(demoKey); return s !== null ? parseInt(s, 10) : 0; } catch { return 0; }
   });
-
-  const [secondsRemaining, setSecondsRemaining] = useState(720); // 12 minutes = 720 seconds
+  const [secondsRemaining, setSecondsRemaining] = useState(720);
   const [autoPlay, setAutoPlay] = useState(true);
 
   const load = () => api.get(`/orders/${id}`).then((d) => setOrder(d.order)).catch((e) => setError(e.message));
 
-  useEffect(() => {
-    load();
-    const t = setInterval(load, 15000);
-    return () => clearInterval(t);
-  }, [id]);
+  useEffect(() => { load(); const t = setInterval(load, 15000); return () => clearInterval(t); }, [id]);
 
-  // Sync with backend status if backend is already ahead
   useEffect(() => {
-    if (order && order.status && STEPS.includes(order.status)) {
-      const backendIdx = STEPS.indexOf(order.status);
-      setDemoStep((prev) => Math.max(prev, backendIdx));
+    if (order?.status && STEPS.includes(order.status)) {
+      setDemoStep((prev) => Math.max(prev, STEPS.indexOf(order.status)));
     }
   }, [order?.status]);
 
-  // Save demo step to localStorage and synchronize with backend in real-time
   useEffect(() => {
     const currentStatus = STEPS[demoStep];
-    try {
-      localStorage.setItem(demoKey, demoStep.toString());
-      localStorage.setItem(`grocify_demo_order_status_${id}`, currentStatus);
-      window.dispatchEvent(new CustomEvent('grocify_order_updated', {
-        detail: { orderId: id, status: currentStatus, step: demoStep }
-      }));
-    } catch { /* storage blocked */ }
-
-    // Sync to backend so My Orders and database immediately reflect the new status
-    if (order && order.id && order.status !== 'Cancelled' && order.status !== 'Payment Pending') {
-      if (order.status !== currentStatus) {
-        api.post(`/orders/${id}/progress`, { step: currentStatus })
-          .then((res) => {
-            if (res?.order) setOrder(res.order);
-          })
-          .catch(() => {
-            // graceful fallback if network/sync fails
-          });
-      }
+    try { localStorage.setItem(demoKey, demoStep.toString()); } catch {}
+    if (order?.id && order.status !== 'Cancelled' && order.status !== 'Payment Pending' && order.status !== currentStatus) {
+      api.post(`/orders/${id}/progress`, { step: currentStatus }).then((res) => { if (res?.order) setOrder(res.order); }).catch(() => {});
     }
   }, [demoStep, demoKey, id, order?.id, order?.status]);
 
-  // Live countdown timer (around 12 minutes total, countdown adjusts based on step)
   useEffect(() => {
-    const timer = setInterval(() => {
-      setSecondsRemaining((prev) => {
-        if (demoStep >= 4) return 0; // Delivered
-        if (prev <= 1) return 1;
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
+    const t = setInterval(() => setSecondsRemaining((p) => demoStep >= 4 ? 0 : Math.max(1, p - 1)), 1000);
+    return () => clearInterval(t);
   }, [demoStep]);
 
-  // Auto-advance delivery step for demo evaluation (every 14 seconds advances to next step)
   useEffect(() => {
-    if (!autoPlay || demoStep >= 4) return undefined;
-    const interval = setInterval(() => {
-      setDemoStep((prev) => {
-        const next = Math.min(prev + 1, 4);
-        return next;
-      });
-    }, 14000);
-    return () => clearInterval(interval);
+    if (!autoPlay || demoStep >= 4) return;
+    const t = setInterval(() => setDemoStep((p) => Math.min(p + 1, 4)), 14000);
+    return () => clearInterval(t);
   }, [autoPlay, demoStep]);
 
-  // Adjust remaining countdown when step manually jumps
-  function advanceStep(newStep) {
-    setDemoStep(newStep);
-    if (newStep === 0) setSecondsRemaining(720); // 12m
-    else if (newStep === 1) setSecondsRemaining(540); // 9m
-    else if (newStep === 2) setSecondsRemaining(360); // 6m
-    else if (newStep === 3) setSecondsRemaining(120); // 2m
-    else if (newStep === 4) setSecondsRemaining(0); // Delivered
+  function advanceStep(n) {
+    setDemoStep(n);
+    const times = [720, 540, 360, 120, 0];
+    setSecondsRemaining(times[n] || 0);
   }
 
   if (error) return <p className="error">{error}</p>;
-  if (!order) return <p className="muted">Loading tracking information…</p>;
+  if (!order) return <div className="track-shell"><div className="conf-loading"><span className="pay-spinner" /> Loading tracking…</div></div>;
 
-  const effectiveStatus = (order.status === 'Cancelled' || order.status === 'Payment Pending')
-    ? order.status
-    : (STEPS[demoStep] || order.status);
-
+  const effectiveStatus = (order.status === 'Cancelled' || order.status === 'Payment Pending') ? order.status : (STEPS[demoStep] || order.status);
   const orderDate = new Date(order.createdAt || Date.now());
-  const estimatedArrival = new Date(orderDate.getTime() + 12 * 60 * 1000);
+  const mins = Math.floor(secondsRemaining / 60);
+  const secs = secondsRemaining % 60;
 
-  const minutes = Math.floor(secondsRemaining / 60);
-  const seconds = secondsRemaining % 60;
-
-  // Build synthesized delivery history including demo progress
-  const simulatedHistory = STEPS.slice(0, demoStep + 1).map((stepName, idx) => ({
-    status: stepName,
-    at: new Date(orderDate.getTime() + idx * 2.5 * 60 * 1000).toISOString(),
+  const simulatedHistory = STEPS.slice(0, demoStep + 1).map((s, i) => ({
+    status: s, at: new Date(orderDate.getTime() + i * 2.5 * 60 * 1000).toISOString(),
   }));
-
   const simulatedDelivery = {
     ...(order.delivery || {}),
     status: effectiveStatus,
     history: simulatedHistory,
-    assignedTo: demoStep >= 2 ? (order.delivery?.assignedTo || 'Rohan Sharma (Express Partner)') : null,
+    assignedTo: demoStep >= 2 ? (order.delivery?.assignedTo || 'Rohan Sharma') : null,
   };
 
-  return (
-    <div className="card tracking-dashboard-card">
-      <div className="tracking-header">
-        <div>
-          <span className="tracking-badge">⚡ Real-Time Tracking</span>
-          <h2 style={{ margin: '6px 0 2px' }}>Order {order.id}</h2>
-          <p className="muted">Placed on {orderDate.toLocaleString()}</p>
-        </div>
-        <div style={{ textAlign: 'right' }}>
-          <StatusBadge status={effectiveStatus} />
-        </div>
-      </div>
+  const currentInfo = STEP_INFO[effectiveStatus] || STEP_INFO['Order Placed'];
 
-      {/* Estimated Arrival Banner (Target ~12 minutes) */}
-      <div className="eta-banner-box">
-        <div className="eta-visual">
-          <span className="eta-icon">{demoStep >= 4 ? '🎉' : '⏱️'}</span>
-          <div>
-            <div className="eta-title">
-              {demoStep >= 4 ? 'Package Delivered' : 'Estimated Time to Reach'}
-            </div>
-            <div className="eta-countdown">
-              {demoStep >= 4 ? (
-                <span className="delivered-text">Delivered Safely</span>
-              ) : (
-                <span>~{minutes}m {seconds < 10 ? `0${seconds}` : seconds}s ({estimatedArrival.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</span>
-              )}
-            </div>
+  return (
+    <div className="track-shell">
+      {/* Header */}
+      <header className="track-header">
+        <div>
+          <div className="track-eyebrow">Order {order.id}</div>
+          <div className="track-status-row">
+            <span className={`track-badge ${demoStep >= 4 ? 'done' : ''}`}>
+              {demoStep >= 4 ? 'Delivered' : effectiveStatus}
+            </span>
           </div>
         </div>
-        <div className="eta-pill">
-          {demoStep >= 4 ? 'Completed' : '⚡ 12-Min Express Delivery'}
+        <div className="track-eta">
+          {demoStep >= 4 ? (
+            <><span className="track-eta-label">Delivered</span><span className="track-eta-icon">🎉</span></>
+          ) : (
+            <>
+              <span className="track-eta-label">Arrives in</span>
+              <span className="track-eta-time">{mins}:{secs < 10 ? `0${secs}` : secs}</span>
+            </>
+          )}
         </div>
+      </header>
+
+      {/* Live status card */}
+      <div className="track-live">
+        <span className="track-live-icon">{currentInfo.icon}</span>
+        <div>
+          <strong>{currentInfo.company}</strong>
+          <span className="track-live-action">{currentInfo.action}</span>
+        </div>
+        {demoStep < 4 && <span className="track-live-pulse" />}
       </div>
 
-      {/* Demo Controller Strip (for HR & Evaluation Demo) */}
-      <div className="demo-controller-panel">
-        <div className="demo-label">
-          <strong>Interactive Demo Steps:</strong>
-          <span>Current: <b style={{ color: 'var(--primary)' }}>{STEPS[demoStep]}</b></span>
-        </div>
-        <div className="demo-actions">
-          <button 
-            type="button" 
-            className="demo-btn" 
-            disabled={demoStep >= 4}
-            onClick={() => advanceStep(Math.min(demoStep + 1, 4))}
-          >
-            Advance Step ⏩
-          </button>
-          <button 
-            type="button" 
-            className="demo-btn ghost"
-            onClick={() => advanceStep(0)}
-          >
-            Reset ↺
-          </button>
-          <button 
-            type="button" 
-            className={`demo-btn ${autoPlay ? 'active' : ''}`}
-            onClick={() => setAutoPlay(!autoPlay)}
-            title="Toggle automatic step progression every 14s"
-          >
-            {autoPlay ? 'Auto-Play: ON' : 'Auto-Play: OFF'}
-          </button>
-        </div>
-      </div>
-
-      {/* Stepper Timeline */}
-      <div className="timeline-container">
+      {/* Timeline */}
+      <div className="track-timeline">
         <DeliveryTimeline delivery={simulatedDelivery} currentStepIndex={demoStep} />
       </div>
 
-      {/* Assigned Delivery Driver Details */}
-      {demoStep >= 2 && (
-        <div className="driver-info-card">
-          <div className="driver-avatar">🛵</div>
-          <div className="driver-details">
+      {/* Driver card */}
+      {demoStep >= 2 && demoStep < 5 && (
+        <div className="track-driver">
+          <div className="track-driver-avatar">🛵</div>
+          <div className="track-driver-info">
             <strong>Rohan Sharma</strong>
-            <span className="driver-meta">Grocify Express Courier • EV Scooter #KA-05-8842</span>
+            <span>Grocify Express &middot; EV Scooter #KA-05-8842</span>
           </div>
-          <a href="tel:+919876543210" className="driver-call-btn">Call Driver 📞</a>
         </div>
       )}
 
-      {/* Delivery Destination */}
-      <div className="delivery-address-card">
-        <div className="addr-icon">📍</div>
-        <div>
-          <strong>Delivery Destination:</strong>
-          <p className="muted" style={{ margin: 0 }}>
-            {order.address.line}, {order.address.city} - {order.address.pincode}
-          </p>
+      {/* Delivery address */}
+      {order.address && (
+        <div className="track-addr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+          <div>
+            <strong>Delivery address</strong>
+            <span>{order.address.line}, {order.address.city} {order.address.pincode}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Order summary */}
+      <details className="track-items">
+        <summary>Order summary ({order.items.length} item{order.items.length !== 1 ? 's' : ''}) &middot; ₹{order.total}</summary>
+        <div className="track-items-list">
+          {order.items.map((i) => (
+            <div className="track-item" key={i.productId}>
+              <span>{i.name} <span className="conf-qty">&times;{i.quantity}</span></span>
+              <span>₹{(i.price * i.quantity).toFixed(2)}</span>
+            </div>
+          ))}
+        </div>
+      </details>
+
+      {/* Demo controls (subtle) */}
+      <div className="track-demo">
+        <span className="track-demo-label">Demo controls</span>
+        <div className="track-demo-btns">
+          <button type="button" disabled={demoStep >= 4} onClick={() => advanceStep(Math.min(demoStep + 1, 4))}>Next step</button>
+          <button type="button" onClick={() => advanceStep(0)}>Reset</button>
+          <button type="button" className={autoPlay ? 'active' : ''} onClick={() => setAutoPlay(!autoPlay)}>
+            Auto {autoPlay ? 'ON' : 'OFF'}
+          </button>
         </div>
       </div>
 
-      <div style={{ marginTop: 24, display: 'flex', gap: 12 }}>
-        <Link to="/orders"><button className="secondary">← Back to My Orders</button></Link>
-        <Link to="/"><button className="ghost">Continue Shopping</button></Link>
+      {/* Footer */}
+      <div className="track-foot">
+        <Link to="/orders" className="button secondary">My orders</Link>
+        <Link to="/" className="button ghost">Continue shopping</Link>
       </div>
     </div>
   );

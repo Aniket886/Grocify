@@ -3700,3 +3700,88 @@ a.button.pay-cta.primary:hover { background: var(--primary-hover); }
 a.button.pay-cta.secondary { background: var(--surface-2); color: var(--text-strong); border: 1px solid var(--border-strong); }
 a.button.pay-cta.secondary:hover { background: var(--surface-3); }
 .pay-shell button.pay-cta { padding: 11px 18px; }
+
+/* ---------- Payment confirmation ---------- */
+.conf-shell { max-width: 520px; margin: 32px auto; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), 0 1px 4px rgba(0, 0, 0, 0.12); overflow: hidden; }
+.conf-hero { text-align: center; padding: 32px 24px 20px; background: linear-gradient(135deg, var(--surface-2), var(--surface)); border-bottom: 1px solid var(--border); }
+.conf-check-ring { width: 72px; height: 72px; margin: 0 auto 16px; color: var(--primary); }
+.conf-check-svg { width: 100%; height: 100%; }
+.conf-check-svg circle { stroke-dasharray: 166; stroke-dashoffset: 166; animation: conf-circle 0.6s ease-out 0.1s forwards; }
+.conf-check-path { stroke-dasharray: 48; stroke-dashoffset: 48; animation: conf-tick 0.35s ease-out 0.55s forwards; }
+@keyframes conf-circle { to { stroke-dashoffset: 0; } }
+@keyframes conf-tick { to { stroke-dashoffset: 0; } }
+.conf-title { font-size: 24px; font-weight: 800; color: var(--text-strong); margin: 0 0 6px; }
+.conf-subtitle { font-size: 14px; color: var(--text-muted); margin: 0; }
+.conf-receipt { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.conf-amount-row { display: flex; align-items: center; justify-content: space-between; }
+.conf-amount { font-size: 30px; font-weight: 800; color: var(--text-strong); }
+.conf-paid-badge { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 12px; border-radius: 999px; background: rgba(16, 185, 129, 0.16); color: var(--primary); }
+.conf-details { display: grid; gap: 10px; }
+.conf-detail { display: flex; justify-content: space-between; font-size: 13.5px; }
+.conf-detail span:first-child { color: var(--text-muted); }
+.conf-detail strong { color: var(--text-strong); text-align: right; word-break: break-all; }
+.conf-mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; letter-spacing: 0.03em; }
+.conf-toggle { display: flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--border); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; transition: all 0.15s; }
+.conf-toggle:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.conf-items { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; background: var(--surface-2); border-radius: 10px; }
+.conf-item { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); }
+.conf-item.conf-total { border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px; font-weight: 700; color: var(--text-strong); }
+.conf-qty { color: var(--text-muted); font-size: 12px; }
+.conf-addr { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text-muted); padding: 12px 14px; background: var(--surface-2); border-radius: 10px; }
+.conf-addr svg { flex: none; margin-top: 1px; color: var(--accent); }
+.conf-actions { padding: 16px 24px 22px; display: flex; flex-direction: column; align-items: center; gap: 14px; border-top: 1px solid var(--border); }
+.conf-cta { width: 100%; text-align: center; padding: 12px; font-size: 15px; font-weight: 700; border-radius: 12px; }
+.conf-secondary-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.conf-link { background: none; border: 0; padding: 0; color: var(--accent); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; }
+.conf-link:hover { text-decoration: underline; }
+.conf-dot { color: var(--border-strong); font-size: 10px; }
+.conf-loading { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 48px 24px; color: var(--text-muted); }
+@media (max-width: 520px) {
+  .conf-shell { margin: 16px 0; border-radius: 14px; }
+}
+
+/* ---------- Order tracking ---------- */
+.track-shell { max-width: 560px; margin: 32px auto; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), 0 1px 4px rgba(0, 0, 0, 0.12); overflow: hidden; }
+.track-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 22px 24px; background: linear-gradient(135deg, var(--surface-2), var(--surface)); border-bottom: 1px solid var(--border); }
+.track-eyebrow { font-size: 12.5px; color: var(--text-muted); letter-spacing: 0.02em; word-break: break-all; }
+.track-status-row { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+.track-badge { font-size: 14px; font-weight: 700; padding: 4px 14px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.track-badge.done { background: rgba(16, 185, 129, 0.16); color: var(--primary); }
+.track-eta { text-align: right; }
+.track-eta-label { display: block; font-size: 12px; color: var(--text-muted); }
+.track-eta-time { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--text-strong); line-height: 1.1; }
+.track-eta-icon { font-size: 28px; }
+.track-live { display: flex; align-items: center; gap: 14px; padding: 16px 24px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+.track-live-icon { font-size: 28px; flex: none; }
+.track-live strong { display: block; font-size: 14px; color: var(--text-strong); }
+.track-live-action { display: block; font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.track-live-pulse { width: 10px; height: 10px; flex: none; border-radius: 50%; background: var(--primary); margin-left: auto; animation: track-pulse 1.5s ease-in-out infinite; }
+@keyframes track-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }
+.track-timeline { padding: 20px 24px; }
+.track-driver { display: flex; align-items: center; gap: 14px; padding: 14px 24px; margin: 0 24px 16px; background: var(--surface-2); border-radius: 12px; border: 1px solid var(--border); }
+.track-driver-avatar { font-size: 28px; flex: none; }
+.track-driver-info { display: flex; flex-direction: column; }
+.track-driver-info strong { font-size: 14px; color: var(--text-strong); }
+.track-driver-info span { font-size: 12.5px; color: var(--text-muted); }
+.track-addr { display: flex; gap: 10px; padding: 14px 24px; margin: 0 24px 16px; background: var(--surface-2); border-radius: 12px; border: 1px solid var(--border); }
+.track-addr svg { flex: none; margin-top: 2px; color: var(--accent); }
+.track-addr strong { display: block; font-size: 13px; color: var(--text-strong); }
+.track-addr span { font-size: 13px; color: var(--text-muted); }
+.track-items { margin: 0 24px 16px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.track-items summary { padding: 12px 16px; font-size: 13.5px; font-weight: 600; color: var(--text); cursor: pointer; background: var(--surface-2); }
+.track-items summary:hover { background: var(--surface-3); }
+.track-items-list { padding: 10px 16px; display: flex; flex-direction: column; gap: 6px; }
+.track-item { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); }
+.track-demo { margin: 0 24px 16px; padding: 10px 14px; border: 1px dashed var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.track-demo-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.track-demo-btns { display: flex; gap: 6px; }
+.track-demo-btns button { font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; }
+.track-demo-btns button:hover { background: var(--surface-2); color: var(--text); }
+.track-demo-btns button.active { background: var(--accent-soft); color: var(--accent); border-color: var(--primary); }
+.track-demo-btns button:disabled { opacity: 0.4; cursor: default; }
+.track-foot { display: flex; gap: 10px; padding: 16px 24px; border-top: 1px solid var(--border); }
+.track-foot .button { flex: 1; text-align: center; }
+@media (max-width: 560px) {
+  .track-shell { margin: 16px 0; border-radius: 14px; }
+  .track-driver, .track-addr, .track-items, .track-demo { margin-left: 16px; margin-right: 16px; }
+}
