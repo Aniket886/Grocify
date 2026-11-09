@@ -21,3 +21,13 @@ skills/
 
 # Office temporary lock files
 ~$*
+
+# UPI Gateway (upi-gateway/) local runtime data - never commit
+upi-gateway/database/*.sqlite
+upi-gateway/storage/framework/verification-node-*
+upi-gateway/storage/logs/*
+upi-gateway/vendor/
+upi-gateway/node_modules/
+upi-gateway/bootstrap/cache/*.php
+upi-gateway/database/*.sqlite*
+upi-gateway/storage/installed

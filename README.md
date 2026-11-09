@@ -575,3 +575,26 @@ This is an academic project for GM University (course UC25CA2303). No open-sourc
 <sub>README last updated 2026-11-08 · [Report an issue](https://github.com/Aniket886/Grocify/issues)</sub>
 
 </div>
+
+## UPI Gateway (`upi-gateway/`)
+
+Grocify takes UPI payments through a self-hosted Laravel gateway that lives in `upi-gateway/` and runs as a separate PHP process on port 8000. Grocify talks to it over HTTP only (`server/payments/gatewayProvider.js`).
+
+- Start everything: `start-grocify.bat` (API 5000, site 5173, gateway 8000), or just the gateway: `npm run gateway` (needs PHP 8.2+).
+- Config: `.env` holds `PAYMENT_GATEWAY_URL`, `PAYMENT_GATEWAY_KEY_ID`, `PAYMENT_GATEWAY_SECRET` and `PAYMENT_WEBHOOK_SECRET`. The receiving UPI ID is set in the gateway admin panel (`/login`), never in code.
+- Flow: checkout creates a gateway order, the customer pays by QR or UPI app and submits the UTR, and Grocify marks the order paid only when the gateway reports `paid`.
+- Runtime data (`upi-gateway/.env`, `database/*.sqlite`, logs) is git-ignored.
+
+### Verifying UPI payments (no PG keys)
+
+A UTR typed by a customer is never trusted. The order goes to `review` and is paid automatically only when a matching bank credit exists (same UTR, same amount, received after the order was created, each credit usable once).
+
+Forward your "money received" SMS / app-notification text from the receiving phone to the gateway with an SMS-forwarder or automation app (Tasker, MacroDroid, etc.):
+
+```
+POST http://<gateway-host>:8000/api/v1/inbound/credit
+X-Api-Key: <PAYMENT_GATEWAY_KEY_ID>   X-Api-Secret: <PAYMENT_GATEWAY_SECRET>
+{"message": "<full SMS text>"}
+```
+
+Debit/OTP messages are ignored. Orders without a matching credit can still be approved or rejected by hand in the gateway admin panel (Orders).
