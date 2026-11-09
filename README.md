@@ -6,7 +6,7 @@
 
 Browse, cart, order, pay and track groceries online, with a full admin console behind it.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-2e7d32?style=flat-square)](#-versioning)
+[![Version](https://img.shields.io/badge/version-1.1.4-2e7d32?style=flat-square)](#-versioning)
 [![Tests](https://img.shields.io/badge/tests-45%20passing-2e7d32?style=flat-square)](#-testing)
 [![Node](https://img.shields.io/badge/node-%E2%89%A5%2022.12-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![React](https://img.shields.io/badge/react-19-61dafb?style=flat-square&logo=react&logoColor=black)](https://react.dev)
@@ -50,11 +50,11 @@ Browse, cart, order, pay and track groceries online, with a full admin console b
 
 Grocify is a working online grocery store built as a college **Project Based Learning (PBL)** assignment for the course *E-Commerce and Digital Business* (UC25CA2303, GM University).
 
-Customers can search groceries, fill a cart, place an order, pay digitally (UPI, card or net banking) and follow the order until it is delivered. Administrators manage products, categories, customers, orders, payments, stock and deliveries from one place, and read sales reports.
+Customers can search groceries, fill a cart, place an order, pay with real UPI (or mock mode), and follow the order through five delivery stages until it arrives. Administrators manage products, categories, customers, orders, payments, stock and deliveries from one place, and read sales reports.
 
 Beyond the basic shopping flow, the design focuses on what makes real shops fail: two customers buying the last item at the same moment, a double-clicked pay button, stock held by orders nobody pays for, and card details ending up in the wrong place.
 
-> **Status:** all ten required functions work and are covered by automated tests. The prototype uses a local data store and a **mock payment gateway** (no real money moves). See [Known limitations](#-known-limitations).
+> **Status:** all required functions work and are covered by automated tests. The project supports both a **self-hosted UPI payment gateway** (real QR codes, UTR verification) and a **mock payment provider** (no real money). See [Known limitations](#-known-limitations).
 
 ## ✨ Features
 
@@ -67,20 +67,24 @@ Beyond the basic shopping flow, the design focuses on what makes real shops fail
 - Browse by category, search, see price / description / availability
 - Cart: add, change quantity, remove, automatic total
 - Place an order with a delivery address and a unique order ID
-- Pay by **UPI, card or net banking**, with retry on failure
-- Order history and a **delivery timeline**
+- **UPI payments** via self-hosted gateway: scan QR, pay with any UPI app, or submit a 12-digit UTR for instant verification (~1.7s)
+- Card and net banking placeholders (coming soon)
+- **Animated payment confirmation** with receipt card, order details and item breakdown
+- **Order tracking** with five delivery stages, ETA countdown, driver card and demo auto-play
 - In-app **notifications** for order, payment and delivery updates
+- **PWA support**: installable on mobile with service worker
 
 </td>
 <td width="50%" valign="top">
 
 ### 🛠️ Admin
 - Dashboard with revenue, orders and low-stock counts
-- Add, edit and delete products and categories
+- Add, edit and delete products and categories (with e-commerce fields: weight, origin, images)
 - View and manage orders, customers and payments
-- **Inventory** view with low-stock highlighting
+- **Inventory** view with low-stock highlighting and instant restock
 - **Assign delivery** and move orders through five delivery steps
 - **Sales and order reports** with a date range
+- UPI Gateway admin panel for order management and merchant settings
 
 </td>
 </tr>
@@ -89,10 +93,11 @@ Beyond the basic shopping flow, the design focuses on what makes real shops fail
 
 ### ⚙️ Built-in dependability
 - **All-or-nothing order creation:** stock check, stock reduction, order write and cart clear happen as one step
-- **Unique order IDs** per customer (`ORD-20261107-AB12-0001`), safe under concurrent orders
+- **Unique order IDs** per customer (`ORD-20261109-AB12-0001`), safe under concurrent orders
 - **Double-click safe checkout** using a one-time idempotency key
 - **Automatic stock release** when an order is unpaid after 15 minutes or cancelled
 - **No card or UPI details ever stored**; payment goes through a swappable provider layer
+- **HMAC-SHA256 signed webhooks** between the UPI gateway and Grocify for tamper-proof payment confirmation
 - **Request-ID logging** with daily rotating files
 
 </td>
@@ -108,11 +113,15 @@ Beyond the basic shopping flow, the design focuses on what makes real shops fail
 </tr>
 <tr>
 <td align="center"><img src="docs/screenshots/02-cart.png" alt="Cart" width="400"><br><sub><b>Cart:</b> quantity controls, instant subtotals and checkout</sub></td>
-<td align="center"><img src="docs/screenshots/03-payment.png" alt="Digital Payment" width="400"><br><sub><b>Payment:</b> UPI, card or net banking with retry logic</sub></td>
+<td align="center"><img src="docs/screenshots/03-payment.png" alt="UPI Payment" width="400"><br><sub><b>Payment:</b> UPI QR code, app deep-link, UTR verification</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="docs/screenshots/05-tracking.png" alt="Order tracking" width="400"><br><sub><b>Tracking:</b> real-time five-step delivery timeline</sub></td>
-<td align="center"><img src="docs/screenshots/08-admin-inventory.png" alt="Admin inventory" width="400"><br><sub><b>Inventory Operations:</b> SKU monitoring & instant restock</sub></td>
+<td align="center"><img src="docs/screenshots/04-confirmation.png" alt="Payment confirmation" width="400"><br><sub><b>Confirmation:</b> animated checkmark, receipt card & order details</sub></td>
+<td align="center"><img src="docs/screenshots/05-tracking.png" alt="Order tracking" width="400"><br><sub><b>Tracking:</b> five-step delivery timeline with ETA & driver card</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/screenshots/06-admin-dashboard.png" alt="Admin dashboard" width="400"><br><sub><b>Dashboard:</b> revenue, order count & low-stock alerts</sub></td>
+<td align="center"><img src="docs/screenshots/08-admin-inventory.png" alt="Admin inventory" width="400"><br><sub><b>Inventory:</b> SKU monitoring & instant restock</sub></td>
 </tr>
 <tr>
 <td align="center"><img src="docs/screenshots/07-admin-deliveries.png" alt="Admin deliveries" width="400"><br><sub><b>Logistics:</b> order assignment and step advancement</sub></td>
@@ -120,57 +129,67 @@ Beyond the basic shopping flow, the design focuses on what makes real shops fail
 </tr>
 </table>
 
-More screens (confirmation, dashboard, inventory management) are in [`docs/screenshots`](docs/screenshots). A clickable design mock-up is in [`docs/mockup.html`](docs/mockup.html).
+More screens are in [`docs/screenshots`](docs/screenshots). A clickable design mock-up is in [`docs/mockup.html`](docs/mockup.html).
 
 ## 🧰 Tech stack
 
 ### Languages
 
-| Language | Where it is used | Approx. size |
-|---|---|---|
-| **JavaScript** (ES modules, Node.js) | Backend: server, data store, payments, middleware, scripts | ~1,200 lines in 38 files |
-| **JavaScript + JSX** (React) | Frontend: screens, components, state | ~1,300 lines in 37 files |
-| **CSS3** | Frontend styling (hand-written, no framework) | ~40 lines |
-| **HTML5** | App shell (`index.html`) and the design mock-up | ~200 lines |
-| **JavaScript** | Automated tests (`node:test`) | ~725 lines in 4 files |
-| **Python 3** | Documentation tooling only: draws diagrams, builds the Word report | ~600 lines |
-| **Markdown** | Documentation | this file and `docs/` |
+| Language | Where it is used |
+|---|---|
+| **JavaScript** (ES modules, Node.js) | Backend: server, data store, payments, middleware, scripts |
+| **JavaScript + JSX** (React) | Frontend: screens, components, state |
+| **CSS3** | Frontend styling (hand-written, no framework) |
+| **HTML5** | App shell (`index.html`) and the design mock-up |
+| **PHP 8.3** (Laravel 12) | Self-hosted UPI payment gateway (`upi-gateway/`) |
+| **JavaScript** | Automated tests (`node:test`) |
+| **Python 3** | Documentation tooling only: draws diagrams, builds the Word report |
+| **Markdown** | Documentation |
 
 ### Frontend
 
 | Technology | Version | Purpose |
 |---|---|---|
-| [React](https://react.dev) | 19.3.1 | User interface |
-| [React Router](https://reactrouter.com) | 7.18.5 | Pages and navigation |
-| [Vite](https://vite.dev) | 8.3.6 | Dev server and build |
-| [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react) | 6.2.1 | React support for Vite |
+| [React](https://react.dev) | 19 | User interface |
+| [React Router](https://reactrouter.com) | 7 | Pages and navigation |
+| [Vite](https://vite.dev) | 8 | Dev server and build |
+| [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react) | 6 | React support for Vite |
 | JavaScript, JSX, CSS3, HTML5 | n/a | Languages (no TypeScript, no CSS framework) |
 
 ### Backend
 
 | Technology | Version | Purpose |
 |---|---|---|
-| [Node.js](https://nodejs.org) | ≥ 22.12 (developed on 24.14) | Runtime |
-| [Express](https://expressjs.com) | 5.3.0 | Web framework and routing |
-| [bcryptjs](https://github.com/dcodeIO/bcrypt.js) | 3.0.3 | Password hashing |
-| [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) | 9.0.3 | Signed login tokens |
-| [helmet](https://helmetjs.github.io) | 8.3.0 | Security headers |
-| [cors](https://github.com/expressjs/cors) | 2.8.6 | Allowed website address |
-| [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit) | 8.7.3 | Login attempt limiting |
-| [dotenv](https://github.com/motdotla/dotenv) | 18.0.9 | Settings from `.env` |
-| [Winston](https://github.com/winstonjs/winston) | 3.19.0 | Logging |
-| [winston-daily-rotate-file](https://github.com/winstonjs/winston-daily-rotate-file) | 5.0.0 | Daily rotating log files |
+| [Node.js](https://nodejs.org) | >= 22.12 | Runtime |
+| [Express](https://expressjs.com) | 5 | Web framework and routing |
+| [bcryptjs](https://github.com/dcodeIO/bcrypt.js) | 3 | Password hashing |
+| [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) | 9 | Signed login tokens |
+| [helmet](https://helmetjs.github.io) | 8 | Security headers |
+| [cors](https://github.com/expressjs/cors) | 2 | Allowed website address |
+| [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit) | 8 | Login attempt limiting |
+| [dotenv](https://github.com/motdotla/dotenv) | 18 | Settings from `.env` |
+| [Winston](https://github.com/winstonjs/winston) | 3 | Logging |
+
+### UPI Payment Gateway
+
+| Technology | Version | Purpose |
+|---|---|---|
+| [PHP](https://www.php.net) | 8.3 | Runtime |
+| [Laravel](https://laravel.com) | 12 | Framework |
+| SQLite | — | Gateway database (orders, merchants, webhooks) |
+| HMAC-SHA256 | — | Webhook signing and verification |
 
 ### Data, payments and tooling
 
 | Area | Today | Planned |
 |---|---|---|
 | **Data store** | Local JSON file (`server/data/localStore.js`) | Firebase Firestore (same function names) |
+| **Postgres** (optional) | `DATABASE_URL` env var for persistent data across deploys | — |
 | **Login** | bcrypt + signed tokens (HS256, 7 days) | Firebase Authentication |
-| **Payments** | Mock provider (`server/payments/mockProvider.js`) | Real gateway through the same interface |
-| **Testing** | Node's built-in test runner (`node:test`) | n/a |
-| **Docs tooling** | Python 3 with `python-docx` and `matplotlib` | n/a |
-| **Version control** | Git and GitHub, pull-request workflow | n/a |
+| **Payments** | Self-hosted UPI gateway (`upi-gateway/`) or mock provider | — |
+| **Testing** | Node's built-in test runner (`node:test`) | — |
+| **Docs tooling** | Python 3 with `python-docx` and `matplotlib` | — |
+| **Version control** | Git and GitHub, pull-request workflow | — |
 
 ## 🏗️ Architecture
 
@@ -181,15 +200,39 @@ flowchart LR
   B["🌐 Browser<br/>React website (Vite)<br/>customer + admin screens"]
   subgraph API["⚙️ Express API (Node.js)"]
     direction TB
-    M["Request ID + logging<br/>token check · role check<br/>validation · rate limit"] --> R["Routes → Controllers → Services"]
+    M["Request ID + logging<br/>token check · role check<br/>validation · rate limit"] --> R["Routes → Controllers"]
   end
-  D[("🗄️ Data store<br/>local file now<br/>Firebase later")]
-  P["💳 Payment provider<br/>mock now, real gateway later"]
+  D[("🗄️ Data store<br/>JSON file or Postgres")]
+  G["💳 UPI Gateway<br/>Laravel · PHP 8.3<br/>port 8000"]
   L["📝 Log files<br/>daily rotation"]
   B <-->|"JSON over HTTP"| API
   API <--> D
-  API --> P
+  API <-->|"REST + HMAC webhooks"| G
   API --> L
+```
+
+### Payment flow
+
+```mermaid
+sequenceDiagram
+    participant C as Customer Browser
+    participant N as Grocify API (Node)
+    participant G as UPI Gateway (PHP)
+    participant U as UPI App
+
+    C->>N: POST /payments/initiate/:id
+    N->>G: POST /api/v1/orders (create)
+    G-->>N: order_id, QR, payment_url
+    N-->>C: QR code + payment link
+
+    C->>U: Scan QR / open UPI app
+    U-->>C: Payment done, get UTR
+
+    C->>N: POST /payments/verify-utr/:id {utr, gatewayOrderId}
+    N->>G: POST /pay/:orderId/utr
+    G-->>N: status: paid
+    G->>N: Webhook: order.paid (HMAC signed)
+    N-->>C: {paid: true} → redirect to confirmation
 ```
 
 Design diagrams (ER diagram, order flow) are in the [project report](docs/Grocify-Project-Report.docx) and [`docs/diagrams`](docs/diagrams).
@@ -200,6 +243,7 @@ Design diagrams (ER diagram, order flow) are in the [project report](docs/Grocif
 
 - **Node.js 22.12 or newer** (check with `node -v`) and **npm**
 - **Git**
+- **PHP 8.3+** (only if using the UPI gateway; check with `php -v`)
 
 ### Run it
 
@@ -228,9 +272,51 @@ Then open **http://localhost:5173**. The API runs on port 5000.
 
 > On Windows, use Git Bash or PowerShell; the commands are the same (use `Copy-Item .env.example .env` instead of `cp` in PowerShell).
 
-**Log in as admin** with the email and password you put in `.env`. **Customers** register from the website. No real money is used: the payment page runs in test mode with a "Simulate failed payment" button.
+**Log in as admin** with the email and password you put in `.env`. **Customers** register from the website.
+
+### One-command start (Windows)
+
+```bash
+start-grocify.bat
+```
+
+Starts the API (port 5000), website (port 5173) and UPI gateway (port 8000) together.
+
+### Mock mode vs UPI Gateway
+
+| | Mock mode | UPI Gateway |
+|---|---|---|
+| **Setup** | Default, no extra config | Set `PAYMENT_PROVIDER=gateway` in `.env` + gateway credentials |
+| **How it works** | "Pay" button succeeds instantly | Real UPI QR codes, UTR verification, webhook confirmation |
+| **Real money** | No | No (demo mode: any 12-digit UTR is accepted) |
+| **Use for** | Quick demos, testing | Realistic e-commerce demo, PBL presentations |
 
 **Start clean before a demo:** `npm run demo:reset` wipes all data and recreates the samples.
+
+### Setting up the UPI Gateway
+
+```bash
+# 1. Install PHP dependencies (one time)
+cd upi-gateway
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+
+# 2. Set GATEWAY_DEMO_AUTO_APPROVE_UTR=true in upi-gateway/.env for demo mode
+
+# 3. Start the gateway
+php artisan serve --host=127.0.0.1 --port=8000
+
+# 4. In the main Grocify .env, set:
+#    PAYMENT_PROVIDER=gateway
+#    PAYMENT_GATEWAY_URL=http://127.0.0.1:8000
+#    PAYMENT_GATEWAY_KEY_ID=<from gateway admin panel>
+#    PAYMENT_GATEWAY_SECRET=<from gateway admin panel>
+#    PAYMENT_WEBHOOK_SECRET=<from gateway admin panel>
+```
+
+The receiving UPI ID is set in the gateway admin panel (`/login`), never in code.
 
 ## 🔧 Configuration
 
@@ -244,15 +330,16 @@ Copy `.env.example` to `.env`. `.env` is git-ignored and must never be committed
 | `JWT_SECRET` | random per start | Signs login tokens. **Set a long random value**, or logins reset on every restart |
 | `JWT_EXPIRES_IN` | `7d` | Login lifetime |
 | `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` | none | Admin account created by `npm run seed` |
-| `PAYMENT_PROVIDER` | `mock` | Payment provider (`mock` or `gateway`) |
+| `PAYMENT_PROVIDER` | `mock` | Payment provider: `mock` (instant) or `gateway` (UPI gateway) |
+| `PAYMENT_GATEWAY_URL` | none | UPI gateway address (e.g. `http://127.0.0.1:8000`) |
+| `PAYMENT_GATEWAY_KEY_ID` / `SECRET` | none | Gateway API credentials (from the gateway admin panel) |
+| `PAYMENT_WEBHOOK_SECRET` | none | HMAC secret for webhook signature verification |
 | `PAYMENT_TIMEOUT_MINUTES` | `15` | Unpaid orders are cancelled after this, and stock is released |
 | `LOW_STOCK_DEFAULT_LIMIT` | `10` | Low-stock limit for new products |
 | `LOG_LEVEL` / `LOG_DIR` | `info` / `./logs` | Logging level and folder |
 | `LOG_MAX_FILES` / `LOG_MAX_SIZE` | `14d` / `10m` | Log rotation |
 | `DATA_FILE` | `server/data/dev-db.json` | Where the local data file lives (optional). Not tracked by Git |
-| `DATABASE_URL` | (empty) | Postgres connection string. When set, all users, addresses, orders and payments are stored there and survive every redeploy |
-| `FIREBASE_*`, `VITE_FIREBASE_*`, `VITE_GOOGLE_CREATOR_ID` | none | **Not used yet.** Reserved for the Firebase step |
-| `PAYMENT_GATEWAY_*`, `PAYMENT_WEBHOOK_SECRET` | none | **Not used yet.** Reserved for a real gateway |
+| `DATABASE_URL` | (empty) | Postgres connection string. When set, data survives every redeploy |
 
 ## 📜 Scripts
 
@@ -261,6 +348,7 @@ Copy `.env.example` to `.env`. `.env` is git-ignored and must never be committed
 | `npm run server` | Start the API (port 5000) |
 | `npm run dev:server` | Start the API and restart on file changes |
 | `npm run dev:client` | Start the website (port 5173, proxies `/api` to the server) |
+| `npm run gateway` | Start the UPI gateway (port 8000, needs PHP 8.3+) |
 | `npm run build` | Build the website into `dist/` |
 | `npm run seed` | Create sample products and the admin account |
 | `npm run demo:reset` | Wipe all local data, then seed again (refuses in production) |
@@ -274,8 +362,7 @@ Grocify/
 ├── vite.config.js              # Vite setup: React plugin, /api proxy, app version
 ├── package.json                # Scripts, dependencies, and the app VERSION (single source)
 ├── .env.example                # Settings template (blank values); copy to .env
-├── firebase.json               # Firebase config (placeholder until Firebase is connected)
-├── firestore.rules             # Deny-all rules: only the server talks to the database
+├── start-grocify.bat           # One-click launcher: API + site + gateway (Windows)
 │
 ├── server/                     # ── BACKEND (Node.js + Express, JavaScript ES modules)
 │   ├── index.js                #   Starts the API and the 1-minute expiry sweep
@@ -284,8 +371,7 @@ Grocify/
 │   ├── resetDemo.js            #   Wipe data and re-seed (npm run demo:reset)
 │   ├── config/
 │   │   ├── env.js              #   Reads .env, app version, defaults
-│   │   ├── logger.js           #   Winston: levels, JSON lines, daily rotation
-│   │   └── firebaseAdmin.js    #   Placeholder for Firebase Admin (empty on purpose)
+│   │   └── logger.js           #   Winston: levels, JSON lines, daily rotation
 │   ├── middleware/
 │   │   ├── authenticate.js     #   Verifies the login token
 │   │   ├── authorize.js        #   Role check (customer / admin)
@@ -295,12 +381,13 @@ Grocify/
 │   ├── routes/                 #   URL → controller maps (auth, products, categories, cart,
 │   │                           #     orders, payments, inventory, notifications, admin)
 │   ├── controllers/            #   Request handling and business rules (one per area)
+│   │   └── paymentsController.js  # Initiate, verify UTR, status, webhook handler
 │   ├── services/
 │   │   └── orderService.js     #   Expires unpaid orders and logs each one
 │   ├── payments/
 │   │   ├── PaymentProvider.js  #   The interface every provider follows
-│   │   ├── mockProvider.js     #   Fake gateway used now
-│   │   ├── gatewayProvider.js  #   Empty slot for the real gateway
+│   │   ├── mockProvider.js     #   Instant success/failure for testing
+│   │   ├── gatewayProvider.js  #   Calls the UPI gateway REST API
 │   │   └── index.js            #   Picks the provider from PAYMENT_PROVIDER
 │   ├── data/
 │   │   └── localStore.js       #   Local data store + all-or-nothing order logic
@@ -315,14 +402,24 @@ Grocify/
 │   ├── components/             #   Navbar, Footer, ProductCard, StatusBadge,
 │   │                           #     DeliveryTimeline, ErrorBoundary
 │   ├── pages/
-│   │   ├── customer/           #   14 screens: Home, Login, Register, Profile, ProductList,
-│   │   │                       #     ProductDetail, Cart, Checkout, Payment, PaymentConfirmation,
-│   │   │                       #     OrderHistory, OrderTracking, Notifications, NotFound
-│   │   └── admin/              #   9 screens: Dashboard, ManageProducts, ManageCategories,
-│   │                           #     ManageCustomers, ManageOrders, ManagePayments, Inventory,
-│   │                           #     Deliveries, Reports
-│   ├── styles/main.css         #   All styling
-│   └── config/firebase.js      #   Placeholder for Firebase (empty on purpose)
+│   │   ├── customer/           #   Home, Login, Register, Profile, ProductList,
+│   │   │                       #     ProductDetail, Cart, Checkout, Payment,
+│   │   │                       #     PaymentConfirmation, OrderHistory, OrderTracking,
+│   │   │                       #     Notifications, NotFound
+│   │   └── admin/              #   Dashboard, ManageProducts, ManageCategories,
+│   │                           #     ManageCustomers, ManageOrders, ManagePayments,
+│   │                           #     Inventory, Deliveries, Reports
+│   └── styles/main.css         #   All styling
+│
+├── upi-gateway/                # ── UPI PAYMENT GATEWAY (Laravel 12, PHP 8.3, SQLite)
+│   ├── app/
+│   │   ├── Http/Controllers/   #   Checkout (QR, UTR), API (orders, merchants), Admin
+│   │   ├── Services/           #   OrderService, WebhookOutboxService, WebhookOutboxDispatcher
+│   │   ├── Jobs/SendWebhook.php#   Queued HMAC-signed webhook delivery with retries
+│   │   └── Models/             #   Order, User (merchant), WebhookOutbox
+│   ├── database/               #   Migrations and SQLite database (git-ignored)
+│   ├── routes/                 #   Web and API routes
+│   └── .env                    #   Gateway config (git-ignored)
 │
 ├── tests/                      # ── 45 automated tests (node:test)
 │   ├── api.test.js             #   Login, roles, products, cart
@@ -342,10 +439,10 @@ Grocify/
 │   └── report/build_report.py  #   Rebuilds the Word report (Python)
 │
 ├── logs/                       # Runtime logs (git-ignored)
-└── public/images/              # Static images (placeholder)
+└── public/images/              # Product images (optimised 800px)
 ```
 
-<sub>Not tracked by Git: `node_modules/`, `dist/`, `.env`, `logs/*.log`, and `server/data/dev-db.json` (your local data).</sub>
+<sub>Not tracked by Git: `node_modules/`, `dist/`, `.env`, `logs/*.log`, `server/data/dev-db.json`, and `upi-gateway/.env`, `upi-gateway/database/*.sqlite`.</sub>
 
 ## 🔄 Workflow
 
@@ -358,13 +455,12 @@ flowchart TD
   C --> D{"Enough stock for<br/>every item?"}
   D -- No --> E["Refused: 'only N available'<br/>nothing is reserved"]
   D -- Yes --> F["ONE all-or-nothing step:<br/>unique order ID · stock reduced · cart cleared · customer notified"]
-  F --> G["Customer pays<br/>UPI · card · net banking"]
+  F --> G["Customer pays<br/>UPI QR · UPI app · UTR"]
   G --> H{"Payment<br/>successful?"}
   H -- No --> I["Order stays 'Payment Pending'<br/>retry, or cancelled after 15 min<br/>and stock restored"]
   I --> G
-  H -- Yes --> J["Order confirmed"]
-  J --> K["Admin assigns a delivery person"]
-  K --> L["Packed → Shipped → Out for Delivery → Delivered<br/>(customer notified at each step)"]
+  H -- Yes --> J["Payment confirmed<br/>animated receipt shown"]
+  J --> K["Order tracking page<br/>Packed → Shipped → Out for Delivery → Delivered<br/>(customer notified at each step)"]
 ```
 
 ### 2. Order status lifecycle
@@ -390,7 +486,7 @@ Delivery moves **one step at a time**: no skipping and no going back.
 
 ### 3. Development workflow
 
-The project was built in seven phases that fit the 14-week PBL timeline. Each phase ended with something that could be run and checked.
+The project was built in phases that fit the 14-week PBL timeline. Each phase ended with something that could be run and checked.
 
 | Phase | Work | Delivered through |
 |---|---|---|
@@ -401,39 +497,24 @@ The project was built in seven phases that fit the 14-week PBL timeline. Each ph
 | 5 Delivery and admin | Delivery tracking, notifications, reports | [PR #1](https://github.com/Aniket886/Grocify/pull/1) |
 | 6 Hardening | Logging fixes, 13 hardening tests, UI polish, test report | [PR #2](https://github.com/Aniket886/Grocify/pull/2) |
 | 7 Final | Project report, demo script, demo reset command | [PR #3](https://github.com/Aniket886/Grocify/pull/3) |
-| v1.0.0 | README refresh, version in footer and API | This change |
+| v1.0.0 | README refresh, version in footer and API | [PR #4](https://github.com/Aniket886/Grocify/pull/4) |
+| UI overhaul | Dark theme, responsive landing page, modern UI | [PR #5](https://github.com/Aniket886/Grocify/pull/5) – [PR #6](https://github.com/Aniket886/Grocify/pull/6) |
+| PWA + auth fixes | Mobile install banner, service worker, auto-seed login | — |
+| Product catalogue | Real Indian grocery photography, optimised images, e-commerce fields | [PR #7](https://github.com/Aniket886/Grocify/pull/7) – [PR #8](https://github.com/Aniket886/Grocify/pull/8) |
+| UPI Gateway | Self-hosted Laravel gateway, QR payments, webhook flow | [PR #9](https://github.com/Aniket886/Grocify/pull/9) |
+| Rs. 1 test product | Tea sachet priced at Rs. 1 for end-to-end UPI testing | [PR #10](https://github.com/Aniket886/Grocify/pull/10) |
+| Demo mode banner | Clear "no real money" notice when using mock payments | [PR #11](https://github.com/Aniket886/Grocify/pull/11) |
+| Data persistence | Postgres support for surviving Render redeploys | [PR #12](https://github.com/Aniket886/Grocify/pull/12) |
+| Payment placeholders | Card and net banking placeholder panels, clearer UPI wording | [PR #13](https://github.com/Aniket886/Grocify/pull/13) |
+| Gateway demo mode | `GATEWAY_DEMO_AUTO_APPROVE_UTR` switch for demos | [PR #14](https://github.com/Aniket886/Grocify/pull/14) |
+| Payment UI redesign | Professional checkout page with QR, timer, UPI app buttons | [PR #15](https://github.com/Aniket886/Grocify/pull/15) |
+| Fast UTR + order flow | UTR verification 13s → 1.7s, confirmation + tracking redesign | [PR #16](https://github.com/Aniket886/Grocify/pull/16) |
 
 ### 4. Git work tree
 
 `main` is the stable branch. After the first push, **every change goes on its own branch and is merged through a reviewed pull request**. Nothing is pushed straight to `main`.
 
-```mermaid
-gitGraph
-  commit id: "Phases 1-4 (4 commits)"
-  branch phase-5-delivery-reports-notifications
-  commit id: "backend"
-  commit id: "frontend"
-  commit id: "tests + README"
-  checkout main
-  merge phase-5-delivery-reports-notifications id: "PR #1"
-  branch phase-6-hardening-testing-polish
-  commit id: "logging"
-  commit id: "UI polish"
-  commit id: "hardening tests"
-  commit id: "test + logging docs"
-  checkout main
-  merge phase-6-hardening-testing-polish id: "PR #2"
-  branch phase-7-final-report-and-demo
-  commit id: "demo reset + tidy"
-  commit id: "report + diagrams"
-  commit id: "demo script"
-  checkout main
-  merge phase-7-final-report-and-demo id: "PR #3"
-  branch readme-v1-layout-and-version
-  commit id: "README + v1.0.0"
-```
-
-**Branch names** describe the work (`phase-5-delivery-reports-notifications`). **Commits** are grouped by purpose with a clear title and a body explaining what changed and why. **Pull requests** have a clear title, a summary, how it was tested, and notes for the reviewer.
+**Branch names** describe the work (`feat/fast-utr-and-order-flow`). **Commits** are grouped by purpose with a clear title and a body explaining what changed and why. **Pull requests** have a clear title, a summary, how it was tested, and notes for the reviewer.
 
 ```bash
 git checkout main && git pull
@@ -467,9 +548,14 @@ Base address: `http://localhost:5000/api`. Everything is JSON. 🔓 public · �
 | POST | `/orders` | 👤 | Place an order (header `Idempotency-Key`) |
 | GET | `/orders` | 👤 | My order history |
 | GET | `/orders/:id` | 👤 owner · 🛡️ | One order with payment and delivery |
-| POST | `/orders/:id/pay` | 👤 owner | Pay `{ method: "UPI" \| "Card" \| "Net Banking" }` |
+| POST | `/orders/:id/pay` | 👤 owner | Pay (mock mode only) |
 | POST | `/orders/:id/cancel` | 👤 owner · 🛡️ | Cancel an unpaid order |
+| POST | `/orders/:id/progress` | 👤 owner | Advance demo delivery step |
 | GET | `/payments/config` | 🔓 | Active provider and whether test mode is on |
+| POST | `/payments/initiate/:id` | 👤 owner | Create a UPI gateway payment order |
+| GET | `/payments/status/:id` | 👤 owner | Check payment status (`?local=1` for local-only) |
+| POST | `/payments/verify-utr/:id` | 👤 owner | Submit UTR for instant verification |
+| POST | `/payments/webhook` | 🔓 | Receive HMAC-signed gateway webhook |
 | GET | `/notifications` | 👤 | My notifications and unread count |
 | POST | `/notifications/read-all` · `/:id/read` | 👤 | Mark read |
 | GET | `/inventory` | 🛡️ | Stock list (`?lowOnly=true`) |
@@ -500,6 +586,7 @@ Roles are enforced **on the server** for every request. Nobody can register as a
 - **Server-side validation** of all input; oversized or broken requests are refused with a clear message, never a crash.
 - **Rate limiting** on login and register (30 attempts per 15 minutes), **security headers** (Helmet), **CORS** limited to the website address, 100 KB request limit.
 - **Card, UPI and bank details are never accepted or stored.** Only method, status and transaction ID are kept.
+- **HMAC-SHA256 signed webhooks** between the UPI gateway and Grocify, with timestamp validation and replay protection.
 - Responses never contain password hashes; logs never contain passwords, tokens, card data or request bodies (an automated test scans for this).
 - `.env` is git-ignored; `.env.example` holds blanks only.
 
@@ -526,19 +613,21 @@ Highlights: **20 customers race for 5 units and exactly 5 orders succeed with st
 
 ## ⚠️ Known limitations
 
-- **Local mode:** data lives in a local JSON file and login is handled by the app. Fine for one server; Firebase is the planned replacement (the code has swap points ready).
-- **Mock payments:** no real money moves. The real-gateway slot exists but is empty.
+- **Local mode:** data lives in a local JSON file by default (Postgres is optional). Fine for one server; Firebase is the planned replacement.
+- **UPI gateway is single-threaded:** `php artisan serve` handles one request at a time. Fine for demos; production would use Nginx + PHP-FPM.
+- **Demo UTR mode:** with `GATEWAY_DEMO_AUTO_APPROVE_UTR=true`, any 12-digit number is accepted. Real bank-credit verification requires forwarding SMS alerts to the gateway.
 - **Notifications** appear inside the website only (no email or SMS).
-- **No production deployment** is set up; the server does not serve the built website.
+- **Card and net banking** are placeholder panels — only UPI payments work today.
 - Browser checks were done by hand; the server logic is covered by automated tests.
 
 ## 🗺️ Roadmap
 
 - [ ] Connect Firebase (login and database)
-- [ ] Real payment gateway: test mode first, then live, with signed confirmation callbacks
+- [ ] Card and net banking payment methods
 - [ ] Email / SMS / messaging-app notifications
 - [ ] Delivery partner screen and live status updates; PDF invoices
 - [ ] Product photos, coupons, delivery time slots
+- [ ] Nginx + PHP-FPM for production gateway deployment
 - [ ] Automated browser tests and a CI pipeline
 
 ## 📚 Documentation
@@ -560,7 +649,7 @@ To release a new version:
 
 ```bash
 npm version minor --no-git-tag-version   # or patch / major; updates package.json and the lockfile
-# then update the version badge and the footer line at the bottom of this README
+# then update the version badge at the top of this README
 ```
 
 ## 📄 License
@@ -571,40 +660,8 @@ This is an academic project for GM University (course UC25CA2303). No open-sourc
 
 <div align="center">
 
-**Grocify v1.0.0** · Online Grocery E-Commerce System · UC25CA2303 · GM University
+**Grocify v1.1.4** · Online Grocery E-Commerce System · UC25CA2303 · GM University
 
-<sub>README last updated 2026-11-08 · [Report an issue](https://github.com/Aniket886/Grocify/issues)</sub>
+<sub>README last updated 2026-11-09 · [Report an issue](https://github.com/Aniket886/Grocify/issues)</sub>
 
 </div>
-
-## UPI Gateway (`upi-gateway/`)
-
-Grocify takes UPI payments through a self-hosted Laravel gateway that lives in `upi-gateway/` and runs as a separate PHP process on port 8000. Grocify talks to it over HTTP only (`server/payments/gatewayProvider.js`).
-
-- Start everything: `start-grocify.bat` (API 5000, site 5173, gateway 8000), or just the gateway: `npm run gateway` (needs PHP 8.2+).
-- Config: `.env` holds `PAYMENT_GATEWAY_URL`, `PAYMENT_GATEWAY_KEY_ID`, `PAYMENT_GATEWAY_SECRET` and `PAYMENT_WEBHOOK_SECRET`. The receiving UPI ID is set in the gateway admin panel (`/login`), never in code.
-- Flow: checkout creates a gateway order, the customer pays by QR or UPI app and submits the UTR, and Grocify marks the order paid only when the gateway reports `paid`.
-- Runtime data (`upi-gateway/.env`, `database/*.sqlite`, logs) is git-ignored.
-
-### Verifying UPI payments (no PG keys)
-
-A UTR typed by a customer is never trusted. The order goes to `review` and is paid automatically only when a matching bank credit exists (same UTR, same amount, received after the order was created, each credit usable once).
-
-Forward your "money received" SMS / app-notification text from the receiving phone to the gateway with an SMS-forwarder or automation app (Tasker, MacroDroid, etc.):
-
-```
-POST http://<gateway-host>:8000/api/v1/inbound/credit
-X-Api-Key: <PAYMENT_GATEWAY_KEY_ID>   X-Api-Secret: <PAYMENT_GATEWAY_SECRET>
-{"message": "<full SMS text>"}
-```
-
-Debit/OTP messages are ignored. Orders without a matching credit can still be approved or rejected by hand in the gateway admin panel (Orders).
-
-## Keeping user data across deployments
-
-Users, saved addresses, orders and payments are runtime data. They are **not** in Git (`server/data/dev-db.json` is ignored), so merging a PR never overwrites them. But Render's container disk is wiped on every deploy, so the data must live somewhere that persists. Pick one:
-
-1. **Postgres (recommended, free options exist):** create a database (Neon, Supabase or Render Postgres), then set `DATABASE_URL` on the Render service. The app creates its own `app_state` table on first start and saves there. Existing data is loaded on every boot.
-2. **Render persistent disk (paid):** attach a disk at `/var/data` and set `DATA_FILE=/var/data/grocify-db.json`.
-
-Without either, the server logs a warning at startup that data is lost on redeploy. A fresh, empty store is seeded with the demo catalogue and the admin account.
