@@ -28,7 +28,9 @@ rem  [FILL: command to start client]
 set "CMD_CLIENT=npm run dev:client"
 
 rem  [FILL: any additional required commands]   (leave empty if none)
-set "CMD_EXTRA="
+rem  UPI Gateway (PHP, port 8000). Uses PHP from PATH or the winget install.
+set "PATH=%LOCALAPPDATA%\Microsoft\WinGet\Packages\PHP.PHP.8.3_Microsoft.Winget.Source_8wekyb3d8bbwe;%PATH%"
+set "CMD_EXTRA=npm run gateway"
 
 set "API_PORT=5000"
 set "WEB_PORT=5173"

@@ -1,0 +1,17 @@
+<?php
+
+use App\Http\Controllers\Api\AccountApiController;
+use App\Http\Controllers\Api\InboundCreditController;
+use App\Http\Controllers\Api\OrderApiController;
+use Illuminate\Support\Facades\Route;
+
+// Per-key (120/min) and per-IP (600/min) throttling is handled inside
+// the api.key middleware (AuthenticateApiKey), so no separate throttle:X,1
+// is needed here.  Public / unauthenticated API endpoints would still need
+// their own throttle middleware if added.
+Route::prefix('v1')->middleware(['api.key'])->group(function () {
+    Route::get('accounts', [AccountApiController::class, 'index']);
+    Route::post('orders', [OrderApiController::class, 'store']);
+    Route::post('inbound/credit', [InboundCreditController::class, 'store']);
+    Route::get('orders/{orderNo}', [OrderApiController::class, 'show']);
+});

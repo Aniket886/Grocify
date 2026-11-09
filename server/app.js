@@ -36,7 +36,12 @@ export default function createApp() {
   });
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(cors({ origin: true, credentials: true }));
-  app.use(express.json({ limit: '100kb' }));
+  app.use(express.json({
+    limit: '100kb',
+    verify: (req, res, buf) => {
+      req.rawBody = buf.toString('utf8');
+    },
+  }));
 
   // One line per request: ID, method, path, status, duration, user, IP.
   // Level follows the outcome: 5xx is an error, 4xx a warning, the rest info.

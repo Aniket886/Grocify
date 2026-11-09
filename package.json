@@ -8,6 +8,7 @@
     "server": "node server/index.js",
     "dev:server": "node --watch server/index.js",
     "dev:client": "vite",
+    "gateway": "php upi-gateway/artisan serve --host=127.0.0.1 --port=8000",
     "build": "vite build",
     "seed": "node server/seed.js",
     "demo:reset": "node server/resetDemo.js",
