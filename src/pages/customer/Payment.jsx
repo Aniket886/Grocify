@@ -137,6 +137,7 @@ export default function Payment() {
   }
 
   const isGateway = config.provider === 'gateway';
+  const panelStyle = { margin: '16px 0', padding: '16px', background: 'var(--surface-subtle, #f8fafc)', borderRadius: '12px', border: '1px solid var(--border, #e2e8f0)' };
 
   return (
     <div className="card narrow">
@@ -156,11 +157,11 @@ export default function Payment() {
         {config.methods.map((m) => <option key={m}>{m}</option>)}
       </select>
 
-      {isGateway && (
-        <div style={{ margin: '16px 0', padding: '16px', background: 'var(--surface-subtle, #f8fafc)', borderRadius: '12px', border: '1px solid var(--border, #e2e8f0)' }}>
+      {isGateway && method === 'UPI' && (
+        <div style={{ ...panelStyle, color: '#0f172a' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-            <h4 style={{ margin: 0 }}>🏦 Pay with UPI</h4>
-            <span style={{ fontSize: '0.8rem', background: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '12px', fontWeight: 600 }}>Auto-Verified</span>
+            <h4 style={{ margin: 0, color: '#0f172a' }}>🏦 Pay with UPI</h4>
+            <span style={{ fontSize: '0.8rem', background: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '12px', fontWeight: 600 }}>Bank-verified</span>
           </div>
 
           {gatewayData && (
@@ -189,7 +190,7 @@ export default function Payment() {
           {/* Direct UTR Entry for Instant Verification */}
           <form onSubmit={submitUtrVerification} style={{ borderTop: '1px solid #e2e8f0', paddingTop: '12px' }}>
             <label htmlFor="utrInput" style={{ fontSize: '0.85rem', fontWeight: 600 }}>
-              Already paid? Enter 12-digit UTR for Instant Verification:
+              Already paid? Enter the 12-digit UTR:
             </label>
             <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
               <input
@@ -204,7 +205,7 @@ export default function Payment() {
                 style={{ flex: 1, fontFamily: 'monospace', letterSpacing: '1px' }}
               />
               <button type="submit" className="primary" disabled={busy || utr.length !== 12}>
-                Verify &amp; Complete
+                Submit UTR
               </button>
             </div>
             <span style={{ fontSize: '0.75rem', color: '#64748b', display: 'block', marginTop: '4px' }}>
@@ -213,7 +214,35 @@ export default function Payment() {
           </form>
 
           <p style={{ margin: '12px 0 0', fontSize: '0.8rem', color: '#64748b' }}>
-            ⚡ Payments are automatically verified and confirmed within seconds.
+            ⚡ Your order is confirmed automatically once the matching bank credit is received. A UTR that doesn't match is held for review, never accepted blindly.
+          </p>
+        </div>
+      )}
+
+      {isGateway && method !== 'UPI' && (
+        <div style={{ ...panelStyle, color: '#0f172a' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+            <h4 style={{ margin: 0, color: '#0f172a' }}>{method === 'Card' ? '💳 Pay with Card' : '🏛️ Pay with Net Banking'}</h4>
+            <span style={{ fontSize: '0.8rem', background: '#fef3c7', color: '#92400e', padding: '2px 8px', borderRadius: '12px', fontWeight: 600 }}>Coming soon</span>
+          </div>
+          {/* Placeholder only: nothing here is submitted or charged. */}
+          {method === 'Card' ? (
+            <fieldset disabled style={{ border: 0, padding: 0, margin: 0, display: 'grid', gap: '8px' }}>
+              <input placeholder="Card number" aria-label="Card number" />
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <input placeholder="MM / YY" aria-label="Expiry" style={{ flex: 1 }} />
+                <input placeholder="CVV" aria-label="CVV" style={{ flex: 1 }} />
+              </div>
+              <input placeholder="Name on card" aria-label="Name on card" />
+            </fieldset>
+          ) : (
+            <fieldset disabled style={{ border: 0, padding: 0, margin: 0 }}>
+              <select aria-label="Choose your bank"><option>Choose your bank</option></select>
+            </fieldset>
+          )}
+          <button className="primary" disabled style={{ marginTop: '12px' }}>Not available yet</button>
+          <p style={{ margin: '12px 0 0', fontSize: '0.8rem', color: '#64748b' }}>
+            This is a placeholder for a future integration. Please choose UPI to pay now.
           </p>
         </div>
       )}
