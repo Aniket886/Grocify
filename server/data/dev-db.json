@@ -728,6 +728,21 @@
       "description": "Signature gift hamper with Forest Honey (250g), A2 Cultured Ghee (250ml), Kashmiri Walnuts (200g), and 70% Dark Chocolate.",
       "image": "/images/products/festive_hamper.png",
       "featured": true
+    },
+    {
+      "id": "2de89e86-5e4c-4d53-9de2-9b41f99b444d",
+      "isActive": true,
+      "createdAt": "2026-11-09T11:07:52.000Z",
+      "name": "Tea Sachet (₹1 payment test)",
+      "price": 1,
+      "stock": 500,
+      "description": "Single tea sachet priced at ₹1 for testing UPI checkout end to end.",
+      "categoryId": "148c38ce-60a2-4b67-892c-8651fd639212",
+      "lowStockLimit": 10,
+      "image": "/images/products/darjeeling_tea.jpg",
+      "badge": "Test Item",
+      "unit": "1 pc",
+      "origin": "Darjeeling, West Bengal"
     }
   ],
   "carts": {
