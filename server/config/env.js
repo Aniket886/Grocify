@@ -26,6 +26,8 @@ const env = {
   jwtSecret: hasJwtSecret ? process.env.JWT_SECRET : defaultStableJwtSecret,
   jwtSecretGenerated: !hasJwtSecret,
   jwtExpiresIn: pick(process.env.JWT_EXPIRES_IN, '7d'),
+  // Postgres connection string (Neon, Supabase, Render Postgres...). When set, data is stored there so it survives redeploys.
+  databaseUrl: pick(process.env.DATABASE_URL, ''),
   dataFile: process.env.DATA_FILE || path.join(root, 'server/data/dev-db.json'),
   logLevel: process.env.LOG_LEVEL || 'info',
   logDir: path.resolve(root, process.env.LOG_DIR || './logs'),

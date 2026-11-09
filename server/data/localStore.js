@@ -4,25 +4,90 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import env from '../config/env.js';
+import logger from '../config/logger.js';
 import { DELIVERY_STATUSES, ASSIGNMENT_REQUIRED_FROM } from '../utils/constants.js';
 
 let db = null;
+let pool = null; // set when DATABASE_URL is configured (durable Postgres storage)
+let flushTimer = null;
+let writing = Promise.resolve();
+
+function normalize(d) {
+  d = d && typeof d === 'object' ? d : {};
+  return {
+    ...d,
+    users: d.users || [],
+    categories: d.categories || [],
+    products: d.products || [],
+    carts: d.carts || {},
+    orders: d.orders || [],
+    payments: d.payments || [],
+    deliveries: d.deliveries || [],
+    notifications: d.notifications || [],
+  };
+}
 
 function load() {
   if (db) return db;
   try {
-    db = JSON.parse(fs.readFileSync(env.dataFile, 'utf8'));
+    db = normalize(JSON.parse(fs.readFileSync(env.dataFile, 'utf8')));
   } catch {
-    db = { users: [], categories: [], products: [], carts: {} };
+    db = normalize(null);
   }
-  db.orders = db.orders || [];
-  db.payments = db.payments || [];
-  db.deliveries = db.deliveries || [];
-  db.notifications = db.notifications || [];
   return db;
 }
 
+/**
+ * Call once at startup. With DATABASE_URL set, all data (users, orders, payments, addresses)
+ * lives in Postgres and survives every redeploy. Without it the JSON file at DATA_FILE is used,
+ * which is only durable on a machine whose disk persists (local dev, or a Render persistent disk).
+ */
+export async function initStore(injectedPool) {
+  if (!env.databaseUrl && !injectedPool) {
+    if (env.nodeEnv === 'production' && !process.env.DATA_FILE) {
+      logger.warn('No DATABASE_URL or DATA_FILE set: data is stored on the container disk and is LOST on every redeploy');
+    }
+    return;
+  }
+  if (injectedPool) {
+    pool = injectedPool; // tests
+  } else {
+    const { default: pg } = await import('pg');
+    const local = /@(localhost|127\.0\.0\.1)[:/]/.test(env.databaseUrl);
+    pool = new pg.Pool({ connectionString: env.databaseUrl, max: 2, ssl: local ? undefined : { rejectUnauthorized: false } });
+  }
+  await pool.query('CREATE TABLE IF NOT EXISTS app_state (id INT PRIMARY KEY, data JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT now())');
+  const { rows } = await pool.query('SELECT data FROM app_state WHERE id = 1');
+  db = normalize(rows[0]?.data);
+  logger.info('Data store: Postgres', { users: db.users.length, orders: db.orders.length });
+  if (!rows[0]) await persist();
+}
+
+function persist() {
+  const payload = JSON.stringify(db);
+  writing = writing
+    .then(() => pool.query(
+      'INSERT INTO app_state (id, data) VALUES (1, $1::jsonb) ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()',
+      [payload],
+    ))
+    .catch((e) => logger.error('Failed to save data to Postgres', { message: e.message }));
+  return writing;
+}
+
+/** Writes any pending data now. Called on shutdown so a redeploy never drops the last orders. */
+export async function flushStore() {
+  if (!pool) return;
+  clearTimeout(flushTimer);
+  flushTimer = null;
+  if (db) await persist();
+  await writing;
+}
+
 function save() {
+  if (pool) {
+    flushTimer ||= setTimeout(() => { flushTimer = null; persist(); }, 200);
+    return;
+  }
   fs.mkdirSync(path.dirname(env.dataFile), { recursive: true });
   const payload = JSON.stringify(db, null, 2);
   try {

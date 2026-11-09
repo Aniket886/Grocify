@@ -249,7 +249,8 @@ Copy `.env.example` to `.env`. `.env` is git-ignored and must never be committed
 | `LOW_STOCK_DEFAULT_LIMIT` | `10` | Low-stock limit for new products |
 | `LOG_LEVEL` / `LOG_DIR` | `info` / `./logs` | Logging level and folder |
 | `LOG_MAX_FILES` / `LOG_MAX_SIZE` | `14d` / `10m` | Log rotation |
-| `DATA_FILE` | `server/data/dev-db.json` | Where the local data file lives (optional) |
+| `DATA_FILE` | `server/data/dev-db.json` | Where the local data file lives (optional). Not tracked by Git |
+| `DATABASE_URL` | (empty) | Postgres connection string. When set, all users, addresses, orders and payments are stored there and survive every redeploy |
 | `FIREBASE_*`, `VITE_FIREBASE_*`, `VITE_GOOGLE_CREATOR_ID` | none | **Not used yet.** Reserved for the Firebase step |
 | `PAYMENT_GATEWAY_*`, `PAYMENT_WEBHOOK_SECRET` | none | **Not used yet.** Reserved for a real gateway |
 
@@ -598,3 +599,12 @@ X-Api-Key: <PAYMENT_GATEWAY_KEY_ID>   X-Api-Secret: <PAYMENT_GATEWAY_SECRET>
 ```
 
 Debit/OTP messages are ignored. Orders without a matching credit can still be approved or rejected by hand in the gateway admin panel (Orders).
+
+## Keeping user data across deployments
+
+Users, saved addresses, orders and payments are runtime data. They are **not** in Git (`server/data/dev-db.json` is ignored), so merging a PR never overwrites them. But Render's container disk is wiped on every deploy, so the data must live somewhere that persists. Pick one:
+
+1. **Postgres (recommended, free options exist):** create a database (Neon, Supabase or Render Postgres), then set `DATABASE_URL` on the Render service. The app creates its own `app_state` table on first start and saves there. Existing data is loaded on every boot.
+2. **Render persistent disk (paid):** attach a disk at `/var/data` and set `DATA_FILE=/var/data/grocify-db.json`.
+
+Without either, the server logs a warning at startup that data is lost on redeploy. A fresh, empty store is seeded with the demo catalogue and the admin account.

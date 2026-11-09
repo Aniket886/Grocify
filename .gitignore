@@ -13,7 +13,7 @@ serviceAccountKey.json
 .DS_Store
 .vscode/
 
-# Keep test databases ignored, but track dev-db.json so cloud deployments (Render) boot with persistent initial data
+# Test databases
 server/data/test-db*.json
 
 # Anti-gravity skills
@@ -31,3 +31,7 @@ upi-gateway/node_modules/
 upi-gateway/bootstrap/cache/*.php
 upi-gateway/database/*.sqlite*
 upi-gateway/storage/installed
+
+# Runtime data (users, orders, payments) must never be committed or a deploy overwrites it
+server/data/dev-db.json
+server/data/*.tmp
