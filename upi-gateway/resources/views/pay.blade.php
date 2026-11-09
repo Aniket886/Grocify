@@ -89,12 +89,12 @@
                             <x-icon name="shield" class="w-9 h-9" />
                         </div>
                         <h1 class="mt-6 text-2xl font-bold tracking-tight text-slate-900">Verifying your payment</h1>
-                        <p class="mt-2 text-sm text-slate-500 max-w-sm">{{ $merchant }} is confirming your UTR with their bank. This page updates automatically once it's approved.</p>
+                        <p class="mt-2 text-sm text-slate-500 max-w-sm">Your UTR is being verified automatically. This page updates once payment is confirmed.</p>
                         <dl class="mt-8 w-full max-w-xs rounded-xl bg-slate-50 ring-1 ring-slate-200 divide-y divide-slate-200 text-sm text-left">
                             <div class="flex justify-between px-4 py-3"><dt class="text-slate-500">Your UTR</dt><dd class="font-mono font-medium text-slate-900">{{ $order->customer_utr }}</dd></div>
                             <div class="flex justify-between px-4 py-3"><dt class="text-slate-500">Submitted</dt><dd class="font-medium text-slate-900">{{ $order->utr_submitted_at?->format('d M, h:i A') }}</dd></div>
                         </dl>
-                        <p class="mt-6 text-xs text-slate-400">Don't pay again. You can close this page; the merchant will be notified once it's confirmed.</p>
+                        <p class="mt-6 text-xs text-slate-400">Don't pay again. You can close this page — it updates automatically once payment is confirmed.</p>
                     </div>
                 @elseif ($order->status === 'expired')
                     <div class="flex-1 flex flex-col items-center justify-center text-center py-8">
@@ -104,13 +104,13 @@
                             <p class="mt-2 text-sm text-slate-500 max-w-sm">Already paid? Don't pay again. We can still check the provider until {{ $order->expires_at->copy()->addHours((int) config('gateway.late_payment_grace_hours', 24))->format('d M, h:i A') }}. This page updates when payment is confirmed.</p>
                         @endif
                         @if ($order->acceptsCustomerUtr())
-                            <p class="mt-2 text-sm text-slate-500 max-w-sm">If you already paid, don't pay again — submit your UTR below so {{ $merchant }} can confirm it.</p>
+                            <p class="mt-2 text-sm text-slate-500 max-w-sm">If you already paid, don't pay again — submit your UTR below to verify your payment.</p>
                             @include('pay._utr-form', ['class' => 'mt-8 w-full max-w-sm'])
                         @else
                             <p class="mt-2 text-sm text-slate-500 max-w-xs">Please ask {{ $merchant }} for a new payment link.</p>
                             <div class="mt-8 flex items-start gap-3 rounded-xl bg-amber-50 ring-1 ring-amber-200 px-4 py-3 text-left text-sm text-amber-800 max-w-sm">
                                 <x-icon name="alert" class="w-5 h-5 text-amber-600" />
-                                <div>If money was debited from your account, don't pay again. Share your UTR with the merchant to confirm the payment.</div>
+                                <div>If money was debited from your account, don't pay again. Submit your UTR to verify the payment.</div>
                             </div>
                         @endif
                     </div>

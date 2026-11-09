@@ -153,7 +153,7 @@ export async function verifyUtr(req, res) {
       paid: false,
       gatewayStatus: gw.status,
       message: gw.status === 'review'
-        ? 'UTR received. The merchant will confirm your payment shortly.'
+        ? 'UTR received. Your payment is being verified automatically — this usually takes a few seconds.'
         : `Payment is ${gw.status} on the gateway.`,
     });
   }
