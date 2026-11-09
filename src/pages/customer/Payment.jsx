@@ -3,6 +3,16 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../../services/api.js';
 import StatusBadge from '../../components/StatusBadge.jsx';
 
+
+const svg = (d) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>
+);
+const METHOD_ICONS = {
+  UPI: svg(<><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><path d="M14 14h3v3m4 0v4h-4m-3-1v1" /></>),
+  Card: svg(<><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></>),
+  'Net Banking': svg(<path d="M3 10l9-6 9 6M5 10v8m4-8v8m6-8v8m4-8v8M3 20h18" />),
+};
+
 export default function Payment() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,6 +25,11 @@ export default function Payment() {
   const [utr, setUtr] = useState('');
   const [checking, setChecking] = useState(false);
   const pollTimer = useRef(null);
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => {
     api.get(`/orders/${id}`).then((d) => setOrder(d.order)).catch((e) => setError(e.message));
@@ -137,140 +152,153 @@ export default function Payment() {
   }
 
   const isGateway = config.provider === 'gateway';
-  const panelStyle = { margin: '16px 0', padding: '16px', background: 'var(--surface-subtle, #f8fafc)', borderRadius: '12px', border: '1px solid var(--border, #e2e8f0)' };
+  const secsLeft = Math.max(0, Math.floor((new Date(order.expiresAt).getTime() - now) / 1000));
+  const timeLeft = `${String(Math.floor(secsLeft / 60)).padStart(2, '0')}:${String(secsLeft % 60).padStart(2, '0')}`;
+  const qrSrc = gatewayData?.orderId ? `${config.gatewayUrl}/pay/${gatewayData.orderId}/qr.svg` : null;
 
   return (
-    <div className="card narrow">
-      <h2>Payment</h2>
-      <p>Order <b>{order.id}</b></p>
-      <p>Amount to pay: <b>₹{order.total}</b></p>
-      <p className="muted">Pay before {new Date(order.expiresAt).toLocaleTimeString()} or the order is cancelled.</p>
-      
-      {config.mock && (
-        <p className="error" role="status">
-          Demo mode: no real payment is taken. This server is using the mock payment provider, so "Pay" succeeds instantly. Set PAYMENT_PROVIDER=gateway to use the UPI gateway.
-        </p>
-      )}
-
-      <label htmlFor="method">Payment method</label>
-      <select id="method" value={method} onChange={(e) => setMethod(e.target.value)}>
-        {config.methods.map((m) => <option key={m}>{m}</option>)}
-      </select>
-
-      {isGateway && method === 'UPI' && (
-        <div style={{ ...panelStyle, color: '#0f172a' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-            <h4 style={{ margin: 0, color: '#0f172a' }}>🏦 Pay with UPI</h4>
-            <span style={{ fontSize: '0.8rem', background: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '12px', fontWeight: 600 }}>Bank-verified</span>
-          </div>
-
-          {gatewayData && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
-              <a
-                href={gatewayData.paymentUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button primary"
-                style={{ textAlign: 'center', display: 'inline-block', textDecoration: 'none' }}
-              >
-                🚀 Open UPI Payment Page & QR
-              </a>
-              {gatewayData.upiIntent && (
-                <a
-                  href={gatewayData.upiIntent}
-                  className="button secondary"
-                  style={{ textAlign: 'center', display: 'inline-block', textDecoration: 'none' }}
-                >
-                  📱 Pay with UPI Mobile App (GPay/PhonePe/Paytm)
-                </a>
-              )}
-            </div>
-          )}
-
-          {/* Direct UTR Entry for Instant Verification */}
-          <form onSubmit={submitUtrVerification} style={{ borderTop: '1px solid #e2e8f0', paddingTop: '12px' }}>
-            <label htmlFor="utrInput" style={{ fontSize: '0.85rem', fontWeight: 600 }}>
-              Already paid? Enter the 12-digit UTR:
-            </label>
-            <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-              <input
-                id="utrInput"
-                type="text"
-                maxLength="12"
-                pattern="\d{12}"
-                inputMode="numeric"
-                placeholder="e.g. 412345678901"
-                value={utr}
-                onChange={(e) => setUtr(e.target.value)}
-                style={{ flex: 1, fontFamily: 'monospace', letterSpacing: '1px' }}
-              />
-              <button type="submit" className="primary" disabled={busy || utr.length !== 12}>
-                Submit UTR
-              </button>
-            </div>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', display: 'block', marginTop: '4px' }}>
-              Find the 12-digit UPI Ref / UTR number in your UPI app transaction details.
-            </span>
-          </form>
-
-          <p style={{ margin: '12px 0 0', fontSize: '0.8rem', color: '#64748b' }}>
-            ⚡ Your order is confirmed automatically once the matching bank credit is received. A UTR that doesn't match is held for review, never accepted blindly.
-          </p>
+    <div className="pay-shell">
+      <header className="pay-summary">
+        <div>
+          <div className="pay-eyebrow">Order {order.id}</div>
+          <div className="pay-amount">₹{order.total}</div>
         </div>
-      )}
-
-      {isGateway && method !== 'UPI' && (
-        <div style={{ ...panelStyle, color: '#0f172a' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-            <h4 style={{ margin: 0, color: '#0f172a' }}>{method === 'Card' ? '💳 Pay with Card' : '🏛️ Pay with Net Banking'}</h4>
-            <span style={{ fontSize: '0.8rem', background: '#fef3c7', color: '#92400e', padding: '2px 8px', borderRadius: '12px', fontWeight: 600 }}>Coming soon</span>
-          </div>
-          {/* Placeholder only: nothing here is submitted or charged. */}
-          {method === 'Card' ? (
-            <fieldset disabled style={{ border: 0, padding: 0, margin: 0, display: 'grid', gap: '8px' }}>
-              <input placeholder="Card number" aria-label="Card number" />
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <input placeholder="MM / YY" aria-label="Expiry" style={{ flex: 1 }} />
-                <input placeholder="CVV" aria-label="CVV" style={{ flex: 1 }} />
-              </div>
-              <input placeholder="Name on card" aria-label="Name on card" />
-            </fieldset>
-          ) : (
-            <fieldset disabled style={{ border: 0, padding: 0, margin: 0 }}>
-              <select aria-label="Choose your bank"><option>Choose your bank</option></select>
-            </fieldset>
-          )}
-          <button className="primary" disabled style={{ marginTop: '12px' }}>Not available yet</button>
-          <p style={{ margin: '12px 0 0', fontSize: '0.8rem', color: '#64748b' }}>
-            This is a placeholder for a future integration. Please choose UPI to pay now.
-          </p>
+        <div className={`pay-timer${secsLeft < 120 ? ' low' : ''}`} title="Time left to pay">
+          <span aria-hidden="true">⏱</span> {timeLeft}
         </div>
-      )}
+      </header>
 
-      {error && <p className="error" role="alert">{error}</p>}
-
-      <div className="row" style={{ marginTop: '12px' }}>
-        {isGateway ? (
-          <>
-            <button className="primary" disabled={busy || checking} onClick={checkStatusManually}>
-              {checking ? 'Checking...' : '✓ Refresh Status'}
-            </button>
-          </>
-        ) : (
-          <button className="primary" disabled={busy} onClick={() => pay()}>Pay ₹{order.total}</button>
-        )}
-
-        {config.testMode && (
-          <button className="secondary" disabled={busy} onClick={() => pay('failure')}>
-            Simulate failed payment
+      <div className="pay-tabs" role="tablist" aria-label="Payment method">
+        {config.methods.map((m) => (
+          <button
+            key={m}
+            role="tab"
+            type="button"
+            aria-selected={method === m}
+            className={`pay-tab${method === m ? ' active' : ''}`}
+            onClick={() => { setMethod(m); setError(''); }}
+          >
+            {METHOD_ICONS[m]}
+            {m}
           </button>
-        )}
-        <button className="danger" disabled={busy} onClick={cancel}>Cancel order</button>
+        ))}
       </div>
 
-      <p className="muted" style={{ marginTop: '16px' }}>
-        Payee details are shown on the secure UPI checkout. Card, UPI and bank details are never stored by Grocify.
-      </p>
+      {config.mock && (
+        <div className="pay-note warn" role="status">
+          Demo mode: no real payment is taken. "Pay" succeeds instantly because this server uses the mock payment provider.
+        </div>
+      )}
+
+      <section className="pay-body">
+        {!isGateway && (
+          <>
+            <p className="pay-lead">Pay securely with {method}.</p>
+            <button className="primary pay-cta" disabled={busy} onClick={() => pay()}>Pay ₹{order.total}</button>
+            {config.testMode && (
+              <button className="secondary pay-cta" disabled={busy} onClick={() => pay('failure')}>Simulate failed payment</button>
+            )}
+          </>
+        )}
+
+        {isGateway && method === 'UPI' && (
+          <>
+            {!gatewayData ? (
+              <div className="pay-loading"><span className="pay-spinner" /> Preparing your secure payment…</div>
+            ) : (
+              <>
+                <div className="pay-qr-wrap">
+                  {qrSrc && (
+                    <div className="pay-qr">
+                      <img src={qrSrc} alt="UPI QR code" width="200" height="200" onError={(e) => { e.currentTarget.parentElement.style.display = 'none'; }} />
+                    </div>
+                  )}
+                  <div className="pay-qr-text">
+                    <strong>Scan &amp; pay</strong>
+                    <span>Open any UPI app, scan the QR and approve the payment of ₹{order.total}.</span>
+                    <div className="pay-apps" aria-label="Supported apps">
+                      {['GPay', 'PhonePe', 'Paytm', 'BHIM'].map((a) => <span key={a}>{a}</span>)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pay-actions">
+                  {gatewayData.upiIntent && (
+                    <a className="button primary pay-cta" href={gatewayData.upiIntent}>Pay with UPI app</a>
+                  )}
+                  <a className="button secondary pay-cta" href={gatewayData.paymentUrl} target="_blank" rel="noopener noreferrer">
+                    Open payment page
+                  </a>
+                </div>
+
+                <div className="pay-status" aria-live="polite">
+                  <span className="pay-spinner" />
+                  <span>Waiting for your payment. This page updates automatically.</span>
+                  <button type="button" className="pay-link" disabled={checking} onClick={checkStatusManually}>
+                    {checking ? 'Checking…' : 'Refresh'}
+                  </button>
+                </div>
+
+                <div className="pay-divider"><span>Already paid?</span></div>
+
+                <form onSubmit={submitUtrVerification} className="pay-utr">
+                  <label htmlFor="utrInput">UPI reference number (UTR)</label>
+                  <div className="pay-utr-row">
+                    <input
+                      id="utrInput"
+                      type="text"
+                      maxLength="12"
+                      pattern="\d{12}"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      placeholder="12-digit number"
+                      value={utr}
+                      onChange={(e) => setUtr(e.target.value.replace(/\D/g, ''))}
+                    />
+                    <button type="submit" className="primary" disabled={busy || utr.length !== 12}>
+                      {busy ? 'Confirming…' : 'Confirm payment'}
+                    </button>
+                  </div>
+                  <small>Find it in your UPI app under the payment details (shown as UTR or UPI Ref. No.).</small>
+                </form>
+              </>
+            )}
+          </>
+        )}
+
+        {isGateway && method !== 'UPI' && (
+          <div className="pay-soon">
+            <div className="pay-soon-head">
+              <strong>{method === 'Card' ? 'Pay with card' : 'Pay with net banking'}</strong>
+              <span className="pay-pill">Coming soon</span>
+            </div>
+            {/* Placeholder only: nothing here is submitted or charged. */}
+            <fieldset disabled className="pay-fields">
+              {method === 'Card' ? (
+                <>
+                  <input placeholder="Card number" aria-label="Card number" />
+                  <div className="pay-utr-row">
+                    <input placeholder="MM / YY" aria-label="Expiry" />
+                    <input placeholder="CVV" aria-label="CVV" />
+                  </div>
+                  <input placeholder="Name on card" aria-label="Name on card" />
+                </>
+              ) : (
+                <select aria-label="Choose your bank"><option>Choose your bank</option></select>
+              )}
+            </fieldset>
+            <button className="primary pay-cta" disabled>Not available yet</button>
+            <p className="pay-lead">This option is coming soon. Please choose UPI to pay now.</p>
+          </div>
+        )}
+
+        {error && <div className="pay-note error" role="alert">{error}</div>}
+      </section>
+
+      <footer className="pay-foot">
+        <span><span aria-hidden="true">🔒</span> Secure payment. Card, UPI and bank details are never stored by Grocify.</span>
+        <button type="button" className="pay-link danger" disabled={busy} onClick={cancel}>Cancel order</button>
+      </footer>
     </div>
   );
 }
