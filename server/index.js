@@ -50,6 +50,7 @@ const autoSeed = async () => {
           ['Royal Kashmiri Jumbo Walnut Kernels', 490, 15, 'Handpicked extra-large walnut halves', '400 g Pack', 'High Omega-3', 'Sopore, Kashmir', '/images/products/walnut_kernels.jpg'],
         ],
         'Household & Essentials': [
+          ['Tea Sachet (₹1 payment test)', 1, 500, 'Single tea sachet priced at ₹1 for testing UPI checkout end to end', '1 pc', 'Test Item', 'Darjeeling, West Bengal', '/images/products/darjeeling_tea.jpg'],
           ['Eco-Friendly Bamboo Toothbrushes', 160, 30, 'Moso bamboo ergonomic toothbrushes with charcoal bristles', 'Pack of 4', 'Biodegradable', 'Sustainable Living', '/images/products/bamboo_toothbrushes.jpg'],
           ['Neem & Citrus Natural Floor Cleaner', 199, 20, 'Non-toxic bio-enzyme cleaner with cold-pressed neem', '1 L Bottle', 'Pet-Safe Non-Toxic', 'Bio-Enzyme Labs', '/images/products/floor_cleaner.jpg'],
         ],
@@ -123,9 +124,19 @@ const autoSeed = async () => {
   }
 };
 
+await store.initStore();
 await autoSeed();
 
 // Every minute, cancel unpaid orders past their deadline and put their stock back.
 setInterval(() => expireUnpaidOrders().catch((e) => logger.error('Order expiry sweep failed', { message: e.message })), 60000).unref();
 
-createApp().listen(env.port, () => logger.info(`Grocify API running on port ${env.port}`));
+const server = createApp().listen(env.port, () => logger.info(`Grocify API running on port ${env.port}`));
+
+// Render sends SIGTERM on every deploy: finish saving before the container stops.
+for (const sig of ['SIGTERM', 'SIGINT']) {
+  process.on(sig, async () => {
+    server.close();
+    await store.flushStore().catch(() => {});
+    process.exit(0);
+  });
+}
