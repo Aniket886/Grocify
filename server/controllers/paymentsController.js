@@ -77,6 +77,18 @@ export async function status(req, res) {
     });
   }
 
+  // Background auto-polls pass ?local=1 to skip the gateway round-trip.
+  // The gateway webhook updates the local order when payment arrives, so
+  // the poller only needs to read the local record. Manual refreshes and
+  // UTR verification still query the gateway directly.
+  if (req.query.local) {
+    return res.json({
+      status: order.status,
+      paymentStatus: order.paymentStatus,
+      paid: false,
+    });
+  }
+
   // Check with UPI Gateway
   try {
     const gatewayOrder = await gatewayProvider.getOrderStatus(order.id);
@@ -131,6 +143,7 @@ export async function verifyUtr(req, res) {
   }
 
   const cleanUtr = utr.trim();
+  const { gatewayOrderId } = req.body || {};
 
   if (order.status === 'Order Placed' && order.paymentStatus === 'paid') {
     return res.json({ success: true, order, paid: true });
@@ -138,13 +151,18 @@ export async function verifyUtr(req, res) {
 
   if (order.status !== 'Payment Pending') throw badRequest('This order is not awaiting payment', 409);
 
-  // The gateway is the source of truth: make sure its order exists, hand it the
-  // UTR, then only mark Grocify's order paid if the gateway reports "paid".
-  let gw = await gatewayProvider.getOrderStatus(order.id).catch(() => null);
-  gw ||= await gatewayProvider.createOrder({ order, customer: await store.findUserById(order.userId) });
-  if (gw.status !== 'paid') {
-    await gatewayProvider.submitUtr(gw.order_id, cleanUtr);
-    gw = await gatewayProvider.getOrderStatus(order.id);
+  // When the frontend provides the gateway order number we can skip the
+  // getOrderStatus round-trip and submit the UTR directly.
+  let gw;
+  if (gatewayOrderId) {
+    gw = await gatewayProvider.submitUtr(gatewayOrderId, cleanUtr);
+  } else {
+    gw = await gatewayProvider.getOrderStatus(order.id).catch(() => null);
+    if (!gw) gw = await gatewayProvider.createOrder({ order, customer: await store.findUserById(order.userId) });
+    if (gw.status !== 'paid') {
+      const utrResult = await gatewayProvider.submitUtr(gw.order_id, cleanUtr);
+      if (utrResult?.status) gw = utrResult;
+    }
   }
 
   if (gw.status !== 'paid') {
@@ -153,7 +171,7 @@ export async function verifyUtr(req, res) {
       paid: false,
       gatewayStatus: gw.status,
       message: gw.status === 'review'
-        ? 'UTR received. The merchant will confirm your payment shortly.'
+        ? 'UTR received. Your payment is being verified — this usually takes a few seconds.'
         : `Payment is ${gw.status} on the gateway.`,
     });
   }

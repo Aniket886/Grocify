@@ -53,7 +53,7 @@ export default function Payment() {
     if (config.provider === 'gateway' && order && order.status === 'Payment Pending') {
       pollTimer.current = setInterval(async () => {
         try {
-          const res = await api.get(`/payments/status/${id}`);
+          const res = await api.get(`/payments/status/${id}?local=1`);
           if (res.paid) {
             clearInterval(pollTimer.current);
             navigate(`/orders/${id}/confirmation`);
@@ -94,8 +94,9 @@ export default function Payment() {
     }
     setError('');
     setBusy(true);
+    if (pollTimer.current) clearInterval(pollTimer.current);
     try {
-      const res = await api.post(`/payments/verify-utr/${id}`, { utr: utr.trim() });
+      const res = await api.post(`/payments/verify-utr/${id}`, { utr: utr.trim(), gatewayOrderId: gatewayData?.orderId });
       if (res.paid) {
         navigate(`/orders/${id}/confirmation`);
       } else {
