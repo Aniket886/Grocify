@@ -16,6 +16,7 @@ export function config(req, res) {
     provider: provider.name,
     methods: PAYMENT_METHODS,
     testMode: (provider.name === 'mock' || env.paymentGatewayEnv === 'sandbox') && env.nodeEnv !== 'production',
+    mock: provider.name === 'mock',
     gatewayUrl: env.paymentGatewayUrl,
     gatewayEnv: env.paymentGatewayEnv,
   });
