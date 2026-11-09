@@ -643,8 +643,10 @@ class OrderService
 
             $this->ensureUtrUnused($locked, $utr);
 
-            if ($credit = $this->findCredit($locked, $utr)) {
-                $this->settleWithCredit($locked, $credit, $utr);
+            // Demo mode accepts any unused 12-digit UTR. Otherwise a matching bank credit is required.
+            $demo = (bool) config('gateway.demo_auto_approve_utr', false);
+            if ($demo || ($credit = $this->findCredit($locked, $utr))) {
+                $this->settleWithCredit($locked, $demo ? null : $credit, $utr);
             } else {
                 // No matching bank credit yet: hold for review. It is paid
                 // automatically if the credit alert arrives, or the merchant
@@ -680,7 +682,7 @@ class OrderService
             ->first();
     }
 
-    private function settleWithCredit(Order $locked, object $credit, string $utr): void
+    private function settleWithCredit(Order $locked, ?object $credit, string $utr): void
     {
         $this->ensureUtrUnused($locked, $utr);
 
@@ -688,7 +690,7 @@ class OrderService
             'status' => Order::PAID,
             'utr' => $utr,
             'customer_utr' => $utr,
-            'verified_by' => 'bank_alert',
+            'verified_by' => $credit ? 'bank_alert' : 'auto_utr',
             'paid_at' => now(),
             'utr_submitted_at' => $locked->utr_submitted_at ?? now(),
             'review_note' => null,
@@ -700,7 +702,9 @@ class OrderService
             'verification_process_identity' => null,
         ])->save();
 
-        DB::table('inbound_credits')->where('id', $credit->id)->update(['order_id' => $locked->id]);
+        if ($credit) {
+            DB::table('inbound_credits')->where('id', $credit->id)->update(['order_id' => $locked->id]);
+        }
         app(WebhookOutboxService::class)->record($locked->refresh(), 'order.paid');
     }
 

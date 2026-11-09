@@ -78,6 +78,11 @@ return [
         ? false
         : (bool) env('GATEWAY_ALLOW_INSECURE_REDIRECTS', false),
 
+    // DEMO ONLY. When true, any unused 12-digit UTR marks the order paid with no bank check, so
+    // anyone can "pay" by typing digits. Keep false in production; the default requires a matching
+    // bank credit (POST /api/v1/inbound/credit).
+    'demo_auto_approve_utr' => (bool) env('GATEWAY_DEMO_AUTO_APPROVE_UTR', false),
+
     // ── Content-Security-Policy ───────────────────────────────────────────────
     // Set to true to switch from Report-Only to enforcing CSP.
     // See App\Http\Middleware\SecurityHeaders for what must be fixed first.
