@@ -145,6 +145,12 @@ export default function Payment() {
       <p>Amount to pay: <b>₹{order.total}</b></p>
       <p className="muted">Pay before {new Date(order.expiresAt).toLocaleTimeString()} or the order is cancelled.</p>
       
+      {config.mock && (
+        <p className="error" role="status">
+          Demo mode: no real payment is taken. This server is using the mock payment provider, so "Pay" succeeds instantly. Set PAYMENT_PROVIDER=gateway to use the UPI gateway.
+        </p>
+      )}
+
       <label htmlFor="method">Payment method</label>
       <select id="method" value={method} onChange={(e) => setMethod(e.target.value)}>
         {config.methods.map((m) => <option key={m}>{m}</option>)}
