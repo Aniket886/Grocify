@@ -25,10 +25,11 @@ export function password(value) {
   return value;
 }
 
-export function number(value, field, { min = 0, integer = false } = {}) {
+export function number(value, field, { min = 0, max = Infinity, integer = false } = {}) {
   const n = Number(value);
   if (value === '' || value === null || value === undefined || !Number.isFinite(n)) throw badRequest(`${field} must be a number`);
   if (integer && !Number.isInteger(n)) throw badRequest(`${field} must be a whole number`);
   if (n < min) throw badRequest(`${field} must be at least ${min}`);
+  if (n > max) throw badRequest(`${field} must be at most ${max}`);
   return n;
 }

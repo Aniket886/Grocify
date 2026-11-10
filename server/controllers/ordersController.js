@@ -112,7 +112,14 @@ export async function adminList(req, res) {
   res.json({ orders: await Promise.all(orders.map((o) => present(o, { withCustomer: true }))) });
 }
 
+// Demonstration aid: lets a customer step their own paid order through delivery so the tracking screen
+// can be shown without an admin. A real store sets DEMO_DELIVERY_CONTROLS=false, after which only an
+// admin can move a delivery (through /api/admin/orders/:id/status).
 export async function advanceDemoDelivery(req, res) {
+  if (!env.demoDeliveryControls) {
+    req.log.warn('Delivery self-advance refused: demo controls are off', { userId: req.user.id, orderId: req.params.id });
+    throw badRequest('Delivery updates are made by the store', 403);
+  }
   const order = await loadAccessible(req);
   if (order.userId !== req.user.id && req.user.role !== 'admin') throw badRequest('Order not found', 404);
   if (order.status === 'Cancelled' || order.status === 'Payment Pending') {
