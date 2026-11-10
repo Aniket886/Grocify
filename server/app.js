@@ -8,6 +8,7 @@ import cors from 'cors';
 import env from './config/env.js';
 import logger from './config/logger.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
+import { buildCsp, looksLikeFile, renderIndexHtml } from './utils/html.js';
 import authRoutes from './routes/auth.js';
 import categoryRoutes from './routes/categories.js';
 import productRoutes from './routes/products.js';
@@ -22,8 +23,26 @@ const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = path.join(rootDir, 'dist');
 const publicDir = path.join(rootDir, 'public');
 
+/**
+ * CORS decision for one request. Cross-site browser calls are allowed only from the configured
+ * origins (CLIENT_URL and CORS_ORIGINS). A page calling its own host is same-origin and always allowed.
+ * Any other Origin gets no CORS headers at all, so the browser blocks the calling page from reading
+ * the response. The Origin is never reflected back blindly.
+ */
+export function corsOptionsFor(req) {
+  const origin = req.get('Origin');
+  if (!origin) return { origin: false };
+  let sameHost = false;
+  try { sameHost = new URL(origin).host === req.get('host'); } catch { /* malformed Origin: not allowed */ }
+  const allowed = sameHost || env.corsOrigins.includes(origin.replace(/\/+$/, ''));
+  return { origin: allowed ? origin : false, credentials: allowed };
+}
+
 export default function createApp() {
   const app = express();
+  // Behind a hosting proxy (Render), the client address is in X-Forwarded-For. Trusting exactly the
+  // configured number of hops makes req.ip the real client, which rate limiting and logs rely on.
+  app.set('trust proxy', env.trustProxy);
 
   // Every request gets an ID (or keeps a safe one sent by the caller) so one request can be
   // followed through the logs. It is returned in the X-Request-Id header.
@@ -35,7 +54,7 @@ export default function createApp() {
     next();
   });
   app.use(helmet({ contentSecurityPolicy: false }));
-  app.use(cors({ origin: true, credentials: true }));
+  app.use(cors((req, cb) => cb(null, corsOptionsFor(req))));
   app.use(express.json({
     limit: '100kb',
     verify: (req, res, buf) => {
@@ -71,26 +90,38 @@ export default function createApp() {
   // In production (e.g. Render / Cloud), serve compiled Vite frontend and support client-side SPA routing
   // Dynamically substitutes request host into Open Graph meta tags so preview images always resolve cleanly
   if (fs.existsSync(distDir)) {
-    app.use(express.static(distDir));
-    app.get('{*path}', (req, res, next) => {
-      if (req.path.startsWith('/api')) {
+    const indexPath = path.join(distDir, 'index.html');
+    let gatewayOrigin = [];
+    try { gatewayOrigin = [new URL(env.paymentGatewayUrl).origin]; } catch { /* no gateway image origin */ }
+
+    // Every HTML response goes through this one function, so each carries the security headers.
+    const sendShell = (req, res, next) => {
+      let html;
+      try {
+        html = fs.readFileSync(indexPath, 'utf8');
+      } catch {
         return next();
       }
-      const indexPath = path.join(distDir, 'index.html');
-      try {
-        const host = req.get('x-forwarded-host') || req.get('host');
-        const proto = req.get('x-forwarded-proto') || (req.secure ? 'https' : 'http');
-        if (host) {
-          const baseUrl = `${proto}://${host}`;
-          let html = fs.readFileSync(indexPath, 'utf8');
-          html = html.replaceAll('https://gmu2027.space', baseUrl);
-          res.setHeader('Content-Type', 'text/html; charset=utf-8');
-          return res.send(html);
-        }
-      } catch {
-        // Fallback to static sendFile
-      }
-      res.sendFile(indexPath);
+      // Host headers are validated inside renderIndexHtml before they touch the page.
+      html = renderIndexHtml(html, {
+        host: req.get('x-forwarded-host') || req.get('host'),
+        proto: req.get('x-forwarded-proto') || (req.secure ? 'https' : 'http'),
+      });
+      res.setHeader('Content-Security-Policy', buildCsp(html, { imgOrigins: gatewayOrigin }));
+      res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.send(html);
+    };
+
+    app.get(['/', '/index.html'], sendShell);
+    // index:false so the static handler never serves the shell itself (it would skip the headers above).
+    app.use(express.static(distDir, { index: false }));
+    app.get('{*path}', (req, res, next) => {
+      // API paths and anything that names a file (/.env, /backup.zip, /x.js.map) are never answered
+      // with the app shell: they fall through to a plain 404.
+      if (req.path.startsWith('/api') || looksLikeFile(req.path)) return next();
+      sendShell(req, res, next);
     });
   }
 

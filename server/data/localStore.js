@@ -54,7 +54,7 @@ export async function initStore(injectedPool) {
   } else {
     const { default: pg } = await import('pg');
     const local = /@(localhost|127\.0\.0\.1)[:/]/.test(env.databaseUrl);
-    pool = new pg.Pool({ connectionString: env.databaseUrl, max: 2, ssl: local ? undefined : { rejectUnauthorized: false } });
+    pool = new pg.Pool({ connectionString: env.databaseUrl, max: 2, ssl: local ? undefined : { rejectUnauthorized: env.databaseSslVerify } });
   }
   await pool.query('CREATE TABLE IF NOT EXISTS app_state (id INT PRIMARY KEY, data JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT now())');
   const { rows } = await pool.query('SELECT data FROM app_state WHERE id = 1');
@@ -144,6 +144,12 @@ export async function deleteUser(id) {
   return true;
 }
 
+export async function listUsers() {
+  return [...load().users];
+}
+export async function listAdmins() {
+  return load().users.filter((u) => u.role === 'admin');
+}
 export async function listCustomers() {
   return load().users.filter((u) => u.role === 'customer');
 }
