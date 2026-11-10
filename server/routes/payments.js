@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import authenticate from '../middleware/authenticate.js';
+import { paymentLimiter } from '../middleware/rateLimit.js';
 import * as c from '../controllers/paymentsController.js';
 
 const r = Router();
@@ -11,8 +12,8 @@ r.get('/config', c.config);
 r.post('/webhook', c.webhook);
 
 // Customer gateway initiation, status polling & instant UTR verification
-r.post('/initiate/:id', authenticate, c.initiate);
+r.post('/initiate/:id', paymentLimiter, authenticate, c.initiate);
 r.get('/status/:id', authenticate, c.status);
-r.post('/verify-utr/:id', authenticate, c.verifyUtr);
+r.post('/verify-utr/:id', paymentLimiter, authenticate, c.verifyUtr);
 
 export default r;

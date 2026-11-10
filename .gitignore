@@ -35,3 +35,9 @@ upi-gateway/storage/installed
 # Runtime data (users, orders, payments) must never be committed or a deploy overwrites it
 server/data/dev-db.json
 server/data/*.tmp
+
+# Hand-over and deployment notes that contain live credentials - never commit
+*CREDENTIALS*.md
+*CREDENTIALS*.pdf
+*SECRETS*.md
+*SECRETS*.pdf
