@@ -3,9 +3,9 @@ import logger from './config/logger.js';
 import createApp from './app.js';
 import { expireUnpaidOrders } from './services/orderService.js';
 import * as store from './data/localStore.js';
-import bcrypt from 'bcryptjs';
+import { ensureAccounts } from './services/bootstrap.js';
 
-// Ensure initial catalogue and primary accounts exist on boot (e.g. fresh Render container or clean local DB)
+// Ensure the initial catalogue exists on boot (e.g. fresh Render container or clean local DB)
 const autoSeed = async () => {
   try {
     const existing = await store.listCategories();
@@ -87,38 +87,8 @@ const autoSeed = async () => {
       logger.info('Auto-seeded comprehensive PBL grocery & artisanal catalogue');
     }
 
-    // 1. Ensure project owner / customer account (anikettegginamath@gmail.com) is permanently preserved across deployments
-    const aniketEmail = 'anikettegginamath@gmail.com';
-    const aniketUser = await store.findUserByEmail(aniketEmail);
-    if (!aniketUser) {
-      await store.createUser({
-        name: 'Aniket Tegginamath',
-        email: aniketEmail,
-        phone: '+91 98765 43210',
-        role: 'customer',
-        address: {
-          line: 'Vidyanagar, GMU Campus Road',
-          city: 'Hubballi',
-          pincode: '580031',
-        },
-        passwordHash: await bcrypt.hash('aniket123', 10),
-      });
-      logger.info(`Customer account automatically initialized & preserved for ${aniketEmail}`);
-    }
-
-    // 2. Ensure admin account exists even on ephemeral cloud deploys
-    const adminEmail = env.seedAdminEmail || 'admin@grocify.test';
-    const adminPassword = env.seedAdminPassword || 'Admin@123';
-    if (!(await store.findUserByEmail(adminEmail))) {
-      await store.createUser({
-        name: 'Admin',
-        email: adminEmail,
-        phone: '',
-        role: 'admin',
-        passwordHash: await bcrypt.hash(adminPassword, 10),
-      });
-      logger.info(`Admin account initialized for ${adminEmail}`);
-    }
+    // Accounts are never created from built-in credentials. See services/bootstrap.js.
+    await ensureAccounts({ store, env, logger });
   } catch (err) {
     logger.error('Auto-seed check failed', { message: err.message });
   }
@@ -126,6 +96,10 @@ const autoSeed = async () => {
 
 await store.initStore();
 await autoSeed();
+
+if (env.jwtSecretGenerated) {
+  logger[env.nodeEnv === 'production' ? 'error' : 'warn']('JWT_SECRET is not set: using a temporary secret, so every login is signed out when the server restarts. Set JWT_SECRET to a long random value.');
+}
 
 // Every minute, cancel unpaid orders past their deadline and put their stock back.
 setInterval(() => expireUnpaidOrders().catch((e) => logger.error('Order expiry sweep failed', { message: e.message })), 60000).unref();
